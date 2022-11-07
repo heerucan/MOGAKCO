@@ -27,6 +27,8 @@ enum Font {
     case body3
     case body4
     case caption
+    case onboard1
+    case onboard2
     
     fileprivate var property: FontStyle {
         switch self {
@@ -54,6 +56,10 @@ enum Font {
             return FontStyle(font: .regular, size: 12, lineHeight: 21.6)
         case .caption:
             return FontStyle(font: .regular, size: 10, lineHeight: 16)
+        case .onboard1:
+            return FontStyle(font: .medium, size: 24, lineHeight: 38.4)
+        case .onboard2:
+            return FontStyle(font: .regular, size: 24, lineHeight: 38.4)
         }
     }
 }
