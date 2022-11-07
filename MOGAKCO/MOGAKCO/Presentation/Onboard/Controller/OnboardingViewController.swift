@@ -34,10 +34,6 @@ final class OnboardingViewController: BaseViewController {
     
     // MARK: - UI & Layout
     
-    override func configureUI() {
-        
-    }
-    
     override func setupDelegate() {
         onboardView.collectionView.delegate = self
     }
@@ -52,6 +48,16 @@ final class OnboardingViewController: BaseViewController {
                     cell.setupData(value, index)
                 }
                 .disposed(by: disposeBag)
+        
+        onboardView.collectionView.rx.willEndDragging
+            .withUnretained(self)
+            .subscribe(onNext: { (vc, arg1) in
+                let (_, targetContentOffset) = arg1
+                let page = Int(targetContentOffset.pointee.x / self.onboardView.collectionView.frame.width)
+                print(page, self.onboardView.collectionView.frame.width)
+                self.onboardView.pageControl.currentPage = page
+            })
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method

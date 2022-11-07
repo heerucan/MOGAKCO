@@ -29,11 +29,13 @@ final class OnboardView: BaseView {
         return layout
     }()
     
-    let pageControl = UIPageControl()
-    
-    let startButton = SSAC48Button().then {
-        $0.backgroundColor = .red
+    let pageControl = UIPageControl().then {
+        $0.numberOfPages = 3
+        $0.pageIndicatorTintColor = Color.gray5
+        $0.currentPageIndicatorTintColor = Color.black
     }
+    
+    let startButton = H48Button(.fill, "시작하기")
     
     // MARK: - Initializer
     
@@ -42,10 +44,6 @@ final class OnboardView: BaseView {
     }
     
     // MARK: - UI & Layout
-    
-    override func configureUI() {
-        super.configureUI()
-    }
     
     override func configureLayout() {
         addSubviews([collectionView,
