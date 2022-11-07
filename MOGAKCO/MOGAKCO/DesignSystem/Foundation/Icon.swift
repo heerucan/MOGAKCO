@@ -9,6 +9,13 @@ import UIKit
 
 @frozen
 enum Icon {
+    // MARK: - Splash + Onboarding Image
+    static let onboarding1 = UIImage(named: "onboarding_img1")
+    static let onboarding2 = UIImage(named: "onboarding_img2")
+    static let onboarding3 = UIImage(named: "onboarding_img3")
+    static let splashLogo = UIImage(named: "splash_logo")
+    static let txt = UIImage(named: "txt")
+    
     // MARK: - Tab Icon
     static let friends = UIImage(named: "friends")
     static let friendsInactive = UIImage(named: "friendsInactive")
@@ -29,20 +36,16 @@ enum Icon {
     static let bell = UIImage(named: "bell")
     static let cancelMatch = UIImage(named: "cancel_match")
     static let check = UIImage(named: "check")
-    
     static let closeBig = UIImage(named: "close_big")
     static let closeSmall = UIImage(named: "close_small")
     static let faq = UIImage(named: "faq")
     static let filterControl = UIImage(named: "filter_control")
     static let friendsPlus = UIImage(named: "friends_plus")
     static let logout = UIImage(named: "logout")
-    
     static let man = UIImage(named: "man")
     static let woman = UIImage(named: "woman")
-
     static let mapMarker = UIImage(named: "map_marker")
     static let antenna = UIImage(named: "antenna")
-    
     static let message = UIImage(named: "message")
     static let moreArrow = UIImage(named: "more_arrow")
     static let more = UIImage(named: "more")
@@ -52,7 +55,6 @@ enum Icon {
     static let plus = UIImage(named: "plus")
     static let qna = UIImage(named: "qna")
     static let search = UIImage(named: "search")
-
     static let settingAlarm = UIImage(named: "setting_alarm")
     static let siren = UIImage(named: "siren")
     static let write = UIImage(named: "write")

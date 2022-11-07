@@ -43,6 +43,9 @@
 		5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */; };
 		5BC57D6E2918F5D5006CB05C /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */; };
 		5BC57D6F2918F5D5006CB05C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */; };
+		5BC57D7129190AA9006CB05C /* SSAC48Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7029190AA9006CB05C /* SSAC48Button.swift */; };
+		5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */; };
+		5BC57D7829190DDC006CB05C /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7729190DDC006CB05C /* OnboardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +81,9 @@
 		5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
+		5BC57D7029190AA9006CB05C /* SSAC48Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSAC48Button.swift; sourceTree = "<group>"; };
+		5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		5BC57D7729190DDC006CB05C /* OnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,9 @@
 		5BC57D122918E895006CB05C /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D7229190D84006CB05C /* View */,
+				5BC57D7329190D88006CB05C /* ViewModel */,
+				5BC57D7429190D8B006CB05C /* Controller */,
 			);
 			path = Onboard;
 			sourceTree = "<group>";
@@ -183,6 +192,7 @@
 		5BC57D142918E8AC006CB05C /* CTA */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D7029190AA9006CB05C /* SSAC48Button.swift */,
 			);
 			path = CTA;
 			sourceTree = "<group>";
@@ -351,6 +361,29 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
+		5BC57D7229190D84006CB05C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5BC57D7729190DDC006CB05C /* OnboardView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5BC57D7329190D88006CB05C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5BC57D7429190D8B006CB05C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -438,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BC57D7129190AA9006CB05C /* SSAC48Button.swift in Sources */,
 				5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */,
 				5BC57D1F2918E957006CB05C /* APIError.swift in Sources */,
 				5BC57D412918EB85006CB05C /* UIView+.swift in Sources */,
@@ -448,6 +482,7 @@
 				5BC57D352918EA9E006CB05C /* BaseCollectionCell.swift in Sources */,
 				5BC57D3D2918EB53006CB05C /* Date+.swift in Sources */,
 				5BC57D472918EBFF006CB05C /* UITextField+.swift in Sources */,
+				5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BC57D492918EC43006CB05C /* ReusableProtocol.swift in Sources */,
 				5BC57D212918E96D006CB05C /* GenericAPIManager.swift in Sources */,
@@ -455,6 +490,7 @@
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
+				5BC57D7829190DDC006CB05C /* OnboardView.swift in Sources */,
 				5BC57D312918EA86006CB05C /* BaseView.swift in Sources */,
 				5BC57D502918EDB4006CB05C /* CObservable.swift in Sources */,
 				5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */,

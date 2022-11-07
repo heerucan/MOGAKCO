@@ -23,7 +23,9 @@ class BaseViewController: UIViewController, BaseMethodProtocol {
         setupNotificationCenter()
     }
     
-    func configureUI() { }
+    func configureUI() {
+        view.backgroundColor = .white
+    }
     func configureLayout() { }
     func bindViewModel() { }
     func setupDelegate() { }
