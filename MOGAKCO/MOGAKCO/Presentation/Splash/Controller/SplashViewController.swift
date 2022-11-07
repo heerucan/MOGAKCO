@@ -51,10 +51,11 @@ final class SplashViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func configureAnimation() {
-        UIView.animate(withDuration: 2, delay: 0.5) {
+        UIView.animate(withDuration: 0.1, delay: 0.5) {
             self.logoImageView.alpha = 1
             self.titleImageView.alpha = 1
-        } completion: { finished in
+        } completion: { [weak self] _ in
+            guard let self = self else { return }
             let viewController = OnboardingViewController()
             viewController.modalPresentationStyle = .fullScreen
             viewController.modalTransitionStyle = .crossDissolve

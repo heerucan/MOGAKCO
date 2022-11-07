@@ -54,17 +54,25 @@ final class OnboardingViewController: BaseViewController {
             .subscribe(onNext: { (vc, arg1) in
                 let (_, targetContentOffset) = arg1
                 let page = Int(targetContentOffset.pointee.x / self.onboardView.collectionView.frame.width)
-                print(page, self.onboardView.collectionView.frame.width)
                 self.onboardView.pageControl.currentPage = page
             })
+            .disposed(by: disposeBag)
+        
+        onboardView.startButton.rx.tap
+            .withUnretained(self)
+            .bind { _ in
+                self.presentSignupView()
+            }
             .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
-    
-    // MARK: - @objc
-    
+    private func presentSignupView() {
+        let viewController = SignupViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        self.present(viewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - CollectionView

@@ -57,8 +57,8 @@ final class OnboardView: BaseView {
         }
         
         pageControl.snp.makeConstraints { make in
-            make.top.equalTo(collectionView.snp.bottom).offset(56)
             make.centerX.equalToSuperview()
+            make.bottom.equalTo(startButton.snp.top).offset(-42)
         }
         
         startButton.snp.makeConstraints { make in
