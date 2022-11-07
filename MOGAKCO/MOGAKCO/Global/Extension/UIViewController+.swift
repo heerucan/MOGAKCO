@@ -13,6 +13,7 @@ extension UIViewController {
                    actions: [UIAlertAction] = [],
                    cancelTitle: String? = "취소",
                    preferredStyle: UIAlertController.Style = .actionSheet) {
+        
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: preferredStyle)
@@ -32,7 +33,6 @@ extension UIViewController {
     }
     
     func topViewController(currentViewController: UIViewController) -> UIViewController {
-        
         if let tabBarController = currentViewController as? UITabBarController,
            let selectedViewController = tabBarController.selectedViewController {
             return self.topViewController(currentViewController: selectedViewController)

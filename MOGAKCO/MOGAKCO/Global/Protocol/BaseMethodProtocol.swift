@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol BaseMethodProtocol {
+protocol BaseMethodProtocol: AnyObject {
     func configureUI()
     func configureLayout()
     func bindViewModel()

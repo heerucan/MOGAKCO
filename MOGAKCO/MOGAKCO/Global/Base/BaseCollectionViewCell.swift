@@ -1,5 +1,5 @@
 //
-//  BaseCollectionCell.swift
+//  BaseCollectionViewCell.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/07.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BaseCollectionCell: UICollectionViewCell, BaseMethodProtocol {
+class BaseCollectionViewCell: UICollectionViewCell, BaseMethodProtocol {
         
     override init(frame: CGRect) {
         super.init(frame: frame)
