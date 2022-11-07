@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Then
+
 extension UIView {
     func addSubviews(_ components: [UIView]) {
         components.forEach { self.addSubview($0) }
@@ -20,7 +22,7 @@ extension UIView {
         layer.cornerRadius = radius
     }
     
-    func makeShadow(color: CGColor = Color.black100.cgColor,
+    func makeShadow(color: CGColor = Color.black.cgColor,
                     radius: CGFloat,
                     offset: CGSize,
                     opacity: Float) {
@@ -36,9 +38,9 @@ extension UIView {
                                                y: 550,
                                                width: 283,
                                                height: 47)).then {
-            $0.backgroundColor = Color.black100.withAlphaComponent(0.89)
+            $0.backgroundColor = Color.black.withAlphaComponent(0.89)
             $0.textColor = .white
-            $0.font = Font.body5.font
+            $0.font = Font.body4.font
             $0.textAlignment = .center
             $0.text = message
             $0.layer.cornerRadius = 47/2

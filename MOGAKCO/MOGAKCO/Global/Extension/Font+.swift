@@ -8,11 +8,10 @@
 import UIKit
 
 extension UIFont {
+    @frozen
     enum FontType: String {
-        case bold = "Pretendard-Bold"
-        case semibold = "Pretendard-Semibold"
-        case medium = "Pretendard-Medium"
-        case regular = "Pretendard-Regular"
+        case medium = "NotoSansKR-Medium"
+        case regular = "NotoSansKR-Regular"
         
         var name: String {
             return self.rawValue

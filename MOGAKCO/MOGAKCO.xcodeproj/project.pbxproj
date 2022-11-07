@@ -40,6 +40,9 @@
 		5BC57D632918EF60006CB05C /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5BC57D622918EF60006CB05C /* Alamofire */; };
 		5BC57D662918EF73006CB05C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5BC57D652918EF73006CB05C /* SnapKit */; };
 		5BC57D692918EF81006CB05C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5BC57D682918EF81006CB05C /* Kingfisher */; };
+		5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */; };
+		5BC57D6E2918F5D5006CB05C /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */; };
+		5BC57D6F2918F5D5006CB05C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,9 @@
 		5BC57D532918EDFD006CB05C /* Icon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icon.swift; sourceTree = "<group>"; };
 		5BC57D552918EE46006CB05C /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		5BC57D572918EE7A006CB05C /* TempModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempModel.swift; sourceTree = "<group>"; };
+		5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
+		5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +201,8 @@
 		5BC57D182918E918006CB05C /* Asset */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */,
+				5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */,
 				5BC57D032918E73F006CB05C /* Assets.xcassets */,
 			);
 			path = Asset;
@@ -329,6 +337,7 @@
 		5BC57D2D2918EA3F006CB05C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -415,7 +424,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BC57D6E2918F5D5006CB05C /* NotoSansKR-Medium.otf in Resources */,
 				5BC57D072918E73F006CB05C /* LaunchScreen.storyboard in Resources */,
+				5BC57D6F2918F5D5006CB05C /* NotoSansKR-Regular.otf in Resources */,
 				5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,6 +457,7 @@
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
 				5BC57D312918EA86006CB05C /* BaseView.swift in Sources */,
 				5BC57D502918EDB4006CB05C /* CObservable.swift in Sources */,
+				5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */,
 				5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */,
 				5BC57D4E2918ED93006CB05C /* Matrix.swift in Sources */,
 				5BC57D582918EE7A006CB05C /* TempModel.swift in Sources */,
