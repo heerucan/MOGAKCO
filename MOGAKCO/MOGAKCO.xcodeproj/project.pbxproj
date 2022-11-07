@@ -16,7 +16,7 @@
 		5BC57D212918E96D006CB05C /* GenericAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D202918E96D006CB05C /* GenericAPIManager.swift */; };
 		5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */; };
 		5BC57D312918EA86006CB05C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D302918EA86006CB05C /* BaseView.swift */; };
-		5BC57D352918EA9E006CB05C /* BaseCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D342918EA9E006CB05C /* BaseCollectionCell.swift */; };
+		5BC57D352918EA9E006CB05C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D342918EA9E006CB05C /* BaseCollectionViewCell.swift */; };
 		5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D362918EAAB006CB05C /* BaseMethodProtocol.swift */; };
 		5BC57D392918EABE006CB05C /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D382918EABE006CB05C /* ViewModelType.swift */; };
 		5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D3A2918EB06006CB05C /* UIViewController+.swift */; };
@@ -46,6 +46,10 @@
 		5BC57D7129190AA9006CB05C /* SSAC48Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7029190AA9006CB05C /* SSAC48Button.swift */; };
 		5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */; };
 		5BC57D7829190DDC006CB05C /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7729190DDC006CB05C /* OnboardView.swift */; };
+		5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D79291911CC006CB05C /* UILabel+.swift */; };
+		5BC57D7E291919B0006CB05C /* OnboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */; };
+		5BC57D812919224B006CB05C /* Onboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D802919224B006CB05C /* Onboard.swift */; };
+		5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D822919245D006CB05C /* OnboardViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +64,7 @@
 		5BC57D202918E96D006CB05C /* GenericAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericAPIManager.swift; sourceTree = "<group>"; };
 		5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5BC57D302918EA86006CB05C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
-		5BC57D342918EA9E006CB05C /* BaseCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionCell.swift; sourceTree = "<group>"; };
+		5BC57D342918EA9E006CB05C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		5BC57D362918EAAB006CB05C /* BaseMethodProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseMethodProtocol.swift; sourceTree = "<group>"; };
 		5BC57D382918EABE006CB05C /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		5BC57D3A2918EB06006CB05C /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
@@ -84,6 +88,10 @@
 		5BC57D7029190AA9006CB05C /* SSAC48Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSAC48Button.swift; sourceTree = "<group>"; };
 		5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5BC57D7729190DDC006CB05C /* OnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardView.swift; sourceTree = "<group>"; };
+		5BC57D79291911CC006CB05C /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardCollectionViewCell.swift; sourceTree = "<group>"; };
+		5BC57D802919224B006CB05C /* Onboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard.swift; sourceTree = "<group>"; };
+		5BC57D822919245D006CB05C /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +182,7 @@
 		5BC57D122918E895006CB05C /* Onboard */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D7F29192243006CB05C /* Model */,
 				5BC57D7229190D84006CB05C /* View */,
 				5BC57D7329190D88006CB05C /* ViewModel */,
 				5BC57D7429190D8B006CB05C /* Controller */,
@@ -254,6 +263,7 @@
 				5BC57D3E2918EB63006CB05C /* Font+.swift */,
 				5BC57D442918EBE2006CB05C /* NSNotification+.swift */,
 				5BC57D422918EBB5006CB05C /* Transition+.swift */,
+				5BC57D79291911CC006CB05C /* UILabel+.swift */,
 				5BC57D462918EBFF006CB05C /* UITextField+.swift */,
 				5BC57D402918EB85006CB05C /* UIView+.swift */,
 				5BC57D3A2918EB06006CB05C /* UIViewController+.swift */,
@@ -266,7 +276,7 @@
 			children = (
 				5BC57D302918EA86006CB05C /* BaseView.swift */,
 				5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */,
-				5BC57D342918EA9E006CB05C /* BaseCollectionCell.swift */,
+				5BC57D342918EA9E006CB05C /* BaseCollectionViewCell.swift */,
 				5BC57D4A2918ED54006CB05C /* BaseTableViewCell.swift */,
 			);
 			path = Base;
@@ -364,6 +374,7 @@
 		5BC57D7229190D84006CB05C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D7C291919A6006CB05C /* Cell */,
 				5BC57D7729190DDC006CB05C /* OnboardView.swift */,
 			);
 			path = View;
@@ -372,6 +383,7 @@
 		5BC57D7329190D88006CB05C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5BC57D822919245D006CB05C /* OnboardViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -382,6 +394,22 @@
 				5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		5BC57D7C291919A6006CB05C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5BC57D7F29192243006CB05C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5BC57D802919224B006CB05C /* Onboard.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -479,10 +507,14 @@
 				5BC57D452918EBE2006CB05C /* NSNotification+.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
 				5BC57D542918EDFD006CB05C /* Icon.swift in Sources */,
-				5BC57D352918EA9E006CB05C /* BaseCollectionCell.swift in Sources */,
+				5BC57D352918EA9E006CB05C /* BaseCollectionViewCell.swift in Sources */,
+				5BC57D7E291919B0006CB05C /* OnboardCollectionViewCell.swift in Sources */,
+				5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */,
 				5BC57D3D2918EB53006CB05C /* Date+.swift in Sources */,
 				5BC57D472918EBFF006CB05C /* UITextField+.swift in Sources */,
 				5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */,
+				5BC57D812919224B006CB05C /* Onboard.swift in Sources */,
+				5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BC57D492918EC43006CB05C /* ReusableProtocol.swift in Sources */,
 				5BC57D212918E96D006CB05C /* GenericAPIManager.swift in Sources */,

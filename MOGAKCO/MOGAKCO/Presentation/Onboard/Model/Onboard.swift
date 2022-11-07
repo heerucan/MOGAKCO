@@ -5,4 +5,9 @@
 //  Created by heerucan on 2022/11/07.
 //
 
-import Foundation
+import UIKit
+
+struct Onboard {
+    let title: String
+    let image: UIImage?
+}
