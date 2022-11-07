@@ -7,63 +7,70 @@
 
 import UIKit
 
-final class H48Button: UIButton {
+// MARK: - Enum
+
+@frozen
+enum H48ButtonType {
+    case fill // 배경색있는
+    case outline // 테두리있는
+    case cancel // 취소버튼
     
-    // MARK: - Enum
-    
-    enum ButtonType {
-        case fill // 배경색있는
-        case outline // 테두리있는
-        case cancel // 취소버튼
-        
-        fileprivate var titleColor: UIColor {
-            switch self {
-            case .fill:
-                return .white
-            case .outline:
-                return Color.green
-            case .cancel:
-                return Color.black
-            }
-        }
-        
-        fileprivate var backgroundColor: UIColor {
-            switch self {
-            case .fill:
-                return Color.green
-            case .outline:
-                return .white
-            case .cancel:
-                return Color.gray2
-            }
-        }
-        
-        fileprivate var borderColor: UIColor {
-            switch self {
-            case .fill:
-                return .clear
-            case .outline:
-                return Color.green
-            case .cancel:
-                return .clear
-            }
-        }
-        
-        fileprivate var borderWidth: CGFloat {
-            switch self {
-            case .fill:
-                return 0
-            case .outline:
-                return 1
-            case .cancel:
-                return 0
-            }
+    fileprivate var titleColor: UIColor {
+        switch self {
+        case .fill:
+            return .white
+        case .outline:
+            return Color.green
+        case .cancel:
+            return Color.black
         }
     }
     
+    fileprivate var backgroundColor: UIColor {
+        switch self {
+        case .fill:
+            return Color.green
+        case .outline:
+            return .white
+        case .cancel:
+            return Color.gray2
+        }
+    }
+    
+    fileprivate var borderColor: UIColor {
+        switch self {
+        case .fill:
+            return .clear
+        case .outline:
+            return Color.green
+        case .cancel:
+            return .clear
+        }
+    }
+    
+    fileprivate var borderWidth: CGFloat {
+        switch self {
+        case .fill:
+            return 0
+        case .outline:
+            return 1
+        case .cancel:
+            return 0
+        }
+    }
+}
+
+final class H48Button: UIButton {
+    
     // MARK: - Property
     
-    var type: ButtonType = .fill
+    var title: String? {
+        didSet {
+            setTitle(title, for: .normal)
+        }
+    }
+    
+    private var type: H48ButtonType = .fill
     
     var isDisabled: Bool = false {
         didSet {
@@ -73,9 +80,9 @@ final class H48Button: UIButton {
         
     // MARK: - Initializer
     
-    init(_ type: ButtonType, _ title: String) {
+    init(_ type: H48ButtonType) {
         super.init(frame: .zero)
-        configureUI(type: type, title: title)
+        configureUI(type: type)
     }
     
     required init?(coder: NSCoder) {
@@ -84,13 +91,12 @@ final class H48Button: UIButton {
     
     // MARK: - UI & Layout
     
-    private func configureUI(type: ButtonType, title: String) {
+    private func configureUI(type: H48ButtonType) {
         titleLabel?.font = Font.body3.font
-        setTitle(title, for: .normal)
         setTitleColor(type.titleColor, for: .normal)
         backgroundColor = type.backgroundColor
         makeCornerStyle(radius: 8)
-//        setTitleColor(Color., for: .highlighted)
+        setTitleColor(Color.gray2, for: .highlighted)
     }
     
     private func configureLayout() {
@@ -99,7 +105,7 @@ final class H48Button: UIButton {
         }
     }
     
-    private func configureDisableColor(type: ButtonType) {
+    private func configureDisableColor(type: H48ButtonType) {
         isUserInteractionEnabled = isDisabled ? false : true
         backgroundColor = isDisabled ? Color.gray6 : type.backgroundColor
     }
