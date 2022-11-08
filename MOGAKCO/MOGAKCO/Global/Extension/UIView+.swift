@@ -14,7 +14,7 @@ extension UIView {
         components.forEach { self.addSubview($0) }
     }
     
-    func makeCornerStyle(width: CGFloat = 1,
+    func makeCornerStyle(width: CGFloat = 0,
                          color: CGColor? = nil,
                          radius: CGFloat = 1) {
         layer.borderWidth = width

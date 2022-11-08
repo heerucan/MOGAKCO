@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5BB16AE3291966F700EA3099 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE2291966F700EA3099 /* SignupView.swift */; };
+		5BB16AE52919670300EA3099 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE42919670300EA3099 /* SignupViewModel.swift */; };
+		5BB16AE72919670D00EA3099 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE62919670D00EA3099 /* SignupViewController.swift */; };
+		5BB16AEC29196A8800EA3099 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEB29196A8800EA3099 /* AuthViewModel.swift */; };
+		5BB16AEE29196A8F00EA3099 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AED29196A8F00EA3099 /* AuthViewController.swift */; };
+		5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEF2919726200EA3099 /* AuthReuseView.swift */; };
 		5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFA2918E73D006CB05C /* AppDelegate.swift */; };
 		5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */; };
 		5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D032918E73F006CB05C /* Assets.xcassets */; };
@@ -43,7 +49,7 @@
 		5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */; };
 		5BC57D6E2918F5D5006CB05C /* NotoSansKR-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */; };
 		5BC57D6F2918F5D5006CB05C /* NotoSansKR-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */; };
-		5BC57D7129190AA9006CB05C /* SSAC48Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7029190AA9006CB05C /* SSAC48Button.swift */; };
+		5BC57D7129190AA9006CB05C /* H48Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7029190AA9006CB05C /* H48Button.swift */; };
 		5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */; };
 		5BC57D7829190DDC006CB05C /* OnboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7729190DDC006CB05C /* OnboardView.swift */; };
 		5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D79291911CC006CB05C /* UILabel+.swift */; };
@@ -53,6 +59,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5BB16AE2291966F700EA3099 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		5BB16AE42919670300EA3099 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		5BB16AE62919670D00EA3099 /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		5BB16AEB29196A8800EA3099 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		5BB16AED29196A8F00EA3099 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		5BB16AEF2919726200EA3099 /* AuthReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReuseView.swift; sourceTree = "<group>"; };
 		5BC57CF72918E73D006CB05C /* MOGAKCO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOGAKCO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC57CFA2918E73D006CB05C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -85,7 +97,7 @@
 		5BC57D6A2918EFBC006CB05C /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		5BC57D6C2918F5D4006CB05C /* NotoSansKR-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium.otf"; sourceTree = "<group>"; };
 		5BC57D6D2918F5D5006CB05C /* NotoSansKR-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular.otf"; sourceTree = "<group>"; };
-		5BC57D7029190AA9006CB05C /* SSAC48Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSAC48Button.swift; sourceTree = "<group>"; };
+		5BC57D7029190AA9006CB05C /* H48Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = H48Button.swift; sourceTree = "<group>"; };
 		5BC57D7529190D9E006CB05C /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		5BC57D7729190DDC006CB05C /* OnboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardView.swift; sourceTree = "<group>"; };
 		5BC57D79291911CC006CB05C /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -153,8 +165,8 @@
 			children = (
 				5BC57D132918E89F006CB05C /* Splash */,
 				5BC57D122918E895006CB05C /* Onboard */,
+				5BC57D252918E9F7006CB05C /* Auth */,
 				5BC57D262918E9FC006CB05C /* Signup */,
-				5BC57D252918E9F7006CB05C /* Login */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -201,7 +213,8 @@
 		5BC57D142918E8AC006CB05C /* CTA */ = {
 			isa = PBXGroup;
 			children = (
-				5BC57D7029190AA9006CB05C /* SSAC48Button.swift */,
+				5BB16AEF2919726200EA3099 /* AuthReuseView.swift */,
+				5BC57D7029190AA9006CB05C /* H48Button.swift */,
 			);
 			path = CTA;
 			sourceTree = "<group>";
@@ -292,14 +305,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
-		5BC57D252918E9F7006CB05C /* Login */ = {
+		5BC57D252918E9F7006CB05C /* Auth */ = {
 			isa = PBXGroup;
 			children = (
 				5BC57D2C2918EA38006CB05C /* View */,
 				5BC57D2B2918EA35006CB05C /* ViewModel */,
 				5BC57D2A2918EA30006CB05C /* Controller */,
 			);
-			path = Login;
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		5BC57D262918E9FC006CB05C /* Signup */ = {
@@ -315,6 +328,7 @@
 		5BC57D272918EA1C006CB05C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5BB16AE2291966F700EA3099 /* SignupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -322,6 +336,7 @@
 		5BC57D282918EA28006CB05C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5BB16AE42919670300EA3099 /* SignupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -329,6 +344,7 @@
 		5BC57D292918EA2C006CB05C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5BB16AE62919670D00EA3099 /* SignupViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -336,6 +352,7 @@
 		5BC57D2A2918EA30006CB05C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				5BB16AED29196A8F00EA3099 /* AuthViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -343,6 +360,7 @@
 		5BC57D2B2918EA35006CB05C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5BB16AEB29196A8800EA3099 /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -499,11 +517,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BC57D7129190AA9006CB05C /* SSAC48Button.swift in Sources */,
+				5BC57D7129190AA9006CB05C /* H48Button.swift in Sources */,
+				5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */,
 				5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */,
 				5BC57D1F2918E957006CB05C /* APIError.swift in Sources */,
 				5BC57D412918EB85006CB05C /* UIView+.swift in Sources */,
 				5BC57D4B2918ED54006CB05C /* BaseTableViewCell.swift in Sources */,
+				5BB16AEC29196A8800EA3099 /* AuthViewModel.swift in Sources */,
 				5BC57D452918EBE2006CB05C /* NSNotification+.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
 				5BC57D542918EDFD006CB05C /* Icon.swift in Sources */,
@@ -517,10 +537,12 @@
 				5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BC57D492918EC43006CB05C /* ReusableProtocol.swift in Sources */,
+				5BB16AE72919670D00EA3099 /* SignupViewController.swift in Sources */,
 				5BC57D212918E96D006CB05C /* GenericAPIManager.swift in Sources */,
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
+				5BB16AE3291966F700EA3099 /* SignupView.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
 				5BC57D7829190DDC006CB05C /* OnboardView.swift in Sources */,
 				5BC57D312918EA86006CB05C /* BaseView.swift in Sources */,
@@ -529,6 +551,8 @@
 				5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */,
 				5BC57D4E2918ED93006CB05C /* Matrix.swift in Sources */,
 				5BC57D582918EE7A006CB05C /* TempModel.swift in Sources */,
+				5BB16AEE29196A8F00EA3099 /* AuthViewController.swift in Sources */,
+				5BB16AE52919670300EA3099 /* SignupViewModel.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
 				5BC57D392918EABE006CB05C /* ViewModelType.swift in Sources */,
 				5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */,
