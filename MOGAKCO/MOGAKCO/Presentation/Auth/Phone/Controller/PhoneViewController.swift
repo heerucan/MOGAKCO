@@ -32,7 +32,6 @@ final class PhoneViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        setupAction()
     }
     
     // MARK: - UI & Layout
@@ -43,10 +42,6 @@ final class PhoneViewController: BaseViewController {
     
     override func setupDelegate() {
         phoneView.setupDelegate(self)
-    }
-    
-    private func setupAction() {
-        phoneView.reuseView.okButton.addTarget(self, action: #selector(touchupButton), for: .touchUpInside)
     }
     
     // MARK: - Bind
@@ -85,22 +80,15 @@ final class PhoneViewController: BaseViewController {
         output.tap
             .withUnretained(self)
             .bind { (vc,_) in
-                vc.presentSignupView()
+                vc.pushMessageView()
             }
             .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
-    private func presentSignupView() {
-        let viewController = SignupViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
-    }
-    
-    // MARK: - @objc
-    
-    @objc func touchupButton() {
-        let viewController = SignupViewController()
+    private func pushMessageView() {
+        let viewController = MessageViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }

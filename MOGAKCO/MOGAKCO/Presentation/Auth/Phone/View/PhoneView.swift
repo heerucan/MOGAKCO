@@ -50,6 +50,4 @@ final class PhoneView: BaseView {
     func setupDelegate(_ delegate: UITextFieldDelegate) {
         textField.delegate = delegate
     }
-    
-    // MARK: - Custom Method
 }
