@@ -77,7 +77,7 @@ final class PlainButton: UIButton {
         }
     }
         
-    override var isEnabled: Bool {
+    var isEnable: Bool = false {
         didSet {
             configureDisableColor(type: type)
         }
@@ -112,7 +112,7 @@ final class PlainButton: UIButton {
     }
     
     private func configureDisableColor(type: PlainButtonType) {
-        isUserInteractionEnabled = isEnabled ? true : false
-        backgroundColor = isEnabled ? type.backgroundColor : Color.gray6
+//        isUserInteractionEnabled = isEnable ? true : false
+        backgroundColor = isEnable ? type.backgroundColor : Color.gray6
     }
 }

@@ -147,5 +147,6 @@ extension PlainTextField {
     
     @objc func editingDidEnd() {
         lineView.backgroundColor = Color.gray3
+        self.resignFirstResponder()
     }
 }

@@ -7,13 +7,22 @@
 
 import UIKit
 
-class AuthReuseView: BaseView {
+import SnapKit
+import Then
+
+final class AuthReuseView: BaseView {
     
     // MARK: - Property
     
     var buttonTitle: String? {
         didSet {
             okButton.title = buttonTitle
+        }
+    }
+    
+    var topInset: CGFloat = 168 {
+        didSet {
+            configureLayout(topInset: topInset)
         }
     }
     
@@ -37,19 +46,20 @@ class AuthReuseView: BaseView {
     
     init(_ title: String, subtitle: String? = nil) {
         super.init(frame: .zero)
+        configureLayout(topInset: topInset)
         titleLabel.text = title
         subtitleLabel.text = subtitle
     }
     
     // MARK: - UI & Layout
     
-    override func configureLayout() {
+    func configureLayout(topInset: CGFloat) {
         addSubviews([titleLabel,
                      subtitleLabel,
                      okButton])
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(168)
+            make.top.equalToSuperview().inset(topInset)
             make.centerX.equalToSuperview()
         }
         
