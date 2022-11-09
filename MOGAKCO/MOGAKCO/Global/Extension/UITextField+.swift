@@ -15,4 +15,10 @@ extension UITextField {
         self.leftViewMode = ViewMode.always
         self.rightViewMode = ViewMode.always
     }
+    
+    func backWards(with textString: String, _ maximumCount: Int) {
+        if textString.count > maximumCount {
+            self.deleteBackward()
+        }
+    }
 }
