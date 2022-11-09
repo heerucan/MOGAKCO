@@ -31,7 +31,7 @@ class AuthReuseView: BaseView {
         $0.numberOfLines = 0
     }
     
-    let okButton = H48Button(.fill)
+    let okButton = PlainButton(.fill)
     
     // MARK: - Initializer
     
@@ -64,6 +64,4 @@ class AuthReuseView: BaseView {
             make.height.equalTo(48)
         }
     }
-    
-    // MARK: - Custom Method
 }

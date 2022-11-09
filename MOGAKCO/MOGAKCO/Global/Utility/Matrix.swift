@@ -19,8 +19,12 @@ enum Matrix {
     static let emailSubtitle = "휴대폰 번호 변경 시 인증을 위해 사용해요"
     
     // MARK: - 버튼 문자열
-    static let messageTitle = "인증 문자 받기"
+    static let phoneTitle = "인증 문자 받기"
     static let authStartTitle = "인증하고 시작하기"
     static let nextTitle = "다음"
     static let startTitle = "시작하기"
+    
+    // MARK: - 플레이스홀더
+    static let lineTextFieldPlaceholder = "내용을 입력"
+    static let phonePlaceholder = "휴대폰 번호(-없이 숫자만 입력)"
 }

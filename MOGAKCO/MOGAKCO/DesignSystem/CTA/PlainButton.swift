@@ -8,14 +8,14 @@
 import UIKit
 
 /**
- H48Button
- - 밑줄만 있는 텍스트 필드
+ PlainButton
+ - 기본 버튼 시스템
  */
 
 // MARK: - Enum
 
 @frozen
-enum H48ButtonType {
+enum PlainButtonType {
     case fill // 배경색있는
     case outline // 테두리있는
     case cancel // 취소버튼
@@ -69,15 +69,15 @@ final class PlainButton: UIButton {
     
     // MARK: - Property
     
+    private var type: PlainButtonType = .fill
+    
     var title: String? {
         didSet {
             setTitle(title, for: .normal)
         }
     }
-    
-    private var type: H48ButtonType = .fill
-    
-    var isDisabled: Bool = false {
+        
+    override var isEnabled: Bool {
         didSet {
             configureDisableColor(type: type)
         }
@@ -85,9 +85,10 @@ final class PlainButton: UIButton {
         
     // MARK: - Initializer
     
-    init(_ type: H48ButtonType) {
+    init(_ type: PlainButtonType) {
         super.init(frame: .zero)
         configureUI(type: type)
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {
@@ -96,7 +97,7 @@ final class PlainButton: UIButton {
     
     // MARK: - UI & Layout
     
-    private func configureUI(type: H48ButtonType) {
+    private func configureUI(type: PlainButtonType) {
         titleLabel?.font = Font.body3.font
         setTitleColor(type.titleColor, for: .normal)
         backgroundColor = type.backgroundColor
@@ -110,10 +111,8 @@ final class PlainButton: UIButton {
         }
     }
     
-    private func configureDisableColor(type: H48ButtonType) {
-        isUserInteractionEnabled = isDisabled ? false : true
-        backgroundColor = isDisabled ? Color.gray6 : type.backgroundColor
+    private func configureDisableColor(type: PlainButtonType) {
+        isUserInteractionEnabled = isEnabled ? true : false
+        backgroundColor = isEnabled ? type.backgroundColor : Color.gray6
     }
-    
-    // MARK: - Custom Method
 }

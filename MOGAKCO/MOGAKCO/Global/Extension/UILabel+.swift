@@ -20,12 +20,4 @@ extension UILabel {
             attributedText = attributedString
         }
     }
-    
-    func lineNumber(labelWidth: CGFloat) -> Int {
-        let boundingRect = self.text!.boundingRect(with: .zero,
-                                                   options: [.usesFontLeading],
-                                                   attributes: [.font: self.font!],
-                                                   context: nil)
-        return Int(boundingRect.width / labelWidth + 1)
-    }
 }

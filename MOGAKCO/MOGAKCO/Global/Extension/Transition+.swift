@@ -12,6 +12,7 @@ extension UIViewController {
         case presentNavigation
         case present
         case presentedViewDismiss
+        case presentFullNavigation
         case push
         case dismiss
         case pop
@@ -33,6 +34,10 @@ extension UIViewController {
             self.dismiss(animated: true) {
                 viewController.viewWillAppear(true)
             }
+        case .presentFullNavigation:
+            let navi = UINavigationController(rootViewController: viewController)
+            navi.modalPresentationStyle = .fullScreen
+            self.present(navi, animated: true)
         case .push:
             self.navigationController?.pushViewController(viewController, animated: true)
         case .dismiss:
