@@ -1,5 +1,5 @@
 //
-//  BirthViewController.swift
+//  EmailViewController.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/10.
@@ -12,7 +12,7 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class BirthViewController: BaseViewController {
+final class EmailViewController: BaseViewController {
     
     // MARK: - DisposeBag
     
@@ -20,13 +20,13 @@ final class BirthViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let nicknameView = NicknameView()
-    private let nicknameViewModel = NicknameViewModel()
+    private let emailView = EmailView()
+    private let emailViewModel = EmailViewModel()
     
     // MARK: - LifeCycle
     
     override func loadView() {
-        self.view = nicknameView
+        self.view = emailView
     }
     
     override func viewDidLoad() {
@@ -37,26 +37,26 @@ final class BirthViewController: BaseViewController {
     // MARK: - UI & Layout
     
     override func setupDelegate() {
-        nicknameView.setupDelegate(self)
+        emailView.setupDelegate(self)
     }
     
     // MARK: - Bind
     
     override func bindViewModel() {
         
-        let input = NicknameViewModel.Input()
-        let output = nicknameViewModel.transform(input)
+        let input = EmailViewModel.Input()
+        let output = emailViewModel.transform(input)
         
     }
     
     // MARK: - Custom Method
     
-    private func pushEmailView() {
-//        let viewController = EmailViewController()
-//        self.navigationController?.pushViewController(viewController, animated: true)
+    private func pushGenderView() {
+        let viewController = GenderViewController()
+        self.transition(viewController, .push)
     }
 }
 
 // MARK: - UITextField Delegate
 
-extension BirthViewController: UITextFieldDelegate { }
+extension EmailViewController: UITextFieldDelegate { }
