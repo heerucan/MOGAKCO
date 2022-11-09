@@ -36,10 +36,6 @@ final class PhoneViewController: BaseViewController {
     
     // MARK: - UI & Layout
     
-    override func configureUI() {
-        super.configureUI()
-    }
-    
     override func setupDelegate() {
         phoneView.setupDelegate(self)
     }
@@ -62,9 +58,7 @@ final class PhoneViewController: BaseViewController {
             .withUnretained(self)
             .bind { (vc, value) in
                 vc.phoneViewModel.addHyphen(text: value)
-                if value.count > 13 {
-                    vc.phoneView.textField.deleteBackward()
-                }
+                vc.phoneView.textField.backWards(with: value, 13)
             }
             .disposed(by: disposeBag)
         
@@ -74,9 +68,9 @@ final class PhoneViewController: BaseViewController {
             .map { (vc, value) in
                 vc.phoneViewModel.checkPhoneNumber(with: value)
             }
-            .bind(to: phoneView.reuseView.okButton.rx.isEnabled)
+            .bind(to: phoneView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
-                
+        
         output.tap
             .withUnretained(self)
             .bind { (vc,_) in

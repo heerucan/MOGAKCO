@@ -21,6 +21,7 @@ final class EmailView: BaseView {
     var textField = PlainTextField(.line).then {
         $0.placeholder = Matrix.emailPlaceholder
         $0.keyboardType = .emailAddress
+        $0.becomeFirstResponder()
     }
     
     // MARK: - Initializer
