@@ -7,6 +7,11 @@
 
 import UIKit
 
+/**
+ H48Button
+ - 밑줄만 있는 텍스트 필드
+ */
+
 // MARK: - Enum
 
 @frozen
@@ -60,7 +65,7 @@ enum H48ButtonType {
     }
 }
 
-final class H48Button: UIButton {
+final class PlainButton: UIButton {
     
     // MARK: - Property
     
@@ -96,7 +101,7 @@ final class H48Button: UIButton {
         setTitleColor(type.titleColor, for: .normal)
         backgroundColor = type.backgroundColor
         makeCornerStyle(radius: 8)
-        setTitleColor(Color.gray2, for: .highlighted)
+        setTitleColor(Color.gray3, for: .highlighted)
     }
     
     private func configureLayout() {

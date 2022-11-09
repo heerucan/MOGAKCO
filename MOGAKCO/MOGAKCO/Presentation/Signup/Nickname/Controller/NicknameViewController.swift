@@ -9,4 +9,7 @@ import UIKit
 
 final class SignupViewController: BaseViewController {
     
+    override func viewDidLoad() {
+        view.backgroundColor = .red
+    }
 }

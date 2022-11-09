@@ -70,15 +70,15 @@ final class OnboardingViewController: BaseViewController {
         onboardView.startButton.rx.tap
             .withUnretained(self)
             .bind { _ in
-                self.presentSignupView()
+                self.presentPhoneView()
             }
             .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
-    private func presentSignupView() {
-        let viewController = AuthViewController()
+    private func presentPhoneView() {
+        let viewController = PhoneViewController()
         self.transition(viewController, .presentFullNavigation)
     }
 }
