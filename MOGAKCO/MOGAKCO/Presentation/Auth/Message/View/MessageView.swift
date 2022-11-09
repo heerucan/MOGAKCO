@@ -1,5 +1,5 @@
 //
-//  AuthNumberView.swift
+//  MessageView.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/09.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AuthNumberView: UIView {
+class MessageView: UIView {
 
     /*
     // Only override draw() if you perform custom drawing.
