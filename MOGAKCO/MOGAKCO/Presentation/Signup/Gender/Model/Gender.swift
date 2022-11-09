@@ -13,5 +13,8 @@ struct Gender: Hashable {
 }
 
 struct GenderData {
-    var list = [Gender(image: Icon.man, text: "남자"), Gender(image: Icon.woman, text: "여자")]
+    var list = [
+        Gender(image: Icon.man, text: "남자"),
+        Gender(image: Icon.woman, text: "여자")
+    ]
 }

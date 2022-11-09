@@ -16,7 +16,7 @@ final class GenderView: BaseView {
     
     let reuseView = AuthReuseView(Matrix.genderTitle, subtitle: Matrix.genderSubtitle).then {
         $0.buttonTitle = Matrix.nextButtonTitle
-        $0.okButton.isEnabled = false
+        $0.okButton.isEnable = false
     }
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())

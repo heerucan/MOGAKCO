@@ -12,15 +12,18 @@ import RxCocoa
 
 final class GenderViewModel: ViewModelType {
     
-    lazy var genderList = Observable.of(GenderData().list)
+    let genderList = Observable.of(GenderData().list)
     
-    struct Input { }
+    struct Input {
+        let genderTap: ControlEvent<Void>
+    }
     
     struct Output {
         let gender: Observable<[Gender]>
+        let genderTap: ControlEvent<Void>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output(gender: genderList)
+        return Output(gender: genderList, genderTap: input.genderTap)
     }
 }

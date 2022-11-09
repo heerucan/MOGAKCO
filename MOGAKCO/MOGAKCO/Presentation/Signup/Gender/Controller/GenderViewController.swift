@@ -48,7 +48,7 @@ final class GenderViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = GenderViewModel.Input()
+        let input = GenderViewModel.Input(genderTap: genderView.reuseView.okButton.rx.tap)
         let output = genderViewModel.transform(input)
         
         output.gender // output
@@ -64,16 +64,25 @@ final class GenderViewController: BaseViewController {
         genderView.collectionView.rx.itemSelected
             .withUnretained(self)
             .bind { (vc, indexPath) in
-                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath) as? GenderCollectionViewCell else { return }
-                vc.genderView.reuseView.okButton.isEnabled = cell.isSelected ? true : false
+                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath) as? GenderCollectionViewCell
+                else { return }
+                vc.genderView.reuseView.okButton.isEnable = cell.isSelected ? true : false
                 cell.isSelected.toggle()
+            }
+            .disposed(by: disposeBag)
+        
+        output.genderTap
+            .withUnretained(self)
+            .bind { (vc,_) in
+//                vc.pushHomeView()
+                print("홈으로 이동!!")
             }
             .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
-    private func pushNicknameView() {
+    private func pushHomeView() {
         let viewController = NicknameViewController()
         self.navigationController?.pushViewController(viewController, animated: true)
     }
