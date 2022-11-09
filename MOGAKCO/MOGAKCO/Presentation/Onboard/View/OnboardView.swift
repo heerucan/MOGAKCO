@@ -35,7 +35,9 @@ final class OnboardView: BaseView {
         $0.currentPageIndicatorTintColor = Color.black
     }
     
-    let startButton = H48Button(.fill, "시작하기")
+    let startButton = H48Button(.fill).then {
+        $0.title = Matrix.startTitle
+    }
     
     // MARK: - Initializer
     

@@ -34,6 +34,11 @@ final class OnboardingViewController: BaseViewController {
     
     // MARK: - UI & Layout
     
+    override func configureUI() {
+        super.configureUI()
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     override func setupDelegate() {
         onboardView.collectionView.delegate = self
     }
@@ -41,7 +46,11 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - Bind
     
     override func bindViewModel() {
-        onboardViewModel.onboardList
+        
+        let input = OnboardViewModel.Input()
+        let output = onboardViewModel.transform(input)
+        
+        output.onboardList
             .bind(to: onboardView.collectionView.rx.items(
                 cellIdentifier: OnboardCollectionViewCell.identifier,
                 cellType: OnboardCollectionViewCell.self)) { (index, value, cell) in
@@ -69,9 +78,8 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func presentSignupView() {
-        let viewController = SignupViewController()
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true, completion: nil)
+        let viewController = AuthViewController()
+        self.transition(viewController, .presentFullNavigation)
     }
 }
 

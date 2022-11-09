@@ -44,8 +44,10 @@ final class OnboardCollectionViewCell: BaseCollectionViewCell {
         }
         
         imageView.snp.makeConstraints { make in
-            make.bottom.equalToSuperview()
+            make.top.equalTo(titleLabel.snp.bottom).offset(56)
             make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().inset(7)
+            make.trailing.equalToSuperview().inset(8)
         }
     }
     
