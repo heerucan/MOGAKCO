@@ -61,6 +61,6 @@ final class NicknameViewController: BaseViewController {
     
     private func pushBirthView() {
         let viewController = BirthViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
+        self.transition(viewController, .push)
     }
 }

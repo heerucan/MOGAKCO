@@ -64,7 +64,3 @@ final class EmailViewController: BaseViewController {
         self.transition(viewController, .push)
     }
 }
-
-// MARK: - UITextField Delegate
-
-extension EmailViewController: UITextFieldDelegate { }

@@ -88,8 +88,7 @@ extension PhoneViewController {
                     return
                 }
                 print(verificationID, "되긴 된다")
-                UserDefaults.standard.set(verificationID,
-                                          forKey: "authVerificationID")
+                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
             }
     }
 }

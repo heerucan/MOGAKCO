@@ -88,13 +88,9 @@ final class GenderViewController: BaseViewController {
     }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - Configure DataSource / UICollectionViewDelegate
 
-extension GenderViewController: UICollectionViewDelegate { }
-
-// MARK: - Configure DataSource
-
-extension GenderViewController {
+extension GenderViewController: UICollectionViewDelegate {
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<GenderCollectionViewCell, Gender> { cell, indexPath, itemIdentifier in
         }
