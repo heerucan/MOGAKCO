@@ -44,33 +44,24 @@ final class PhoneViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = PhoneViewModel.Input(tap: phoneView.reuseView.okButton.rx.tap)
+        let input = PhoneViewModel.Input(phoneText: phoneView.textField.rx.text, tap: phoneView.reuseView.okButton.rx.tap)
         let output = phoneViewModel.transform(input)
         
-        phoneViewModel.phoneNumber
-            .withUnretained(self)
-            .bind { (vc, value) in
-                self.phoneView.textField.text = value
-            }.disposed(by: disposeBag)
-        
-        phoneView.textField.rx.text
-            .orEmpty
-            .withUnretained(self)
-            .bind { (vc, value) in
-                vc.phoneViewModel.addHyphen(text: value)
-                vc.phoneView.textField.backWards(with: value, 13)
-            }
+        output.phoneText
+            .bind(to: phoneView.textField.rx.text)
             .disposed(by: disposeBag)
         
-        phoneView.textField.rx.text
-            .orEmpty
-            .withUnretained(self)
-            .map { (vc, value) in
-                vc.phoneViewModel.checkPhoneNumber(with: value)
-            }
+        output.phoneValid
             .bind(to: phoneView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
+        output.phoneText
+            .withUnretained(self)
+            .bind { (vc, value) in
+                vc.phoneView.textField.backWards(with: value, 13)
+            }
+            .disposed(by: disposeBag)
+
         output.tap
             .withUnretained(self)
             .bind { (vc,_) in

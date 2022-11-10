@@ -30,4 +30,6 @@ enum Matrix {
     static let messagePlaceholder = "인증번호 입력"
     static let nicknamePlaceholder = "10자 이내로 입력"
     static let emailPlaceholder = "SeSAC@email.com"
+    
+    // MARK: - 상수값
 }

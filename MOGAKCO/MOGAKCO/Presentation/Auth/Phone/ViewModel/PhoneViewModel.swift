@@ -11,28 +11,40 @@ import RxSwift
 import RxCocoa
 
 final class PhoneViewModel: ViewModelType {
-    
-    let phoneNumber = PublishRelay<String>()
-    
+        
     struct Input {
+        let phoneText: ControlProperty<String?>
         let tap: ControlEvent<Void>
     }
     
     struct Output {
+        let phoneText: Observable<String>
         let tap: ControlEvent<Void>
+        let phoneValid: Observable<Bool>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output(tap: input.tap)
+        let text = input.phoneText
+            .orEmpty
+            .withUnretained(self)
+            .map { (vm, value) in
+                vm.addHyphen(text: value)
+            }
+            .share()
+        
+        let phoneValid = input.phoneText
+            .orEmpty
+            .map { value in
+                value.count > 13 ? false : true &&
+                value.checkRegex(regex: .phone)
+            }
+            .share()
+        
+        return Output(phoneText: text, tap: input.tap, phoneValid: phoneValid)
     }
     
-    func checkPhoneNumber(with phoneText: String) -> Bool {
-        let regex = "^01([0-9]?)-?([0-9]{3,4})-?([0-9]{4})$"
-        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: phoneText.addHyphen())
-    }
-    
-    func addHyphen(text: String) {
+    func addHyphen(text: String) -> String {
         let phoneText = text.replacingOccurrences(of: "(\\d{3})(\\d{4})(\\d{4})", with: "$1-$2-$3", options: .regularExpression, range: nil)
-        phoneNumber.accept(phoneText)
+        return phoneText
     }
 }
