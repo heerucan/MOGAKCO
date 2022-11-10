@@ -33,13 +33,7 @@ final class BirthViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
-    
-    // MARK: - UI & Layout
-    
-    override func setupDelegate() {
-        birthView.setupDelegate(self)
-    }
-    
+
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -48,16 +42,18 @@ final class BirthViewController: BaseViewController {
         let output = birthViewModel.transform(input)
         
         output.dateValid
+            .skip(1)
             .asDriver()
             .drive(birthView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
         output.date
+            .skip(1)
             .asDriver()
-            .drive { value in
-                self.birthView.yearTextField.text = value[0]
-                self.birthView.monthTextField.text = value[1]
-                self.birthView.dayTextField.text = value[2]
+            .drive { [weak self] value in
+                self?.birthView.yearTextField.text = value[0]
+                self?.birthView.monthTextField.text = value[1]
+                self?.birthView.dayTextField.text = value[2]
             }
             .disposed(by: disposeBag)
         
@@ -76,7 +72,3 @@ final class BirthViewController: BaseViewController {
         self.transition(viewController, .push)
     }
 }
-
-// MARK: - UITextField Delegate
-
-extension BirthViewController: UITextFieldDelegate { }

@@ -34,12 +34,6 @@ final class EmailViewController: BaseViewController {
         bindViewModel()
     }
     
-    // MARK: - UI & Layout
-    
-    override func setupDelegate() {
-        emailView.setupDelegate(self)
-    }
-    
     // MARK: - Bind
     
     override func bindViewModel() {

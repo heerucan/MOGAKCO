@@ -34,12 +34,6 @@ final class NicknameViewController: BaseViewController {
         bindViewModel()
     }
     
-    // MARK: - UI & Layout
-    
-    override func setupDelegate() {
-        nicknameView.setupDelegate(self)
-    }
-    
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -70,7 +64,3 @@ final class NicknameViewController: BaseViewController {
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 }
-
-// MARK: - UITextField Delegate
-
-extension NicknameViewController: UITextFieldDelegate { }

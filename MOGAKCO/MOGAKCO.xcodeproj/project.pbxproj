@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B7FDBA5291D6449007E38EA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B7FDBA4291D6449007E38EA /* GoogleService-Info.plist */; };
+		5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */; };
+		5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA9291D6625007E38EA /* FirebaseAuth */; };
+		5B7FDBAC291D6625007E38EA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBAB291D6625007E38EA /* FirebaseMessaging */; };
 		5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE2291966F700EA3099 /* NicknameView.swift */; };
 		5BB16AE52919670300EA3099 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE42919670300EA3099 /* NicknameViewModel.swift */; };
 		5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE62919670D00EA3099 /* NicknameViewController.swift */; };
 		5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEB29196A8800EA3099 /* PhoneViewModel.swift */; };
 		5BB16AEE29196A8F00EA3099 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AED29196A8F00EA3099 /* PhoneViewController.swift */; };
 		5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEF2919726200EA3099 /* AuthReuseView.swift */; };
+		5BC5222C291D917C000A570B /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5222B291D917C000A570B /* UserDefaultsHelper.swift */; };
 		5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFA2918E73D006CB05C /* AppDelegate.swift */; };
 		5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */; };
 		5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D032918E73F006CB05C /* Assets.xcassets */; };
@@ -77,12 +82,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B7FDBA4291D6449007E38EA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5B7FDBAD291D686C007E38EA /* MOGAKCO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MOGAKCO.entitlements; sourceTree = "<group>"; };
 		5BB16AE2291966F700EA3099 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		5BB16AE42919670300EA3099 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		5BB16AE62919670D00EA3099 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		5BB16AEB29196A8800EA3099 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
 		5BB16AED29196A8F00EA3099 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
 		5BB16AEF2919726200EA3099 /* AuthReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReuseView.swift; sourceTree = "<group>"; };
+		5BC5222B291D917C000A570B /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		5BC57CF72918E73D006CB05C /* MOGAKCO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOGAKCO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC57CFA2918E73D006CB05C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,11 +156,14 @@
 			files = (
 				5BEFE257291BBC2A00FD31E9 /* IQKeyboardManagerSwift in Frameworks */,
 				5BC57D692918EF81006CB05C /* Kingfisher in Frameworks */,
+				5B7FDBAC291D6625007E38EA /* FirebaseMessaging in Frameworks */,
 				5BC57D602918EF51006CB05C /* RxSwift in Frameworks */,
 				5BC57D632918EF60006CB05C /* Alamofire in Frameworks */,
+				5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */,
 				5BC57D5E2918EF51006CB05C /* RxCocoa in Frameworks */,
 				5BC57D5B2918EF23006CB05C /* Then in Frameworks */,
 				5BC57D662918EF73006CB05C /* SnapKit in Frameworks */,
+				5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,6 +189,7 @@
 		5BC57CF92918E73D006CB05C /* MOGAKCO */ = {
 			isa = PBXGroup;
 			children = (
+				5B7FDBAD291D686C007E38EA /* MOGAKCO.entitlements */,
 				5BC57D0E2918E840006CB05C /* Network */,
 				5BC57D192918E922006CB05C /* Global */,
 				5BC57D102918E858006CB05C /* DesignSystem */,
@@ -219,6 +231,7 @@
 		5BC57D112918E863006CB05C /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				5B7FDBA4291D6449007E38EA /* GoogleService-Info.plist */,
 				5BC57D082918E73F006CB05C /* Info.plist */,
 				5BC57D052918E73F006CB05C /* LaunchScreen.storyboard */,
 				5BC57CFA2918E73D006CB05C /* AppDelegate.swift */,
@@ -424,6 +437,7 @@
 			children = (
 				5BC57D4D2918ED93006CB05C /* Matrix.swift */,
 				5BC57D4F2918EDB4006CB05C /* CObservable.swift */,
+				5BC5222B291D917C000A570B /* UserDefaultsHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -667,6 +681,9 @@
 				5BC57D652918EF73006CB05C /* SnapKit */,
 				5BC57D682918EF81006CB05C /* Kingfisher */,
 				5BEFE256291BBC2A00FD31E9 /* IQKeyboardManagerSwift */,
+				5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */,
+				5B7FDBA9291D6625007E38EA /* FirebaseAuth */,
+				5B7FDBAB291D6625007E38EA /* FirebaseMessaging */,
 			);
 			productName = MOGAKCO;
 			productReference = 5BC57CF72918E73D006CB05C /* MOGAKCO.app */;
@@ -703,6 +720,7 @@
 				5BC57D642918EF73006CB05C /* XCRemoteSwiftPackageReference "SnapKit" */,
 				5BC57D672918EF81006CB05C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				5BEFE255291BBC2A00FD31E9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
+				5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 5BC57CF82918E73D006CB05C /* Products */;
 			projectDirPath = "";
@@ -720,6 +738,7 @@
 			files = (
 				5BC57D6E2918F5D5006CB05C /* NotoSansKR-Medium.otf in Resources */,
 				5BC57D072918E73F006CB05C /* LaunchScreen.storyboard in Resources */,
+				5B7FDBA5291D6449007E38EA /* GoogleService-Info.plist in Resources */,
 				5BC57D6F2918F5D5006CB05C /* NotoSansKR-Regular.otf in Resources */,
 				5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */,
 			);
@@ -741,6 +760,7 @@
 				5BC57D4B2918ED54006CB05C /* BaseTableViewCell.swift in Sources */,
 				5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */,
 				5BC57D452918EBE2006CB05C /* NSNotification+.swift in Sources */,
+				5BC5222C291D917C000A570B /* UserDefaultsHelper.swift in Sources */,
 				5BEFE26D291BF7D400FD31E9 /* GenderViewController.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
 				5BEFE252291BAEC200FD31E9 /* PlainTextField.swift in Sources */,
@@ -926,6 +946,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MOGAKCO/MOGAKCO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5GQ6QL9S3X;
@@ -955,6 +976,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MOGAKCO/MOGAKCO.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 5GQ6QL9S3X;
@@ -1003,6 +1025,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 		5BC57D592918EF23006CB05C /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then";
@@ -1054,6 +1084,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
+		};
+		5B7FDBA9291D6625007E38EA /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		5B7FDBAB291D6625007E38EA /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
 		5BC57D5A2918EF23006CB05C /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5BC57D592918EF23006CB05C /* XCRemoteSwiftPackageReference "Then" */;

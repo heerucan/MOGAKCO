@@ -24,7 +24,14 @@ final class BirthView: BaseView {
         $0.datePickerMode = .date
         $0.preferredDatePickerStyle = .wheels
         $0.locale = Locale(identifier: "ko-KR")
-        $0.becomeFirstResponder()
+        var componets = DateComponents()
+        componets.day = 1
+        componets.month = 1
+        componets.year = 1990
+        let startDay = Calendar.current.date(from: componets)
+        $0.minimumDate = startDay
+        $0.maximumDate = Date()
+        $0.setDate(startDay!, animated: true)
     }
     
     lazy var stackView = UIStackView(arrangedSubviews: [yearStackView, monthStackView, dayStackView]).then {
@@ -40,6 +47,7 @@ final class BirthView: BaseView {
     
     lazy var yearTextField = PlainTextField(.line).then {
         $0.placeholder = "1990"
+        $0.becomeFirstResponder()
     }
     
     let yearLabel = UILabel().then {
@@ -115,11 +123,5 @@ final class BirthView: BaseView {
                 make.width.equalTo(80)
             }
         }
-    }
-    
-    func setupDelegate(_ delegate: UITextFieldDelegate) {
-        yearTextField.delegate = delegate
-        monthTextField.delegate = delegate
-        dayTextField.delegate = delegate
     }
 }

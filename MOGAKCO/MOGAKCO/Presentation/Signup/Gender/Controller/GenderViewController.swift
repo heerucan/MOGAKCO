@@ -88,9 +88,9 @@ final class GenderViewController: BaseViewController {
     }
 }
 
-// MARK: - UITextField Delegate
+// MARK: - UICollectionViewDelegate
 
-extension GenderViewController: UITextFieldDelegate, UICollectionViewDelegate { }
+extension GenderViewController: UICollectionViewDelegate { }
 
 // MARK: - Configure DataSource
 

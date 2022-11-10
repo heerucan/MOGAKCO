@@ -22,6 +22,7 @@ final class NicknameView: BaseView {
     
     var textField = PlainTextField(.line).then {
         $0.placeholder = Matrix.nicknamePlaceholder
+        $0.becomeFirstResponder()
     }
     
     // MARK: - Initializer
@@ -45,10 +46,5 @@ final class NicknameView: BaseView {
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
-    }
-    
-    func setupDelegate(_ delegate: UITextFieldDelegate) {
-        textField.delegate = delegate
-        textField.becomeFirstResponder()
     }
 }
