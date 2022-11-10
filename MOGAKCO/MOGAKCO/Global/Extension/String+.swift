@@ -8,15 +8,31 @@
 import Foundation
 
 extension String {
-    func addHyphen() -> String {
-        return self.replacingOccurrences(of: "(\\d{3})(\\d{3})(\\d{4})", with: "$1-$2-$3", options: .regularExpression, range: nil)
-    }
-    
     func toDate() -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.date(from: self)!
+    }
+    
+    @frozen
+    enum Regex {
+        case email
+        case phone
+        
+        var regexStyle: String {
+            switch self {
+            case .email:
+                return "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+            case .phone:
+                return "^01([0-9]?)-?([0-9]{3,4})-?([0-9]{4})$"
+            }
+        }
+    }
+    
+    func checkRegex(regex: Regex) -> Bool {
+        let regex = regex.regexStyle
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: self)
     }
 }
