@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAuth
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -34,12 +35,6 @@ final class MessageViewController: BaseViewController {
         bindViewModel()
     }
     
-    // MARK: - UI & Layout
-    
-    override func setupDelegate() {
-        messageView.setupDelegate(self)
-    }
-    
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -55,8 +50,16 @@ final class MessageViewController: BaseViewController {
             .drive(messageView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
+        output.messageText
+            .withUnretained(self)
+            .bind { (vc, value) in
+                vc.verify(value)
+            }
+            .disposed(by: disposeBag)
+        
         output.tap
             .withUnretained(self)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
             .bind { (vc,_) in
                 vc.pushNicknameView()
             }
@@ -71,6 +74,25 @@ final class MessageViewController: BaseViewController {
     }
 }
 
-// MARK: - UITextField Delegate
+// MARK: - Firebase Auth
 
-extension MessageViewController: UITextFieldDelegate { }
+extension MessageViewController {
+    func verify(_ code: String) {
+        guard let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") else { return }
+
+        let credential = PhoneAuthProvider.provider().credential(
+          withVerificationID: verificationID,
+          verificationCode: code)
+        
+        requestLogin(credential)
+    }
+    
+    func requestLogin(_ credential: PhoneAuthCredential) {
+            Auth.auth().signIn(with: credential) { authResult, error in
+                if let error = error {
+                    print("가입실패", error.localizedDescription)
+                }
+                print("가입 성공", authResult)
+            }
+        }
+}

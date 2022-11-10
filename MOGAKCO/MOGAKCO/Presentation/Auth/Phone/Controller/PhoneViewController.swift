@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseAuth
 import RxSwift
 import RxCocoa
 import SnapKit
@@ -34,12 +35,6 @@ final class PhoneViewController: BaseViewController {
         bindViewModel()
     }
     
-    // MARK: - UI & Layout
-    
-    override func setupDelegate() {
-        phoneView.setupDelegate(self)
-    }
-    
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -57,11 +52,13 @@ final class PhoneViewController: BaseViewController {
         
         output.phoneText
             .withUnretained(self)
-            .bind { (vc, value) in
-                vc.phoneView.textField.backWards(with: value, 13)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .bind { (vc, number) in
+                vc.phoneView.textField.backWards(with: number, 13)
+                vc.verify(number)
             }
             .disposed(by: disposeBag)
-
+        
         output.tap
             .withUnretained(self)
             .bind { (vc,_) in
@@ -74,10 +71,25 @@ final class PhoneViewController: BaseViewController {
     
     private func pushMessageView() {
         let viewController = MessageViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
+        self.transition(viewController, .push)
     }
 }
 
-// MARK: - UITextField Delegate
+// MARK: - Firebase Auth
 
-extension PhoneViewController: UITextFieldDelegate { }
+extension PhoneViewController {
+    func verify(_ phoneNumber: String) {
+        Auth.auth().languageCode = "kr"
+        PhoneAuthProvider
+            .provider()
+            .verifyPhoneNumber("+82 \(phoneNumber)", uiDelegate: nil) { verificationID, error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                }
+                print(verificationID, "되긴 된다")
+                UserDefaults.standard.set(verificationID,
+                                          forKey: "authVerificationID")
+            }
+    }
+}

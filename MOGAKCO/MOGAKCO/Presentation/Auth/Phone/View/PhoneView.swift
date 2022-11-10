@@ -47,8 +47,4 @@ final class PhoneView: BaseView {
             make.height.equalTo(48)
         }
     }
-    
-    func setupDelegate(_ delegate: UITextFieldDelegate) {
-        textField.delegate = delegate
-    }
 }

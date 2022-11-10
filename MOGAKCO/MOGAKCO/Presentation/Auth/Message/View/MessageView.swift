@@ -77,8 +77,4 @@ final class MessageView: BaseView {
             make.trailing.equalToSuperview().inset(23)
         }
     }
-    
-    func setupDelegate(_ delegate: UITextFieldDelegate) {
-        textField.delegate = delegate
-    }
 }
