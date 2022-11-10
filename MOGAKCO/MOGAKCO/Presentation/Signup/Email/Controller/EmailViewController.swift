@@ -44,32 +44,20 @@ final class EmailViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = EmailViewModel.Input(emailTap: emailView.reuseView.okButton.rx.tap)
+        let input = EmailViewModel.Input(emailText: emailView.textField.rx.text, tap: emailView.reuseView.okButton.rx.tap)
         let output = emailViewModel.transform(input)
-        
-        emailViewModel.email // Output
-            .asDriver(onErrorJustReturn: "")
-            .drive(emailView.textField.rx.text)
-            .disposed(by: disposeBag)
-                
-        emailView.textField.rx.text
-            .orEmpty
-            .bind(to: emailViewModel.email)
+       
+        output.emailText
+            .bind(to: emailView.textField.rx.text)
             .disposed(by: disposeBag)
         
-        emailView.textField.rx.text // Input
-            .orEmpty
-            .withUnretained(self)
-            .asDriver(onErrorJustReturn: (self, ""))
-            .map { (vc, value) in
-                vc.emailViewModel.checkEmail(with: value)
-            }
+        output.emailVaild
             .drive(emailView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
-        output.emailTap
+        output.tap
             .withUnretained(self)
-            .bind { vc, _ in
+            .bind { (vc,_) in
                 vc.pushGenderView()
             }
             .disposed(by: disposeBag)

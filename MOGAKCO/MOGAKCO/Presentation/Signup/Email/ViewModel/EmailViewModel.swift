@@ -11,23 +11,29 @@ import RxSwift
 import RxCocoa
 
 final class EmailViewModel: ViewModelType {
-    
-    let email = PublishRelay<String>()
-    
+        
     struct Input {
-        let emailTap: ControlEvent<Void>
+        let emailText: ControlProperty<String?>
+        let tap: ControlEvent<Void>
     }
     
     struct Output {
-        let emailTap: ControlEvent<Void>
+        let emailText: ControlProperty<String>
+        let tap: ControlEvent<Void>
+        let emailVaild: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output(emailTap: input.emailTap)
-    }
-    
-    func checkEmail(with phoneText: String) -> Bool {
-        let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: phoneText.addHyphen())
+        let emailVaild = input.emailText
+            .orEmpty
+            .map { value in
+                value.checkRegex(regex: .email)
+            }
+            .asDriver(onErrorJustReturn: false)
+        
+        let text = input.emailText
+            .orEmpty
+        
+        return Output(emailText: text, tap: input.tap, emailVaild: emailVaild)
     }
 }
