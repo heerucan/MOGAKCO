@@ -13,10 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        UINavigationBar.appearance().backIndicatorImage = Icon.arrow
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = Icon.arrow
+        UINavigationBar.appearance().tintColor = Color.black
+        
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let initialViewController = SplashViewController()
-        window?.rootViewController = initialViewController
+        let viewController = SplashViewController()
+        window?.rootViewController = viewController
         window?.makeKeyAndVisible()
     }
 

@@ -48,10 +48,10 @@ final class GenderViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = GenderViewModel.Input(genderTap: genderView.reuseView.okButton.rx.tap)
+        let input = GenderViewModel.Input(genderIndex: genderView.collectionView.rx.itemSelected, tap: genderView.reuseView.okButton.rx.tap)
         let output = genderViewModel.transform(input)
         
-        output.gender // output
+        output.gender
             .withUnretained(self)
             .subscribe { (vc, value) in
                 var snapshot = NSDiffableDataSourceSnapshot<Int, Gender>()
@@ -61,7 +61,7 @@ final class GenderViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        genderView.collectionView.rx.itemSelected
+        output.genderIndex
             .withUnretained(self)
             .bind { (vc, indexPath) in
                 guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath) as? GenderCollectionViewCell
@@ -71,7 +71,7 @@ final class GenderViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.genderTap
+        output.tap
             .withUnretained(self)
             .bind { (vc,_) in
 //                vc.pushHomeView()
@@ -83,8 +83,8 @@ final class GenderViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func pushHomeView() {
-        let viewController = NicknameViewController()
-        self.navigationController?.pushViewController(viewController, animated: true)
+//        let viewController = ()
+//        self.transition(viewController, .push)
     }
 }
 

@@ -14,22 +14,11 @@ final class GenderCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    var clickCount: Int = 0 {
-        didSet {
-            if clickCount == 0 {
-                configureUI()
-            } else {
-                configureSelectedUI()
-            }
-        }
-    }
-    
     override var isSelected: Bool {
         didSet {
             if isSelected {
                 configureSelectedUI()
             } else {
-                clickCount = 0
                 configureUI()
             }
         }
