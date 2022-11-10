@@ -12,18 +12,29 @@ import RxCocoa
 
 final class NicknameViewModel: ViewModelType {
     
-    let nickname = PublishRelay<String>()
-    let isNicknameValid = BehaviorRelay(value: false)
-    
     struct Input {
         let nicknameText: ControlProperty<String?>
-        let nicknameTap: ControlEvent<Void>
+        let tap: ControlEvent<Void>
     }
     
     struct Output {
+        let nicknameText: Driver<String>
+        let tap: ControlEvent<Void>
+        let nicknameValid: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output()
+        let checkValid = input.nicknameText
+            .orEmpty
+            .map { value in
+                (value.count > 10 || value.count == 0) ? false : true
+            }
+            .asDriver(onErrorJustReturn: false)
+        
+        let text = input.nicknameText
+            .orEmpty
+            .asDriver(onErrorJustReturn: "")
+        
+        return Output(nicknameText: text, tap: input.tap, nicknameValid: checkValid)
     }
 }

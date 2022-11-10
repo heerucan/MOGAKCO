@@ -44,33 +44,18 @@ final class NicknameViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = NicknameViewModel.Input(nicknameText: nicknameView.textField.rx.text, nicknameTap: nicknameView.reuseView.okButton.rx.tap)
+        let input = NicknameViewModel.Input(nicknameText: nicknameView.textField.rx.text, tap: nicknameView.reuseView.okButton.rx.tap)
         let output = nicknameViewModel.transform(input)
         
-        nicknameViewModel.nickname // Output
-            .asDriver(onErrorJustReturn: "")
+        output.nicknameText
             .drive(nicknameView.textField.rx.text)
             .disposed(by: disposeBag)
-                
-        // 닉네임 입력하는 것 -> Input
-        nicknameView.textField.rx.text
-            .orEmpty
-            .bind(to: nicknameViewModel.nickname)
-            .disposed(by: disposeBag)
         
-        // 닉네임 입력 후 유효성 검사 -> ? 뷰모델에 map 내의 count 부분을 넣어줄 수 있나?
-        nicknameView.textField.rx.text // Input
-            .orEmpty
-            .withUnretained(self)
-            .asDriver(onErrorJustReturn: (self, ""))
-            .map { (vc, value) in
-                (value.count > 10 || value.count == 0) ? false : true
-            }
+        output.nicknameValid
             .drive(nicknameView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
-        // 그다음 버튼 탭하는 것 -> Input
-        nicknameView.reuseView.okButton.rx.tap
+        output.tap
             .withUnretained(self)
             .bind { vc, _ in
                 vc.pushBirthView()

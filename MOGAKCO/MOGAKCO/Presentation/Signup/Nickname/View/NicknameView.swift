@@ -22,7 +22,6 @@ final class NicknameView: BaseView {
     
     var textField = PlainTextField(.line).then {
         $0.placeholder = Matrix.nicknamePlaceholder
-        $0.keyboardType = .numberPad
     }
     
     // MARK: - Initializer
