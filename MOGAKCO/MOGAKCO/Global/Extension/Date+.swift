@@ -14,4 +14,9 @@ extension Date {
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: self)
     }
+    
+    func checkAge() -> Int {
+        let gap = Calendar.current.dateComponents([.year], from: self, to: Date.now).year ?? 0
+        return gap
+    }
 }

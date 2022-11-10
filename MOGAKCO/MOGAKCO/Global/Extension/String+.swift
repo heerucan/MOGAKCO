@@ -35,4 +35,5 @@ extension String {
         let regex = regex.regexStyle
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: self)
     }
+
 }

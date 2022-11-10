@@ -20,13 +20,13 @@ final class BirthViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let nicknameView = NicknameView()
-    private let nicknameViewModel = NicknameViewModel()
+    private let birthView = BirthView()
+    private let birthViewModel = BirthViewModel()
     
     // MARK: - LifeCycle
     
     override func loadView() {
-        self.view = nicknameView
+        self.view = birthView
     }
     
     override func viewDidLoad() {
@@ -37,23 +37,43 @@ final class BirthViewController: BaseViewController {
     // MARK: - UI & Layout
     
     override func setupDelegate() {
-        nicknameView.setupDelegate(self)
+        birthView.setupDelegate(self)
     }
     
     // MARK: - Bind
     
     override func bindViewModel() {
         
-        let input = NicknameViewModel.Input()
-        let output = nicknameViewModel.transform(input)
+        let input = BirthViewModel.Input(date: birthView.datePicker.rx.date, tap: birthView.reuseView.okButton.rx.tap)
+        let output = birthViewModel.transform(input)
         
+        output.dateValid
+            .asDriver()
+            .drive(birthView.reuseView.okButton.rx.isEnable)
+            .disposed(by: disposeBag)
+        
+        output.date
+            .asDriver()
+            .drive { value in
+                self.birthView.yearTextField.text = value[0]
+                self.birthView.monthTextField.text = value[1]
+                self.birthView.dayTextField.text = value[2]
+            }
+            .disposed(by: disposeBag)
+        
+        output.tap
+            .withUnretained(self)
+            .bind { (vc,_) in
+                vc.pushEmailView()
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
     private func pushEmailView() {
-//        let viewController = EmailViewController()
-//        self.navigationController?.pushViewController(viewController, animated: true)
+        let viewController = EmailViewController()
+        self.transition(viewController, .push)
     }
 }
 
