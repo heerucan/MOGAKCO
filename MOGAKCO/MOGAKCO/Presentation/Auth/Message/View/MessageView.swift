@@ -18,7 +18,7 @@ final class MessageView: BaseView {
         $0.buttonTitle = Matrix.messageButtonTitle
     }
     
-    lazy var stackView = UIStackView(arrangedSubviews: [textField, resendButton]).then {
+    private lazy var stackView = UIStackView(arrangedSubviews: [textField, resendButton]).then {
         $0.axis = .horizontal
         $0.spacing = 8
         $0.alignment = .center
@@ -62,10 +62,8 @@ final class MessageView: BaseView {
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
-//
+
         textField.snp.makeConstraints { make in
-//            make.top.equalToSuperview().inset(297)
-//            make.directionalHorizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(48)
         }
         

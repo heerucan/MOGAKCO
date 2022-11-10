@@ -44,36 +44,23 @@ final class MessageViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = MessageViewModel.Input(messageTap: messageView.reuseView.okButton.rx.tap)
+        let input = MessageViewModel.Input(messageText: messageView.textField.rx.text, tap: messageView.reuseView.okButton.rx.tap)
         let output = messageViewModel.transform(input)
-        
-        messageViewModel.messageNumber // Output
-            .asDriver(onErrorJustReturn: "")
-            .drive(messageView.textField.rx.text)
-            .disposed(by: disposeBag)
                 
-        messageView.textField.rx.text
-            .orEmpty
-            .bind(to: messageViewModel.messageNumber)
+        output.messageText
+            .bind(to: messageView.textField.rx.text)
             .disposed(by: disposeBag)
         
-        messageView.textField.rx.text // Input
-            .orEmpty
-            .withUnretained(self)
-            .asDriver(onErrorJustReturn: (self, ""))
-            .map { (vc, value) in
-                value.count == 6 ? true : false
-            }
+        output.messageValid
             .drive(messageView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
-        output.messageTap
+        output.tap
             .withUnretained(self)
-            .bind { vc, _ in
+            .bind { (vc,_) in
                 vc.pushNicknameView()
             }
             .disposed(by: disposeBag)
-        
     }
     
     // MARK: - Custom Method
