@@ -113,6 +113,8 @@ final class PlainButton: UIButton {
     
     private func configureDisableColor(type: PlainButtonType) {
 //        isUserInteractionEnabled = isEnable ? true : false
+        let titleColor: UIColor = isEnable ? .white : Color.gray3
+        setTitleColor(titleColor, for: .normal)
         backgroundColor = isEnable ? type.backgroundColor : Color.gray6
     }
 }
