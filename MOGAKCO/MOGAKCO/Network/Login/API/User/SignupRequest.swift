@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+/**
+ Signup - 회원가입 요청 바디
+ */
+
+struct SignupRequest {
+    let phoneNumber: String
+    let FCMtoken: String
+    let nick: String
+    let birth: String
+    let email: String
+    let gender: Int
+}
