@@ -31,5 +31,8 @@ enum Matrix {
     static let nicknamePlaceholder = "10자 이내로 입력"
     static let emailPlaceholder = "SeSAC@email.com"
     
-    // MARK: - 상수값
+    // MARK: - UserDefaults Key
+    static let idToken = "idToken"
+    static let verificationID = "authVerificationID"
+    static let FCMtoken = "FCMtoken"
 }

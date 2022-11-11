@@ -52,9 +52,11 @@ final class MessageViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.messageText
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .withUnretained(self)
-            .bind { (vc, value) in
-                vc.verify(value)
+            .bind { (vc, code) in
+//                vc.verifyID(code)
+                print(code)
             }
             .disposed(by: disposeBag)
         
@@ -78,22 +80,22 @@ final class MessageViewController: BaseViewController {
 // MARK: - Firebase Auth
 
 extension MessageViewController {
-    func verify(_ code: String) {
-        guard let verificationID = UserDefaults.standard.string(forKey: "authVerificationID") else { return }
+    func verifyID(_ code: String) {
+        guard let verificationID = UserManager.verificationID else { return }
 
         let credential = PhoneAuthProvider.provider().credential(
           withVerificationID: verificationID,
           verificationCode: code)
         
-        requestSignup(credential)
+        signinFirebase(credential)
     }
     
-    func requestSignup(_ credential: PhoneAuthCredential) {
+    func signinFirebase(_ credential: PhoneAuthCredential) {
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
-                    print("회원가입실패", error.localizedDescription)
+                    print("🔴Firebase 회원가입 실패", error.localizedDescription)
                 }
-                print("회원가입 성공", authResult as Any)
+                print("🟢Firebase 회원가입 성공", authResult as Any)
             }
         }
     
@@ -101,14 +103,13 @@ extension MessageViewController {
         let currentUser = Auth.auth().currentUser
         currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
           if let error = error {
-              print(error.localizedDescription)
+              print("🔴Firebase idToken 가져오기 실패 = 기존 유저 아님", error.localizedDescription)
             return
           }
             guard let idToken = idToken else { return }
-            // 토큰을 싹 서버에게 보내야 함
-            print("토큰 ->>> ", idToken)
-            UserDefaults.standard.set(idToken, forKey: "idToken")
+            // 토큰을 SSAC 서버에게 보내야 함
+            print("🟢Firebase idToken ->>>", idToken)
+            UserDefaults.standard.set(idToken, forKey: Matrix.idToken)
         }
     }
 }
-

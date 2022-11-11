@@ -33,7 +33,7 @@ extension UIView {
         clipsToBounds = false
     }
     
-    func showToast(message : String) {
+    func showToast(_ message : String) {
         let toastLabel = UILabel(frame: CGRect(x: self.frame.size.width/2-141.5,
                                                y: 550,
                                                width: 283,

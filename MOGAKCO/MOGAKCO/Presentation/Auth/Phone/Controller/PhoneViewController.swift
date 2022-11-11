@@ -79,16 +79,15 @@ final class PhoneViewController: BaseViewController {
 
 extension PhoneViewController {
     func verify(_ phoneNumber: String) {
-        Auth.auth().languageCode = "kr"
-        PhoneAuthProvider
-            .provider()
-            .verifyPhoneNumber("+82 \(phoneNumber)", uiDelegate: nil) { verificationID, error in
+        Auth.auth().languageCode = "ko"
+        PhoneAuthProvider.provider().verifyPhoneNumber("+82 \(phoneNumber)", uiDelegate: nil) { verificationID, error in
                 if let error = error {
-                    print(error.localizedDescription)
+                    print("🔴Verfiy 실패", error.localizedDescription)
                     return
                 }
-                print(verificationID, "되긴 된다")
-                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+                guard let verificationID = verificationID else { return }
+                print("🟢VerficationID ->>>", verificationID)
+            UserDefaults.standard.set(verificationID, forKey: Matrix.verificationID)
             }
     }
 }

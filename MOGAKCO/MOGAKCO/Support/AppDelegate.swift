@@ -52,25 +52,25 @@ extension AppDelegate: MessagingDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().token { token, error in
             if let error = error {
-                print("FCMtoken 검색 실패", error.localizedDescription)
+                print("🔴FCMtoken 검색 실패", error.localizedDescription)
             } else if let token = token {
-                print("FCMtoken ->>>", token)
-                UserDefaults.standard.set(token, forKey: "FCMtoken")
+                print("🟢FCMtoken 검색 성공 ->>>", token)
+                UserDefaults.standard.set(token, forKey: Matrix.FCMtoken)
             }
         }
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-      print("FCMtoken ->>>", fcmToken as Any)
-
-      let dataDict: [String: String] = ["token": fcmToken ?? ""]
-      NotificationCenter.default.post(
-        name: Notification.Name("FCMToken"),
-        object: nil,
-        userInfo: dataDict
-      )
-      // TODO: FCMtoken이 갱신되면 SSAC 서버에게 보낼 것
-      // Note: This callback is fired at each app startup and whenever a new token is generated.
+        guard let fcmToken = fcmToken else { return }
+        print("🟢FCMtoken ->>>", fcmToken)
+        let dataDict: [String: String] = ["token": fcmToken]
+        NotificationCenter.default.post(
+            name: Notification.Name("FCMToken"),
+            object: nil,
+            userInfo: dataDict
+        )
+        // TODO: FCMtoken이 갱신되면 SSAC 서버에게 보낼 것
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 }
 
