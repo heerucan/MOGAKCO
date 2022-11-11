@@ -33,6 +33,7 @@ final class MessageViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        checkCurrentUser()
     }
     
     // MARK: - Bind
@@ -84,15 +85,30 @@ extension MessageViewController {
           withVerificationID: verificationID,
           verificationCode: code)
         
-        requestLogin(credential)
+        requestSignup(credential)
     }
     
-    func requestLogin(_ credential: PhoneAuthCredential) {
+    func requestSignup(_ credential: PhoneAuthCredential) {
             Auth.auth().signIn(with: credential) { authResult, error in
                 if let error = error {
-                    print("가입실패", error.localizedDescription)
+                    print("회원가입실패", error.localizedDescription)
                 }
-                print("가입 성공", authResult)
+                print("회원가입 성공", authResult as Any)
             }
         }
+    
+    func checkCurrentUser() { // 파이어베이스에 해당 사용자가 기존 사용자인지 체크 -> 그렇다면 토큰이 있을거고 -> 토큰 가져옴
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+          if let error = error {
+              print(error.localizedDescription)
+            return
+          }
+            guard let idToken = idToken else { return }
+            // 토큰을 싹 서버에게 보내야 함
+            print("토큰 ->>> ", idToken)
+            UserDefaults.standard.set(idToken, forKey: "idToken")
+        }
+    }
 }
+
