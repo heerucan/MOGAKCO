@@ -11,7 +11,7 @@ import Foundation
  Signup - 회원가입 요청 바디
  */
 
-struct SignupRequest {
+struct SignupRequest: Codable {
     let phoneNumber: String
     let FCMtoken: String
     let nick: String
