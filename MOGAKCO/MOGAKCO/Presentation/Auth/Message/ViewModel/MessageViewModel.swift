@@ -12,7 +12,7 @@ import RxCocoa
 
 final class MessageViewModel: ViewModelType {
     
-    let loginResponse = PublishSubject<Login>()
+    let loginResponse = PublishSubject<Result<Login, APIError>>()
     
     struct Input {
         let messageText: ControlProperty<String?>
@@ -23,6 +23,7 @@ final class MessageViewModel: ViewModelType {
         let messageText: ControlProperty<String>
         let tap: Observable<Bool>
         let messageValid: Driver<Bool>
+        let loginResponse: PublishSubject<Result<Login, APIError>>
     }
     
     func transform(_ input: Input) -> Output {
@@ -37,30 +38,23 @@ final class MessageViewModel: ViewModelType {
         
         let nextTap = input.tap
             .withLatestFrom(messageValid)
+        
+        let response = loginResponse
                 
-        return Output(messageText: text, tap: nextTap, messageValid: messageValid)
+        return Output(messageText: text, tap: nextTap, messageValid: messageValid, loginResponse: response)
     }
     
     func requestLogin() {
-        
-//        APIManager.shared.requestData(Login.self, UserRouter.login)
-//            .map { result in
-//                print(result)
-//                switch result {
-//                case .success(let value):
-//                    self.loginResponse.onNext(value)
-//                case .failure(let error):
-//                    self.loginResponse.onError(error)
-//                }
-//            }
-        
-//        APIManager.shared.requestData(Login.self, UserRouter.login) { result in
+        APIManager.shared.requestData(Login.self, UserRouter.login) { result in
+            self.loginResponse.onNext(result)
 //            switch result {
 //            case .success(let value):
 //                print(value)
+//                self.loginResponse.onNext(value)
 //            case .failure(let error):
-//                print(error)
+//                self.loginResponse.onError(error)
+//                print("VM ->>>", error.errorDescription)
 //            }
-//        }
+        }
     }
 }

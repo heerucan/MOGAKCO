@@ -55,29 +55,46 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .bind { (vc, code) in
                 vc.verifyID(code)
-                print("코드", code)
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind { (vc, isValid) in
-                if isValid {
-                    vc.messageViewModel.requestLogin()
-                } else {
-                    vc.showToast(.phoneVerifyFail)
-                    vc.messageViewModel.requestLogin()
-                }
-            }
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (vc, isValid) in
+                isValid ? vc.requestLogin() : vc.showToast(.phoneTypeError)
+            })
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Custom Method
+    // MARK: - Network
+
+    func requestLogin() {
+        APIManager.shared.requestData(Login.self, UserRouter.login) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let value):
+                print("🟣Login Response Data ->>> ", value)
+            case .failure(let error):
+                self.showErrorToast(error.errorDescription!)
+                self.handling(error)
+            }
+        }
+    }
     
-    private func pushNicknameView() {
-        let viewController = NicknameViewController()
-        self.transition(viewController, .push)
+    private func handling(_ error: APIError) {
+        switch error {
+        case .success:
+            let vc = HomeViewController()
+            self.transition(vc, .push)
+        case .notCurrentUserError:
+            let vc = NicknameViewController()
+            self.transition(vc, .push)
+        case .expiredTokenError:
+            print("토큰 만료 -> 401 -> 갱신")
+        default:
+            break
+        }
     }
 }
 
@@ -89,10 +106,10 @@ extension MessageViewController {
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: code)
-        self.signinFirebase(credential)
+        self.signInFirebase(credential)
     }
     
-    func signinFirebase(_ credential: PhoneAuthCredential) {
+    func signInFirebase(_ credential: PhoneAuthCredential) {
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
                 print("🔴Firebase 회원가입 실패", error.localizedDescription)
@@ -104,8 +121,7 @@ extension MessageViewController {
     
     func checkUser() { // 파이어베이스에 해당 사용자가 기존 사용자인지 체크 -> 그렇다면 토큰이 있을거고 -> 토큰 가져옴
         let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { [weak self] idToken, error in
-            guard let self = self else { return }
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
             if let error = error {
                 print("🔴Firebase idToken 실패 = 파베 기존 유저 아님", error.localizedDescription)
                 return
@@ -114,7 +130,24 @@ extension MessageViewController {
             guard let idToken = idToken else { return }
             print("🟢Firebase idToken 성공 ->>>", idToken)
             UserDefaults.standard.set(idToken, forKey: Matrix.idToken)
-            self.pushNicknameView()
         }
     }
 }
+
+//        output.loginResponse
+//            .withUnretained(self)
+//            .map { (vc, result) -> Login? in
+//                switch result {
+//                case .success(let value):
+////                    vc.pushNicknameView()
+//                    return value
+//                case .failure(let error):
+//                    vc.showErrorToast(error.errorDescription!)
+//                }
+//                return nil
+//            }
+//            .subscribe(onNext: { login in
+//                self.pushNicknameView()
+//                print("4", login)
+//            })
+//            .disposed(by: disposeBag)
