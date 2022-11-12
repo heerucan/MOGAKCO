@@ -51,8 +51,8 @@ final class NicknameViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushBirthView()
+            .bind { (vc, isValid) in
+                isValid ? vc.pushBirthView() : vc.showToast(.nickTypeError)
             }
             .disposed(by: disposeBag)
     }

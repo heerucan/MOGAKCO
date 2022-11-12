@@ -24,7 +24,7 @@
 		5BC57D072918E73F006CB05C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D052918E73F006CB05C /* LaunchScreen.storyboard */; };
 		5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D1C2918E94D006CB05C /* APIKey.swift */; };
 		5BC57D1F2918E957006CB05C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D1E2918E957006CB05C /* APIError.swift */; };
-		5BC57D212918E96D006CB05C /* SSACAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D202918E96D006CB05C /* SSACAPIManager.swift */; };
+		5BC57D212918E96D006CB05C /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D202918E96D006CB05C /* APIManager.swift */; };
 		5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */; };
 		5BC57D312918EA86006CB05C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D302918EA86006CB05C /* BaseView.swift */; };
 		5BC57D352918EA9E006CB05C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D342918EA9E006CB05C /* BaseCollectionViewCell.swift */; };
@@ -63,6 +63,8 @@
 		5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D822919245D006CB05C /* OnboardViewModel.swift */; };
 		5BD11A6D291E71760011C5B5 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A6C291E71750011C5B5 /* UserRouter.swift */; };
 		5BD11A74291E75DA0011C5B5 /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */; };
+		5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A75291ECE400011C5B5 /* GenericResponse.swift */; };
+		5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */; };
 		5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE24F291BAB1300FD31E9 /* String+.swift */; };
 		5BEFE252291BAEC200FD31E9 /* PlainTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */; };
 		5BEFE254291BBA1000FD31E9 /* PhoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE253291BBA1000FD31E9 /* PhoneView.swift */; };
@@ -101,7 +103,7 @@
 		5BC57D082918E73F006CB05C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BC57D1C2918E94D006CB05C /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		5BC57D1E2918E957006CB05C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
-		5BC57D202918E96D006CB05C /* SSACAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSACAPIManager.swift; sourceTree = "<group>"; };
+		5BC57D202918E96D006CB05C /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5BC57D302918EA86006CB05C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		5BC57D342918EA9E006CB05C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -134,6 +136,8 @@
 		5BC57D822919245D006CB05C /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
 		5BD11A6C291E71750011C5B5 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
 		5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
+		5BD11A75291ECE400011C5B5 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
+		5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMatrix.swift; sourceTree = "<group>"; };
 		5BEFE24F291BAB1300FD31E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextField.swift; sourceTree = "<group>"; };
 		5BEFE253291BBA1000FD31E9 /* PhoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneView.swift; sourceTree = "<group>"; };
@@ -310,7 +314,8 @@
 			children = (
 				5BC57D1C2918E94D006CB05C /* APIKey.swift */,
 				5BC57D1E2918E957006CB05C /* APIError.swift */,
-				5BC57D202918E96D006CB05C /* SSACAPIManager.swift */,
+				5BC57D202918E96D006CB05C /* APIManager.swift */,
+				5BD11A75291ECE400011C5B5 /* GenericResponse.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -434,6 +439,7 @@
 				5BC57D4D2918ED93006CB05C /* Matrix.swift */,
 				5BC57D4F2918EDB4006CB05C /* CObservable.swift */,
 				5BC5222B291D917C000A570B /* UserManager.swift */,
+				5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -766,6 +772,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */,
 				5BC57D7129190AA9006CB05C /* PlainButton.swift in Sources */,
 				5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */,
 				5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */,
@@ -801,7 +808,7 @@
 				5BC57D492918EC43006CB05C /* ReusableProtocol.swift in Sources */,
 				5BEFE280291C030400FD31E9 /* BirthViewModel.swift in Sources */,
 				5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */,
-				5BC57D212918E96D006CB05C /* SSACAPIManager.swift in Sources */,
+				5BC57D212918E96D006CB05C /* APIManager.swift in Sources */,
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
@@ -821,6 +828,7 @@
 				5BB16AE52919670300EA3099 /* NicknameViewModel.swift in Sources */,
 				5BEFE27E291C02D500FD31E9 /* EmailViewModel.swift in Sources */,
 				5BEFE25B291BEC1A00FD31E9 /* MessageViewModel.swift in Sources */,
+				5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */,
 				5BEFE274291BF9B200FD31E9 /* BirthViewController.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
 				5BC57D392918EABE006CB05C /* ViewModelType.swift in Sources */,

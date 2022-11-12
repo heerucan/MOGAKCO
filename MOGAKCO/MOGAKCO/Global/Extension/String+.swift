@@ -10,7 +10,7 @@ import Foundation
 extension String {
     func toDate() -> Date {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd T HH:mm:ss.SSSZ"
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.date(from: self)!
@@ -35,5 +35,4 @@ extension String {
         let regex = regex.regexStyle
         return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: self)
     }
-
 }

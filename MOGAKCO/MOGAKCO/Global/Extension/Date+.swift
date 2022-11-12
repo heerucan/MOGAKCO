@@ -8,10 +8,32 @@
 import Foundation
 
 extension Date {
-    func toString(format: String) -> String {
+    
+    @frozen
+    enum DateFormat {
+        case year
+        case month
+        case day
+        case full
+        
+        var text: String {
+            switch self {
+            case .year:
+                return "yyyy"
+            case .month:
+                return "MM"
+            case .day:
+                return "dd"
+            case .full:
+                return "yyyy-MM-dd T HH:mm:ss.SSSZ"
+            }
+        }
+    }
+    
+    func toString(format: DateFormat = .full) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = format
+        dateFormatter.dateFormat = format.text
         return dateFormatter.string(from: self)
     }
     
