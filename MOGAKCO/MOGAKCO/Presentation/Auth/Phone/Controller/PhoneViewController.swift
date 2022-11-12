@@ -47,23 +47,29 @@ final class PhoneViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.phoneValid
-            .bind(to: phoneView.reuseView.okButton.rx.isEnable)
+            .drive(phoneView.reuseView.okButton.rx.isEnable)
             .disposed(by: disposeBag)
         
         output.phoneText
             .withUnretained(self)
-            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .observe(on:MainScheduler.asyncInstance)
+            .debounce(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
             .bind { (vc, number) in
                 vc.phoneView.textField.backWards(with: number, 13)
-                vc.verify(number)
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
-            .bind { (vc,_) in
-                vc.pushMessageView()
-            }
+            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (vc, value) in
+                if value {
+                    // 여기서 문자 메시지를 받기
+                    vc.requestMessage(vc.phoneView.textField.text ?? "")
+                } else {
+                    vc.showToast(.phoneTypeError)
+                }
+            })
             .disposed(by: disposeBag)
     }
     
@@ -78,16 +84,21 @@ final class PhoneViewController: BaseViewController {
 // MARK: - Firebase Auth
 
 extension PhoneViewController {
-    func verify(_ phoneNumber: String) {
+    func requestMessage(_ phoneNumber: String) {
         Auth.auth().languageCode = "ko"
-        PhoneAuthProvider.provider().verifyPhoneNumber("+82 \(phoneNumber)", uiDelegate: nil) { verificationID, error in
-                if let error = error {
-                    print("🔴Verfiy 실패", error.localizedDescription)
-                    return
-                }
-                guard let verificationID = verificationID else { return }
-                print("🟢VerficationID ->>>", verificationID)
-            UserDefaults.standard.set(verificationID, forKey: Matrix.verificationID)
+        PhoneAuthProvider.provider().verifyPhoneNumber("+82 \(phoneNumber)", uiDelegate: nil) { [weak self] verificationID, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("🔴Verfiy 실패", error.localizedDescription)
+                // TODO: - 여기서 과도한 요청 시에 .overRequestError로 케이스 처리 해줘야 함
+                self.showToast(.etcAuthError)
+                return
             }
+            
+            guard let verificationID = verificationID else { return }
+            print("🟢VerficationID ->>>", verificationID)
+            UserDefaults.standard.set(verificationID, forKey: Matrix.verificationID)
+            self.pushMessageView()
+        }
     }
 }
