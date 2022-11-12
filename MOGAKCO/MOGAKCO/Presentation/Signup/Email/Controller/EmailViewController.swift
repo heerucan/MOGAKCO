@@ -51,8 +51,8 @@ final class EmailViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .bind { (vc,_) in
-                vc.pushGenderView()
+            .bind { (vc, isValid) in
+                isValid ? vc.pushGenderView() : vc.showToast(.emailTypeError)
             }
             .disposed(by: disposeBag)
     }

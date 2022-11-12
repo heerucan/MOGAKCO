@@ -19,7 +19,7 @@ final class BirthViewModel: ViewModelType {
     
     struct Output {
         let date: Driver<[String]>
-        let tap: ControlEvent<Void>
+        let tap: Observable<Bool>
         let dateValid: Driver<Bool>
     }
     
@@ -38,6 +38,9 @@ final class BirthViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [""])
         
-        return Output(date: date, tap: input.tap, dateValid: dateValid)
+        let nextTap = input.tap
+            .withLatestFrom(dateValid)
+        
+        return Output(date: date, tap: nextTap, dateValid: dateValid)
     }
 }

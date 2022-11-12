@@ -11,7 +11,9 @@ import RxSwift
 import RxCocoa
 
 final class MessageViewModel: ViewModelType {
-        
+    
+    let loginResponse = PublishSubject<Login>()
+    
     struct Input {
         let messageText: ControlProperty<String?>
         let tap: ControlEvent<Void>
@@ -19,7 +21,7 @@ final class MessageViewModel: ViewModelType {
     
     struct Output {
         let messageText: ControlProperty<String>
-        let tap: ControlEvent<Void>
+        let tap: Observable<Bool>
         let messageValid: Driver<Bool>
     }
     
@@ -33,6 +35,32 @@ final class MessageViewModel: ViewModelType {
         
         let text = input.messageText.orEmpty
         
-        return Output(messageText: text, tap: input.tap, messageValid: messageValid)
+        let nextTap = input.tap
+            .withLatestFrom(messageValid)
+                
+        return Output(messageText: text, tap: nextTap, messageValid: messageValid)
+    }
+    
+    func requestLogin() {
+        
+//        APIManager.shared.requestData(Login.self, UserRouter.login)
+//            .map { result in
+//                print(result)
+//                switch result {
+//                case .success(let value):
+//                    self.loginResponse.onNext(value)
+//                case .failure(let error):
+//                    self.loginResponse.onError(error)
+//                }
+//            }
+        
+//        APIManager.shared.requestData(Login.self, UserRouter.login) { result in
+//            switch result {
+//            case .success(let value):
+//                print(value)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
 }

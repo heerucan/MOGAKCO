@@ -54,13 +54,14 @@ final class BirthViewController: BaseViewController {
                 self?.birthView.yearTextField.text = value[0]
                 self?.birthView.monthTextField.text = value[1]
                 self?.birthView.dayTextField.text = value[2]
+                UserDefaults.standard.set(value, forKey: "birthday")
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
-            .bind { (vc,_) in
-                vc.pushEmailView()
+            .bind { (vc, isValid) in
+                isValid ? vc.pushEmailView() : vc.showToast(.birthTypeError)
             }
             .disposed(by: disposeBag)
     }
