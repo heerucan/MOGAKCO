@@ -53,7 +53,7 @@ final class PhoneViewController: BaseViewController {
         output.phoneText
             .withUnretained(self)
             .observe(on:MainScheduler.asyncInstance)
-            .debounce(.milliseconds(300), scheduler: MainScheduler.asyncInstance)
+            .debounce(.seconds(3), scheduler: MainScheduler.asyncInstance)
             .bind { (vc, number) in
                 vc.phoneView.textField.backWards(with: number, 13)
             }
@@ -61,10 +61,9 @@ final class PhoneViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .throttle(.milliseconds(100), scheduler: MainScheduler.instance)
+            .throttle(.seconds(3), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, value) in
                 if value {
-                    // 여기서 문자 메시지를 받기
                     vc.requestMessage(vc.phoneView.textField.text ?? "")
                 } else {
                     vc.showToast(.phoneTypeError)
@@ -90,8 +89,11 @@ extension PhoneViewController {
             guard let self = self else { return }
             if let error = error {
                 print("🔴Verfiy 실패", error.localizedDescription)
-                // TODO: - 여기서 과도한 요청 시에 .overRequestError로 케이스 처리 해줘야 함
-                self.showToast(.etcAuthError)
+                if error.localizedDescription == "QUOTA_EXCEEDED : Exceeded quota." {
+                    self.showToast(.overRequestError)
+                } else {
+                    self.showToast(.etcAuthError)
+                }
                 return
             }
             

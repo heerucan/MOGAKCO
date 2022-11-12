@@ -48,4 +48,26 @@ extension UIViewController {
             return currentViewController
         }
     }
+    
+    func showToast(_ message: ToastMatrix) {
+        let toastLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.size.width/2-(UIScreen.main.bounds.size.width-32)/2,
+                                               y: 70,
+                                               width: UIScreen.main.bounds.size.width-32,
+                                               height: 40)).then {
+            $0.backgroundColor = Color.black.withAlphaComponent(0.89)
+            $0.textColor = .white
+            $0.font = Font.body4.font
+            $0.textAlignment = .center
+            $0.text = message.description
+            $0.layer.cornerRadius = 10
+            $0.clipsToBounds  =  true
+            view.addSubview($0)
+        }
+        
+        UIView.animate(withDuration: 2, delay: 0.2, options: .curveEaseIn) {
+            toastLabel.alpha = 0.0
+        } completion: { _ in
+            toastLabel.removeFromSuperview()
+        }
+    }
 }
