@@ -1,5 +1,5 @@
 //
-//  SSACAPIManager.swift
+//  APIManager.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/07.
@@ -9,9 +9,9 @@ import Foundation
 
 import Alamofire
 
-final class SSACAPIManager {
+final class APIManager {
     private init() { }
-    static let shared = SSACAPIManager()
+    static let shared = APIManager()
     
     typealias Completion<T> = ((Result<T, APIError>) -> Void)
     

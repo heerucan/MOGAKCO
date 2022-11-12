@@ -19,8 +19,8 @@ final class PhoneViewModel: ViewModelType {
     
     struct Output {
         let phoneText: Observable<String>
-        let tap: ControlEvent<Void>
-        let phoneValid: Observable<Bool>
+        let tap: Observable<Bool>
+        let phoneValid: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
@@ -35,12 +35,15 @@ final class PhoneViewModel: ViewModelType {
         let phoneValid = input.phoneText
             .orEmpty
             .map { value in
-                value.count > 13 ? false : true &&
+                (value.count < 13) ? false : true &&
                 value.checkRegex(regex: .phone)
             }
-            .share()
+            .asDriver(onErrorJustReturn: false)
         
-        return Output(phoneText: text, tap: input.tap, phoneValid: phoneValid)
+        let nextTap = input.tap
+            .withLatestFrom(phoneValid)
+        
+        return Output(phoneText: text, tap: nextTap, phoneValid: phoneValid)
     }
     
     func addHyphen(text: String) -> String {
