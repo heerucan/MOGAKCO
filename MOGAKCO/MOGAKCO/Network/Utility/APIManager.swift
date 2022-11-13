@@ -8,18 +8,21 @@
 import Foundation
 
 import Alamofire
+import RxSwift
 
 final class APIManager {
     private init() { }
     static let shared = APIManager()
     
     typealias Completion<T> = ((Result<T, APIError>) -> Void)
+    typealias StatusCompletion<T> = ((Result<T, APIError>?, Int?) -> Void)
+    typealias PostCompletion = ((Int) -> Void)
     
     func requestData<T: Decodable>(_ type: T.Type = T.self,
                                  _ convertible: URLRequestConvertible,
                                  completion: @escaping Completion<T>) {
         AF.request(convertible)
-            .responseDecodable(of: T.self) { response in
+            .responseDecodable(of: type) { response in
                 guard let statusCode = response.response?.statusCode else { return }
                 switch response.result {
                 case .success(let data):
@@ -28,8 +31,29 @@ final class APIManager {
                 case .failure(_):
                     guard let error = APIError(rawValue: statusCode) else { return }
                     completion(.failure(error))
-                    print(error.localizedDescription)
+                    print(error, error.localizedDescription)
                 }
             }
+    }
+
+    func requestStatusData<T: Decodable>(type: T.Type = T.self,
+                               method: HTTPMethod,
+                               url: URL,
+                               parameters: [String: Any]?,
+                               headers: HTTPHeaders,
+                               completion: @escaping StatusCompletion<T>) {
+        AF.request(url, method: method, parameters: parameters, headers: headers)
+            .responseDecodable(of: type) { response in
+            guard let statusCode = response.response?.statusCode else { return }
+            switch response.result {
+            case .success(let data):
+                completion(.success(data), statusCode)
+                
+            case .failure(_):
+                guard let error = APIError(rawValue: statusCode) else { return }
+                completion(.failure(error), statusCode)
+                print(error, error.localizedDescription)
+            }
+        }
     }
 }
