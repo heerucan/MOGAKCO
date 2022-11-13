@@ -61,13 +61,18 @@ final class PhoneViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .throttle(.seconds(3), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, value) in
-                if value {
-                    vc.requestMessage(vc.phoneView.textField.text ?? "")
-                } else {
-                    vc.showToast(.phoneTypeError)
-                }
+                value ? vc.requestMessage(vc.phoneView.textField.text ?? "") : vc.showToast(.phoneTypeError)
+            })
+            .disposed(by: disposeBag)
+        
+        output.userDefaults
+            .withUnretained(self)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (vc, phone) in
+                let phoneNumber = phone.replacingOccurrences(of: "-", with: "")
+                UserDefaultsHelper.standard.phone = "+82" + phoneNumber.suffix(phoneNumber.count-1)
             })
             .disposed(by: disposeBag)
     }
@@ -75,8 +80,8 @@ final class PhoneViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func pushMessageView() {
-        let viewController = MessageViewController()
-        self.transition(viewController, .push)
+        let vc = MessageViewController()
+        self.transition(vc, .push)
     }
 }
 
@@ -99,7 +104,7 @@ extension PhoneViewController {
             
             guard let verificationID = verificationID else { return }
             print("🟢VerficationID ->>>", verificationID)
-            UserDefaults.standard.set(verificationID, forKey: Matrix.verificationID)
+            UserDefaultsHelper.standard.verificationID = verificationID
             self.pushMessageView()
         }
     }

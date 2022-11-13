@@ -45,7 +45,7 @@ final class MessageViewModel: ViewModelType {
     }
     
     func requestLogin() {
-        APIManager.shared.requestData(Login.self, UserRouter.login) { result in
+        APIManager.shared.requestData(Login.self, UserRouter.login) { result  in
             self.loginResponse.onNext(result)
 //            switch result {
 //            case .success(let value):

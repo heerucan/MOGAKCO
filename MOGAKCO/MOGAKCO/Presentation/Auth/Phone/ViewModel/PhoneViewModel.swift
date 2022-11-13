@@ -20,6 +20,7 @@ final class PhoneViewModel: ViewModelType {
     struct Output {
         let phoneText: Observable<String>
         let tap: Observable<Bool>
+        let userDefaults: Observable<String>
         let phoneValid: Driver<Bool>
     }
     
@@ -42,8 +43,13 @@ final class PhoneViewModel: ViewModelType {
         
         let nextTap = input.tap
             .withLatestFrom(phoneValid)
+            .share()
         
-        return Output(phoneText: text, tap: nextTap, phoneValid: phoneValid)
+        let userDefaults = input.tap
+            .withLatestFrom(text)
+            .share()
+        
+        return Output(phoneText: text, tap: nextTap, userDefaults: userDefaults, phoneValid: phoneValid)
     }
     
     func addHyphen(text: String) -> String {

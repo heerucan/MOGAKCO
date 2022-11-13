@@ -51,17 +51,19 @@ final class MessageViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.messageText
-            .throttle(.seconds(3), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { (vc, code) in
                 vc.verifyID(code)
+                print("MessageVC - Credential : ", code)
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, isValid) in
+//                vc.requestLogin()
                 isValid ? vc.requestLogin() : vc.showToast(.phoneTypeError)
             })
             .disposed(by: disposeBag)
@@ -74,7 +76,8 @@ final class MessageViewController: BaseViewController {
             guard let self = self else { return }
             switch result {
             case .success(let value):
-                print("🟣Login Response Data ->>> ", value)
+                print("🟣Login Response Data ->>> \n", value)
+                self.handling(.success)
             case .failure(let error):
                 self.showErrorToast(error.errorDescription!)
                 self.handling(error)
@@ -102,10 +105,11 @@ final class MessageViewController: BaseViewController {
 
 extension MessageViewController {
     func verifyID(_ code: String) {
-        guard let verificationID = UserManager.verificationID else { return }
+        let verificationID = UserDefaultsHelper.standard.verificationID!
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: code)
+        
         self.signInFirebase(credential)
     }
     
@@ -115,13 +119,14 @@ extension MessageViewController {
                 print("🔴Firebase 회원가입 실패", error.localizedDescription)
             } else {
                 print("🟢Firebase 회원가입 성공", authResult as Any)
+                self.checkUser()
             }
         }
     }
     
     func checkUser() { // 파이어베이스에 해당 사용자가 기존 사용자인지 체크 -> 그렇다면 토큰이 있을거고 -> 토큰 가져옴
         let currentUser = Auth.auth().currentUser
-        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+        currentUser?.getIDToken { idToken, error in
             if let error = error {
                 print("🔴Firebase idToken 실패 = 파베 기존 유저 아님", error.localizedDescription)
                 return
@@ -129,7 +134,7 @@ extension MessageViewController {
             
             guard let idToken = idToken else { return }
             print("🟢Firebase idToken 성공 ->>>", idToken)
-            UserDefaults.standard.set(idToken, forKey: Matrix.idToken)
+            UserDefaultsHelper.standard.idToken = idToken
         }
     }
 }
