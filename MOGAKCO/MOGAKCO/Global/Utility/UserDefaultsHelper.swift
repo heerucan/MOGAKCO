@@ -21,6 +21,7 @@ final class UserDefaultsHelper {
         static let birthday = "birthday"
         static let email = "email"
         static let gender = "gender"
+        static let currentUser = "currentUser"
     }
     
     var idToken: String? {
@@ -61,6 +62,11 @@ final class UserDefaultsHelper {
     var gender: Int {
         get { return userDefaults.integer(forKey: Key.gender) }
         set { userDefaults.set(newValue, forKey: Key.gender) }
+    }
+    
+    var currentUser: Bool {
+        get { return userDefaults.bool(forKey: Key.currentUser) }
+        set { userDefaults.set(newValue, forKey: Key.currentUser) }
     }
     
     func removeObject() {

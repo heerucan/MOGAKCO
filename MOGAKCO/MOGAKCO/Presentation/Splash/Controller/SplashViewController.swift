@@ -56,10 +56,20 @@ final class SplashViewController: BaseViewController {
             self.titleImageView.alpha = 1
         } completion: { [weak self] _ in
             guard let self = self else { return }
-            let viewController = OnboardingViewController()
-            viewController.modalPresentationStyle = .fullScreen
-            viewController.modalTransitionStyle = .crossDissolve
-            self.present(viewController, animated: false, completion: nil)
+            
+            if UserDefaultsHelper.standard.currentUser == false {
+                // 신규 사용자
+                let viewController = OnboardingViewController()
+                viewController.modalPresentationStyle = .fullScreen
+                viewController.modalTransitionStyle = .crossDissolve
+                self.present(viewController, animated: false, completion: nil)
+            } else if UserDefaultsHelper.standard.currentUser == true {
+                // 기존 사용자
+                let viewController = HomeViewController()
+                viewController.modalPresentationStyle = .fullScreen
+                viewController.modalTransitionStyle = .crossDissolve
+                self.present(viewController, animated: false, completion: nil)
+            }
         }
     }
 }

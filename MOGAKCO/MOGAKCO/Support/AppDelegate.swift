@@ -55,7 +55,6 @@ extension AppDelegate: MessagingDelegate {
                 print("🔴FCMtoken 검색 실패", error.localizedDescription)
             } else if let token = token {
                 print("🟢FCMtoken 검색 성공 ->>>", token)
-                UserDefaults.standard.set(token, forKey: Matrix.FCMtoken)
             }
         }
     }
