@@ -15,6 +15,7 @@ extension Date {
         case month
         case day
         case full
+        case regular
         
         var text: String {
             switch self {
@@ -25,7 +26,9 @@ extension Date {
             case .day:
                 return "dd"
             case .full:
-                return "yyyy-MM-dd T HH:mm:ss.SSSZ"
+                return "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            case .regular:
+                return "yyyy-MM-dd HH:mm:ss"
             }
         }
     }

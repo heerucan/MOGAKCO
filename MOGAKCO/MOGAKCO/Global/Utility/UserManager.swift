@@ -38,4 +38,19 @@ final class UserManager {
     
     @UserDefault(key: Matrix.FCMtoken, defaultValue: nil)
     static var FCMtoken: String?
+    
+    @UserDefault(key: "phone", defaultValue: nil)
+    static var phone: String?
+    
+    @UserDefault(key: "nickname", defaultValue: nil)
+    static var nickname: String?
+    
+    @UserDefault(key: "birthday", defaultValue: nil)
+    static var birthday: String?
+    
+    @UserDefault(key: "email", defaultValue: nil)
+    static var email: String?
+    
+    @UserDefault(key: "gender", defaultValue: 0)
+    static var gender: Int
 }
