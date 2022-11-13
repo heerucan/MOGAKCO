@@ -20,6 +20,7 @@ final class EmailViewModel: ViewModelType {
     struct Output {
         let emailText: ControlProperty<String>
         let tap:  Observable<Bool>
+        let userDefaults: Observable<ControlProperty<String>.Element>
         let emailVaild: Driver<Bool>
     }
     
@@ -36,7 +37,12 @@ final class EmailViewModel: ViewModelType {
         
         let nextTap = input.tap
             .withLatestFrom(emailVaild)
+            .share()
         
-        return Output(emailText: text, tap: nextTap, emailVaild: emailVaild)
+        let userDefaults = input.tap
+            .withLatestFrom(text)
+            .share()
+        
+        return Output(emailText: text, tap: nextTap, userDefaults: userDefaults,  emailVaild: emailVaild)
     }
 }

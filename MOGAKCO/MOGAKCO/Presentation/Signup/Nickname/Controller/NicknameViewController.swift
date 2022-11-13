@@ -55,12 +55,20 @@ final class NicknameViewController: BaseViewController {
                 isValid ? vc.pushBirthView() : vc.showToast(.nickTypeError)
             }
             .disposed(by: disposeBag)
+        
+        output.userDefaults
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .bind { (vc, nickname) in
+                UserDefaultsHelper.standard.nickname = nickname
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
     private func pushBirthView() {
-        let viewController = BirthViewController()
-        self.transition(viewController, .push)
+        let vc = BirthViewController()
+        self.transition(vc, .push)
     }
 }

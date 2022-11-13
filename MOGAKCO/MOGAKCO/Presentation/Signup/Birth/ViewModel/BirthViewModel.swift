@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 final class BirthViewModel: ViewModelType {
-        
+    
     struct Input {
         let date: ControlProperty<Date>
         let tap: ControlEvent<Void>
@@ -32,14 +32,15 @@ final class BirthViewModel: ViewModelType {
         
         let date = input.date
             .map { value in
-                [value.toString(format: "yyyy"),
-                value.toString(format: "MM"),
-                value.toString(format: "dd")]
+                [value.toString(format: .year),
+                 value.toString(format: .month),
+                 value.toString(format: .day)]
             }
             .asDriver(onErrorJustReturn: [""])
         
         let nextTap = input.tap
             .withLatestFrom(dateValid)
+            .share()
         
         return Output(date: date, tap: nextTap, dateValid: dateValid)
     }

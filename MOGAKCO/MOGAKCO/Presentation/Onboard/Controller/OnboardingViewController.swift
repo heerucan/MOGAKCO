@@ -69,8 +69,8 @@ final class OnboardingViewController: BaseViewController {
         
         onboardView.startButton.rx.tap
             .withUnretained(self)
-            .bind { _ in
-                self.presentPhoneView()
+            .bind { (vc,_) in
+                vc.presentPhoneView()
             }
             .disposed(by: disposeBag)
     }
@@ -78,8 +78,8 @@ final class OnboardingViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func presentPhoneView() {
-        let viewController = PhoneViewController()
-        self.transition(viewController, .presentFullNavigation)
+        let vc = PhoneViewController()
+        self.transition(vc, .presentFullNavigation)
     }
 }
 

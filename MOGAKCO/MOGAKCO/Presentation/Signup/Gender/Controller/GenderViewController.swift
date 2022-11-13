@@ -73,18 +73,56 @@ final class GenderViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .bind { (vc,_) in
-//                vc.pushHomeView()
-                print("홈으로 이동!!")
+            .bind { (vc, gender) in
+                (gender.item == 0) ?
+                (UserDefaultsHelper.standard.gender = 1) : (UserDefaultsHelper.standard.gender = 0)
+                vc.requestSignup()
             }
             .disposed(by: disposeBag)
     }
     
-    // MARK: - Custom Method
+    // MARK: - Network
     
-    private func pushHomeView() {
-//        let viewController = ()
-//        self.transition(viewController, .push)
+    private func requestSignup() {
+        let parameters: [String : Any] = ["phoneNumber": UserDefaultsHelper.standard.phone ?? "",
+                                          "FCMtoken": APIKey.FCMtoken,
+                                          "nick": UserDefaultsHelper.standard.nickname ?? "",
+                                          "birth": UserDefaultsHelper.standard.birthday ?? "",
+                                          "email": UserDefaultsHelper.standard.email ?? "",
+                                          "gender": UserDefaultsHelper.standard.gender]
+        
+        APIManager.shared.requestStatusData(type: SignupRequest.self,
+                                            method: .post,
+                                            url: URL(string: APIKey.baseURL+"/v1/user")!,
+                                            parameters: parameters,
+                                            headers: ["idtoken": UserDefaultsHelper.standard.idToken!]) { response, status in
+            switch response {
+            case .success(let value):
+                print("🟣🟣Sign Response Data ->>> ", value, status as Any)
+            case .failure(let error):
+                self.showErrorToast(error.errorDescription!)
+                self.handling(error)
+            case .none:
+                break
+            }
+        }
+    }
+    
+    private func handling(_ error: APIError) {
+        switch error {
+        case .success:
+            let vc = HomeViewController()
+            self.transition(vc, .push)
+        case .nicknameError:
+            let vc = NicknameViewController()
+            vc.showToast(.invalidNickname)
+            navigationController?.popToViewController(vc, animated: true)
+        case .expiredTokenError:
+            let vc = PhoneViewController()
+            navigationController?.popToViewController(vc, animated: true)
+        default:
+            break
+        }
     }
 }
 
@@ -94,7 +132,7 @@ extension GenderViewController: UICollectionViewDelegate {
     private func configureDataSource() {
         let cellRegistration = UICollectionView.CellRegistration<GenderCollectionViewCell, Gender> { cell, indexPath, itemIdentifier in
         }
-  
+        
         dataSource = UICollectionViewDiffableDataSource(collectionView: genderView.collectionView,
                                                         cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(

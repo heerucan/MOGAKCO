@@ -19,13 +19,13 @@ final class NicknameViewModel: ViewModelType {
     
     struct Output {
         let nicknameText: Driver<String>
-        let tap: ControlEvent<Void>
+        let tap: Observable<Bool>
+        let userDefaults: Observable<ControlProperty<String>.Element>
         let nicknameValid: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
-        let checkValid = input.nicknameText
-            .orEmpty
+        let checkValid = input.nicknameText.orEmpty
             .map { value in
                 (value.count > 10 || value.count == 0) ? false : true
             }
@@ -35,6 +35,14 @@ final class NicknameViewModel: ViewModelType {
             .orEmpty
             .asDriver(onErrorJustReturn: "")
         
-        return Output(nicknameText: text, tap: input.tap, nicknameValid: checkValid)
+        let nextTap = input.tap
+            .withLatestFrom(checkValid)
+            .share()
+            
+        let userDefaults = input.tap
+            .withLatestFrom(text)
+            .share()
+        
+        return Output(nicknameText: text, tap: nextTap, userDefaults: userDefaults, nicknameValid: checkValid)
     }
 }

@@ -55,12 +55,20 @@ final class EmailViewController: BaseViewController {
                 isValid ? vc.pushGenderView() : vc.showToast(.emailTypeError)
             }
             .disposed(by: disposeBag)
+        
+        output.userDefaults
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .bind { (vc, email) in
+                UserDefaultsHelper.standard.email = email
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method
     
     private func pushGenderView() {
-        let viewController = GenderViewController()
-        self.transition(viewController, .push)
+        let vc = GenderViewController()
+        self.transition(vc, .push)
     }
 }

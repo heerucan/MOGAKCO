@@ -49,19 +49,22 @@ final class BirthViewController: BaseViewController {
         
         output.date
             .skip(1)
-            .asDriver()
             .drive { [weak self] value in
                 self?.birthView.yearTextField.text = value[0]
                 self?.birthView.monthTextField.text = value[1]
                 self?.birthView.dayTextField.text = value[2]
-                UserDefaults.standard.set(value, forKey: "birthday")
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
             .bind { (vc, isValid) in
-                isValid ? vc.pushEmailView() : vc.showToast(.birthTypeError)
+                if isValid {
+                    vc.pushEmailView()
+                    UserDefaultsHelper.standard.birthday = vc.birthView.datePicker.date.toString(format: .full)
+                }  else {
+                    vc.showToast(.birthTypeError)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -69,7 +72,7 @@ final class BirthViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func pushEmailView() {
-        let viewController = EmailViewController()
-        self.transition(viewController, .push)
+        let vc = EmailViewController()
+        self.transition(vc, .push)
     }
 }
