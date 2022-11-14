@@ -25,29 +25,38 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
 
     private func configureTabBarViewController() {
         UITabBar.appearance().backgroundColor = .white
-        tabBar.tintColor = .black
+        tabBar.tintColor = Color.green
         tabBar.barTintColor = .white
         tabBar.isTranslucent = false
         
         let firstTabController = HomeViewController()
-        let secondTabController = BookmarkViewController()
-        let thirdTabController = SettingViewController()
+        let secondTabController = ShopViewController()
+        let thirdTabController = FriendViewController()
+        let fourthTabController = MyViewController()
         
         firstTabController.tabBarItem = UITabBarItem(
             title: "홈",
-            image: Icon.TabBar.unselectedMap,
-            selectedImage: Icon.TabBar.map)
+            image: Icon.homeInactive,
+            selectedImage: Icon.home)
                 
         secondTabController.tabBarItem = UITabBarItem(
-            title: "책갈피",
-            image: Icon.TabBar.unselectedBookmark,
-            selectedImage: Icon.TabBar.bookmark)
+            title: "새싹샵",
+            image: Icon.shopInactive,
+            selectedImage: Icon.shop)
         
         thirdTabController.tabBarItem = UITabBarItem(
-            title: "설정",
-            image: Icon.TabBar.unselectedSetting,
-            selectedImage: Icon.TabBar.setting)
+            title: "새싹친구",
+            image: Icon.friendsInactive,
+            selectedImage: Icon.friends)
         
-        self.viewControllers = [firstTabController, secondTabController, thirdTabController]
+        fourthTabController.tabBarItem = UITabBarItem(
+            title: "내정보",
+            image: Icon.myInactive,
+            selectedImage: Icon.my)
+        
+        self.viewControllers = [firstTabController,
+                                secondTabController,
+                                thirdTabController,
+                                fourthTabController]
     }
 }
