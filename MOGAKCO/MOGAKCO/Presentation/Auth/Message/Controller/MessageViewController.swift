@@ -51,52 +51,37 @@ final class MessageViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.messageText
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .withUnretained(self)
             .bind { (vc, code) in
                 vc.verifyID(code)
-                print("MessageVC - Credential : ", code)
             }
             .disposed(by: disposeBag)
         
         output.tap
             .withUnretained(self)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, isValid) in
-//                vc.requestLogin()
-                isValid ? vc.requestLogin() : vc.showToast(.phoneTypeError)
+                //                vc.requestLogin()
+                isValid ? vc.requestLogin() : vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
     }
     
     // MARK: - Network
-
-    func requestLogin() {
+    
+    private func requestLogin() {
         APIManager.shared.requestData(Login.self, UserRouter.login) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let value):
                 print("🟣Login Response Data ->>> \n", value)
-                self.handling(.success)
+                self.handle(with: .success)
+                let vc = HomeViewController()
+                self.transition(vc, .push)
+                
             case .failure(let error):
-                self.showErrorToast(error.errorDescription!)
-                self.handling(error)
+                self.handle(with: error)
             }
-        }
-    }
-    
-    private func handling(_ error: APIError) {
-        switch error {
-        case .success:
-            let vc = HomeViewController()
-            self.transition(vc, .push)
-        case .notCurrentUserError:
-            let vc = NicknameViewController()
-            self.transition(vc, .push)
-        case .expiredTokenError:
-            print("토큰 만료 -> 401 -> 갱신")
-        default:
-            break
         }
     }
 }
@@ -104,16 +89,15 @@ final class MessageViewController: BaseViewController {
 // MARK: - Firebase Auth
 
 extension MessageViewController {
-    func verifyID(_ code: String) {
+    private func verifyID(_ code: String) {
         let verificationID = UserDefaultsHelper.standard.verificationID!
         let credential = PhoneAuthProvider.provider().credential(
             withVerificationID: verificationID,
             verificationCode: code)
-        
         self.signInFirebase(credential)
     }
     
-    func signInFirebase(_ credential: PhoneAuthCredential) {
+    private func signInFirebase(_ credential: PhoneAuthCredential) {
         Auth.auth().signIn(with: credential) { authResult, error in
             if let error = error {
                 print("🔴Firebase 회원가입 실패", error.localizedDescription)
@@ -131,7 +115,6 @@ extension MessageViewController {
                 print("🔴Firebase idToken 실패 = 파베 기존 유저 아님", error.localizedDescription)
                 return
             }
-            
             guard let idToken = idToken else { return }
             print("🟢Firebase idToken 성공 ->>>", idToken)
             UserDefaultsHelper.standard.idToken = idToken

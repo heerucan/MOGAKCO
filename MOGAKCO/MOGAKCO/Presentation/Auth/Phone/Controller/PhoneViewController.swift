@@ -53,7 +53,6 @@ final class PhoneViewController: BaseViewController {
         output.phoneText
             .withUnretained(self)
             .observe(on:MainScheduler.asyncInstance)
-            .debounce(.seconds(3), scheduler: MainScheduler.asyncInstance)
             .bind { (vc, number) in
                 vc.phoneView.textField.backWards(with: number, 13)
             }
@@ -61,9 +60,9 @@ final class PhoneViewController: BaseViewController {
         
         output.tap
             .withUnretained(self)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, value) in
-                value ? vc.requestMessage(vc.phoneView.textField.text ?? "") : vc.showToast(.phoneTypeError)
+                value ? vc.requestMessage(vc.phoneView.textField.text ?? "") : vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
         
@@ -95,9 +94,9 @@ extension PhoneViewController {
             if let error = error {
                 print("🔴Verfiy 실패", error.localizedDescription)
                 if error.localizedDescription == "QUOTA_EXCEEDED : Exceeded quota." {
-                    self.showToast(.overRequestError)
+                    self.showToast(ToastMatrix.overRequestError.description)
                 } else {
-                    self.showToast(.etcAuthError)
+                    self.showToast(ToastMatrix.etcAuthError.description)
                 }
                 return
             }

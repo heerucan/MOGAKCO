@@ -38,7 +38,8 @@ final class EmailViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = EmailViewModel.Input(emailText: emailView.textField.rx.text, tap: emailView.reuseView.okButton.rx.tap)
+        let input = EmailViewModel.Input(emailText: emailView.textField.rx.text,
+                                         tap: emailView.reuseView.okButton.rx.tap)
         let output = emailViewModel.transform(input)
        
         output.emailText
@@ -52,7 +53,7 @@ final class EmailViewController: BaseViewController {
         output.tap
             .withUnretained(self)
             .bind { (vc, isValid) in
-                isValid ? vc.pushGenderView() : vc.showToast(.emailTypeError)
+                isValid ? vc.pushGenderView() : vc.showToast(ToastMatrix.emailTypeError.description)
             }
             .disposed(by: disposeBag)
         

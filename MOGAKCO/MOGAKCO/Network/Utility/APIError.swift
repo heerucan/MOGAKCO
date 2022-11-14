@@ -5,7 +5,9 @@
 //  Created by heerucan on 2022/11/07.
 //
 
-import Foundation
+import UIKit
+
+import FirebaseAuth
 
 @frozen
 enum APIError: Int, Error {
@@ -32,6 +34,54 @@ extension APIError: LocalizedError {
             return "🔔 Server Error"
         case .clientError:
             return "🔔 API 요청시 Header와 RequestBody에 값을 빠트리지 않고 전송했는지 확인"
+        }
+    }
+}
+
+// MARK: - Error Handling
+
+extension UIViewController {
+    
+    typealias Completion = (() -> Void)
+    
+    func handle(with error: APIError) {
+        
+        switch error {
+        case .success:
+            print(error.rawValue, error.errorDescription!)
+            
+        case .nicknameError:
+            print(error.rawValue, error.errorDescription!)
+           
+            let viewControllers: [UIViewController] = self.navigationController?.viewControllers as! [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
+            viewControllers[viewControllers.count - 4].showToast(ToastMatrix.invalidNickname.description)
+            
+        case .expiredTokenError:
+            print(error.rawValue, error.errorDescription!)
+            self.refreshToken()
+            self.showToast(ToastMatrix.overRequestError.description)
+            
+        case .notCurrentUserError:
+            print(error.rawValue, error.errorDescription!)
+            let vc = NicknameViewController()
+            self.transition(vc, .push)
+            
+        default:
+            print(error.rawValue, error.errorDescription!)
+        }
+    }
+    
+    private func refreshToken() {
+        let currentUser = Auth.auth().currentUser
+        currentUser?.getIDTokenForcingRefresh(true) { idToken, error in
+            if let error = error {
+                print("🔴Firebase idToken 실패 = 파베 기존 유저 아님", error.localizedDescription)
+                return
+            }
+            guard let idToken = idToken else { return }
+            print("🟢Firebase idToken 성공 ->>>", idToken)
+            UserDefaultsHelper.standard.idToken = idToken
         }
     }
 }

@@ -65,7 +65,7 @@ final class SplashViewController: BaseViewController {
                 self.present(viewController, animated: false, completion: nil)
             } else if UserDefaultsHelper.standard.currentUser == true {
                 // 기존 사용자
-                let viewController = HomeViewController()
+                let viewController = UINavigationController(rootViewController: TabBarController())
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
                 self.present(viewController, animated: false, completion: nil)

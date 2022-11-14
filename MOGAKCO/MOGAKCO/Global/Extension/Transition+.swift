@@ -16,10 +16,12 @@ extension UIViewController {
         case push
         case dismiss
         case pop
+        case popTo
     }
     
     func transition<T: UIViewController>(_ viewController: T,
                                          _ style: TransitionStyle = .push,
+                                         _ count: Int = 0,
                                          completion: ((T) -> Void)? = nil) {
         completion?(viewController)
         switch style {
@@ -44,6 +46,9 @@ extension UIViewController {
             self.dismiss(animated: true)
         case .pop:
             navigationController?.popViewController(animated: true)
+        case .popTo:
+            let controller = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - count]
+            self.navigationController?.popToViewController(controller!, animated: true)
         }
     }
 }

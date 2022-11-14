@@ -74,9 +74,13 @@ final class GenderViewController: BaseViewController {
         output.tap
             .withUnretained(self)
             .bind { (vc, gender) in
-                (gender.item == 0) ?
-                (UserDefaultsHelper.standard.gender = 1) : (UserDefaultsHelper.standard.gender = 0)
-                vc.requestSignup()
+                if gender.item == 0 {
+                    UserDefaultsHelper.standard.gender = 1
+                    vc.requestSignup()
+                } else {
+                    UserDefaultsHelper.standard.gender = 0
+                    vc.requestSignup()
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -84,44 +88,34 @@ final class GenderViewController: BaseViewController {
     // MARK: - Network
     
     private func requestSignup() {
-        let parameters: [String : Any] = ["phoneNumber": UserDefaultsHelper.standard.phone ?? "",
-                                          "FCMtoken": APIKey.FCMtoken,
-                                          "nick": UserDefaultsHelper.standard.nickname ?? "",
-                                          "birth": UserDefaultsHelper.standard.birthday ?? "",
-                                          "email": UserDefaultsHelper.standard.email ?? "",
-                                          "gender": UserDefaultsHelper.standard.gender]
+        let parameters: [String: Any] = [
+            "phoneNumber": UserDefaultsHelper.standard.phone ?? "",
+            "FCMtoken": APIKey.FCMtoken,
+            "nick": UserDefaultsHelper.standard.nickname ?? "",
+            "birth": UserDefaultsHelper.standard.birthday ?? "",
+            "email": UserDefaultsHelper.standard.email ?? "",
+            "gender": UserDefaultsHelper.standard.gender]
         
         APIManager.shared.requestStatusData(type: SignupRequest.self,
                                             method: .post,
                                             url: URL(string: APIKey.baseURL+"/v1/user")!,
                                             parameters: parameters,
-                                            headers: ["idtoken": UserDefaultsHelper.standard.idToken!]) { response, status in
+                                            headers: ["idtoken": UserDefaultsHelper.standard.idToken!]) { [weak self] response, status in
+            guard let self = self else { return }
             switch response {
             case .success(let value):
                 print("🟣🟣Sign Response Data ->>> ", value, status as Any)
+                self.handle(with: .success)
+                let vc = HomeViewController()
+                self.transition(vc, .push)
+                
             case .failure(let error):
-                self.showErrorToast(error.errorDescription!)
-                self.handling(error)
+                //TODO: - 여기에 코드를 넣어야 하는지 아니면 handle에 넣어야 하는지
+                self.handle(with: error)
+                
             case .none:
                 break
             }
-        }
-    }
-    
-    private func handling(_ error: APIError) {
-        switch error {
-        case .success:
-            let vc = HomeViewController()
-            self.transition(vc, .push)
-        case .nicknameError:
-            let vc = NicknameViewController()
-            vc.showToast(.invalidNickname)
-            navigationController?.popToViewController(vc, animated: true)
-        case .expiredTokenError:
-            let vc = PhoneViewController()
-            navigationController?.popToViewController(vc, animated: true)
-        default:
-            break
         }
     }
 }
