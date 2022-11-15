@@ -67,6 +67,9 @@ final class PlainNavigationBar: BaseView {
         leftButton.setImage(type.leftButton, for: .normal)
         rightButton.setImage(type.rightButton, for: .normal)
         rightButton.setTitle(type.rightButtonText, for: .normal)
+        rightButton.setTitleColor(Color.black, for: .normal)
+        rightButton.titleLabel?.font = Font.title3.font
+        rightButton.setTitleColor(Color.gray3, for: .highlighted)
     }
     
     // MARK: - Configure UI & Layout
@@ -86,6 +89,8 @@ final class PlainNavigationBar: BaseView {
         rightButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
             make.trailing.equalToSuperview()
+            make.width.equalTo(56)
+            make.height.equalTo(44)
         }
         
         titleLabel.snp.makeConstraints { make in

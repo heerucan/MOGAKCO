@@ -33,6 +33,7 @@ enum HeightType {
 enum PlainButtonType {
     case fill // 배경색있는
     case outline // 테두리있는
+    case grayLine
     case cancel // 취소버튼
     
     fileprivate var titleColor: UIColor {
@@ -41,6 +42,8 @@ enum PlainButtonType {
             return .white
         case .outline:
             return Color.green
+        case .grayLine:
+            return Color.black
         case .cancel:
             return Color.black
         }
@@ -51,6 +54,8 @@ enum PlainButtonType {
         case .fill:
             return Color.green
         case .outline:
+            return .white
+        case .grayLine:
             return .white
         case .cancel:
             return Color.gray2
@@ -63,6 +68,8 @@ enum PlainButtonType {
             return .clear
         case .outline:
             return Color.green
+        case .grayLine:
+            return Color.gray4
         case .cancel:
             return .clear
         }
@@ -70,12 +77,23 @@ enum PlainButtonType {
     
     fileprivate var borderWidth: CGFloat {
         switch self {
-        case .fill:
+        case .fill, .cancel:
             return 0
-        case .outline:
+        case .outline, .grayLine:
             return 1
+        }
+    }
+    
+    fileprivate var selectedColor: UIColor {
+        switch self {
+        case .fill:
+            return Color.green
+        case .outline:
+            return .white
+        case .grayLine:
+            return Color.green
         case .cancel:
-            return 0
+            return Color.gray2
         }
     }
 }
@@ -98,6 +116,13 @@ final class PlainButton: UIButton {
             configureDisableColor(type: type)
         }
     }
+    
+    override var isSelected: Bool {
+        didSet {
+            configureSelectedColor(type: type)
+            print("선택")
+        }
+    }
         
     // MARK: - Initializer
     
@@ -117,8 +142,8 @@ final class PlainButton: UIButton {
         titleLabel?.font = Font.body3.font
         setTitleColor(type.titleColor, for: .normal)
         backgroundColor = type.backgroundColor
-        makeCornerStyle(radius: 8)
-        setTitleColor(Color.gray3, for: .highlighted)
+        makeCornerStyle(width: type.borderWidth, color: type.borderColor.cgColor, radius: 8)
+        setTitleColor(Color.gray4, for: .highlighted)
     }
     
     private func configureLayout(height: HeightType = .h48) {
@@ -132,5 +157,10 @@ final class PlainButton: UIButton {
         let titleColor: UIColor = isEnable ? .white : Color.gray3
         setTitleColor(titleColor, for: .normal)
         backgroundColor = isEnable ? type.backgroundColor : Color.gray6
+    }
+    
+    private func configureSelectedColor(type: PlainButtonType) {
+        backgroundColor = isSelected ? type.selectedColor : type.backgroundColor
+        makeCornerStyle(width: 0, color: type.borderColor.cgColor, radius: 8)
     }
 }
