@@ -1,5 +1,5 @@
 //
-//  MyDetailNameTableViewCell.swift
+//  MyDetailCardTableViewCell.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/14.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class MyDetailNameTableViewCell: BaseTableViewCell {
+final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
     
