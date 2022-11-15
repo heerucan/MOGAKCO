@@ -11,8 +11,8 @@ import Alamofire
 
 enum UserRouter {
     case login
-//    case signup(phone: String, name: String, birth: String, fcm: String, email: String, gender: Int)
-    case signup(signup: SignupRequest)
+    //    case signup(phone: String, name: String, birth: String, fcm: String, email: String, gender: Int)
+    case signup(_ signup: SignupRequest)
     case withdraw
     case updateFCMToken
 }
@@ -40,6 +40,19 @@ extension UserRouter: URLRequestConvertible {
         }
     }
     
+    var parameter: [String: String]? {
+        switch self {
+        case .signup(let signup):
+            return ["phoneNumber": signup.phoneNumber,
+                    "FCMtoken": signup.FCMtoken,
+                    "nick": signup.nick,
+                    "birth": signup.birth,
+                    "email": signup.email,
+                    "gender": "\(signup.gender)"]
+        default: return nil
+        }
+    }
+    
     var headers: HTTPHeaders {
         return ["idtoken": UserDefaultsHelper.standard.idToken ?? "",
                 "Content-Type": APIKey.applicationJSON]
@@ -50,6 +63,7 @@ extension UserRouter: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.method = method
         request.headers = headers
+        request = try URLEncodedFormParameterEncoder().encode(parameter, into: request)
         return request
     }
 }
