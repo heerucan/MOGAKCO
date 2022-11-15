@@ -25,6 +25,7 @@
 		5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA9291D6625007E38EA /* FirebaseAuth */; };
 		5B7FDBAC291D6625007E38EA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBAB291D6625007E38EA /* FirebaseMessaging */; };
+		5B89F766292425A300A052C8 /* HomeTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B89F765292425A300A052C8 /* HomeTagCollectionViewCell.swift */; };
 		5B9559972920D8F100B34B60 /* UserDefaultsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */; };
 		5B95599B2920E8D000B34B60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B95599A2920E8D000B34B60 /* GoogleService-Info.plist */; };
 		5B95599F2921173A00B34B60 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95599E2921173A00B34B60 /* TabBarController.swift */; };
@@ -105,9 +106,12 @@
 		5BEFE280291C030400FD31E9 /* BirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE27F291C030400FD31E9 /* BirthViewModel.swift */; };
 		5BEFE283291C04BF00FD31E9 /* GenderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE282291C04BF00FD31E9 /* GenderCollectionViewCell.swift */; };
 		5BEFE286291C069B00FD31E9 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE285291C069B00FD31E9 /* Gender.swift */; };
+		DEB028486BA0EC21E7A12E1A /* Pods_MOGAKCO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2FA24AD10E50213215F6C3 /* Pods_MOGAKCO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		45AAAA6810DB77E718B69BCF /* Pods-MOGAKCO.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOGAKCO.debug.xcconfig"; path = "Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO.debug.xcconfig"; sourceTree = "<group>"; };
+		4D2FA24AD10E50213215F6C3 /* Pods_MOGAKCO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MOGAKCO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B1394DD2921D0F70046013E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5B1394DF292242CE0046013E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		5B1394E129225AAD0046013E /* MyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +128,7 @@
 		5B1395082922D9500046013E /* MyStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyView.swift; sourceTree = "<group>"; };
 		5B13950A2923B5DF0046013E /* MyNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNameView.swift; sourceTree = "<group>"; };
 		5B7FDBAD291D686C007E38EA /* MOGAKCO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MOGAKCO.entitlements; sourceTree = "<group>"; };
+		5B89F765292425A300A052C8 /* HomeTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		5B95599A2920E8D000B34B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B95599E2921173A00B34B60 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -198,6 +203,7 @@
 		5BEFE27F291C030400FD31E9 /* BirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthViewModel.swift; sourceTree = "<group>"; };
 		5BEFE282291C04BF00FD31E9 /* GenderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCollectionViewCell.swift; sourceTree = "<group>"; };
 		5BEFE285291C069B00FD31E9 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
+		758C82AA866FF40BB14B4AC8 /* Pods-MOGAKCO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOGAKCO.release.xcconfig"; path = "Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +222,7 @@
 				5BC57D5B2918EF23006CB05C /* Then in Frameworks */,
 				5BC57D662918EF73006CB05C /* SnapKit in Frameworks */,
 				5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
+				DEB028486BA0EC21E7A12E1A /* Pods_MOGAKCO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +286,22 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5B89F7632924258700A052C8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B89F7642924258A00A052C8 /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5B89F7642924258A00A052C8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B89F765292425A300A052C8 /* HomeTagCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		5B9559A02921179500B34B60 /* Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +313,7 @@
 		5B9559A1292117AA00B34B60 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				5B89F7632924258700A052C8 /* View */,
 				5BD11A7B2920127A0011C5B5 /* HomeViewController.swift */,
 				5B1394DD2921D0F70046013E /* HomeViewModel.swift */,
 				5B1394DF292242CE0046013E /* HomeView.swift */,
@@ -353,6 +377,8 @@
 			children = (
 				5BC57CF92918E73D006CB05C /* MOGAKCO */,
 				5BC57CF82918E73D006CB05C /* Products */,
+				5C8BCD2519CDAEB6A65244B2 /* Pods */,
+				EEDBC58BDAB13F6A1DACB65A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -863,6 +889,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		5C8BCD2519CDAEB6A65244B2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				45AAAA6810DB77E718B69BCF /* Pods-MOGAKCO.debug.xcconfig */,
+				758C82AA866FF40BB14B4AC8 /* Pods-MOGAKCO.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EEDBC58BDAB13F6A1DACB65A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4D2FA24AD10E50213215F6C3 /* Pods_MOGAKCO.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -870,9 +913,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BC57D0B2918E73F006CB05C /* Build configuration list for PBXNativeTarget "MOGAKCO" */;
 			buildPhases = (
+				760D772A0D03A1405D6EC9B2 /* [CP] Check Pods Manifest.lock */,
 				5BC57CF32918E73D006CB05C /* Sources */,
 				5BC57CF42918E73D006CB05C /* Frameworks */,
 				5BC57CF52918E73D006CB05C /* Resources */,
+				E32E44FF278655710C741094 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -954,11 +999,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		760D772A0D03A1405D6EC9B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MOGAKCO-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E32E44FF278655710C741094 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5BC57CF32918E73D006CB05C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B89F766292425A300A052C8 /* HomeTagCollectionViewCell.swift in Sources */,
 				5B9559972920D8F100B34B60 /* UserDefaultsHelper.swift in Sources */,
 				5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */,
 				5B9559A3292117C000B34B60 /* ShopViewController.swift in Sources */,
@@ -1176,6 +1264,7 @@
 		};
 		5BC57D0C2918E73F006CB05C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 45AAAA6810DB77E718B69BCF /* Pods-MOGAKCO.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1206,6 +1295,7 @@
 		};
 		5BC57D0D2918E73F006CB05C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 758C82AA866FF40BB14B4AC8 /* Pods-MOGAKCO.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

@@ -11,6 +11,7 @@ import Firebase
 import FirebaseMessaging
 import IQKeyboardManagerSwift
 import Network
+import NMapsMap
 import UserNotifications
 
 @main
@@ -25,9 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().delegate = self
         
         UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in
-        }
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
         application.registerForRemoteNotifications()
+        
+        NMFAuthManager.shared().clientId = APIKey.clientID
         
         return true
     }

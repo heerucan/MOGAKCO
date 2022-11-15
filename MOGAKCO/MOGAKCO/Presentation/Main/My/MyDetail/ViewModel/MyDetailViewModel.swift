@@ -10,14 +10,14 @@ import UIKit
 final class MyDetailViewModel: ViewModelType {
 
     struct Input {
-        let tap: ControlEvent<Void>
+//        let tap: ControlEvent<Void>
     }
     
     struct Output {
-        let tap: ControlEvent<Void>
+//        let tap: ControlEvent<Void>
     }
     
     func transform(_ input: Input) -> Output {
-        return Output(tap: input.tap)
+        return Output()
     }
 }
