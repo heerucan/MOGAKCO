@@ -23,7 +23,9 @@ class BaseTableViewCell: UITableViewCell, BaseMethodProtocol {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configureUI() { }
+    func configureUI() {
+        contentView.backgroundColor = .white
+    }
     func configureLayout() { }
     func bindViewModel() { }
     func setupDelegate() { }

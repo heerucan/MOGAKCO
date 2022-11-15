@@ -35,7 +35,7 @@ final class OnboardView: BaseView {
         $0.currentPageIndicatorTintColor = Color.black
     }
     
-    let startButton = PlainButton(.fill).then {
+    let startButton = PlainButton(.fill, height: .h48).then {
         $0.title = Matrix.startButtonTitle
     }
     

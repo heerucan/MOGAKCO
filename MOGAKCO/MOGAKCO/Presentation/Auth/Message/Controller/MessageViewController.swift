@@ -61,7 +61,6 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, isValid) in
-                //                vc.requestLogin()
                 isValid ? vc.requestLogin() : vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
@@ -69,8 +68,9 @@ final class MessageViewController: BaseViewController {
     
     // MARK: - Network
     
+    // TODO: - 리팩토링 시급한 부분
     private func requestLogin() {
-        APIManager.shared.requestData(Login.self, UserRouter.login) { [weak self] result in
+        APIManager.shared.requestData(Login.self, AuthRouter.login) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let value):
@@ -121,21 +121,3 @@ extension MessageViewController {
         }
     }
 }
-
-//        output.loginResponse
-//            .withUnretained(self)
-//            .map { (vc, result) -> Login? in
-//                switch result {
-//                case .success(let value):
-////                    vc.pushNicknameView()
-//                    return value
-//                case .failure(let error):
-//                    vc.showErrorToast(error.errorDescription!)
-//                }
-//                return nil
-//            }
-//            .subscribe(onNext: { login in
-//                self.pushNicknameView()
-//                print("4", login)
-//            })
-//            .disposed(by: disposeBag)

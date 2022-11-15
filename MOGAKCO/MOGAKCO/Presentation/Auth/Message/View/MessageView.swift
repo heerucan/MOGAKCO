@@ -31,7 +31,7 @@ final class MessageView: BaseView {
         $0.addSubview(timerLabel)
     }
     
-    let resendButton = PlainButton(.fill).then {
+    let resendButton = PlainButton(.fill, height: .h48).then {
         $0.title = "재전송"
     }
     

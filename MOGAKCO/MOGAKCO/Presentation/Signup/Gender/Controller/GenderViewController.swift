@@ -87,6 +87,7 @@ final class GenderViewController: BaseViewController {
     
     // MARK: - Network
     
+    // TODO: - 리팩토링 시급한 부분
     private func requestSignup() {
         let parameters: [String: Any] = [
             "phoneNumber": UserDefaultsHelper.standard.phone ?? "",

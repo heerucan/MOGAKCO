@@ -44,8 +44,9 @@ final class MessageViewModel: ViewModelType {
         return Output(messageText: text, tap: nextTap, messageValid: messageValid, loginResponse: response)
     }
     
+    // TODO: - 리팩토링 시급한 부분
     func requestLogin() {
-        APIManager.shared.requestData(Login.self, UserRouter.login) { result  in
+        APIManager.shared.requestData(Login.self, AuthRouter.login) { result  in
             self.loginResponse.onNext(result)
 //            switch result {
 //            case .success(let value):

@@ -62,7 +62,9 @@ final class PhoneViewController: BaseViewController {
             .withUnretained(self)
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, value) in
-                value ? vc.requestMessage(vc.phoneView.textField.text ?? "") : vc.showToast(ToastMatrix.phoneTypeError.description)
+                value ?
+                vc.requestMessage(vc.phoneView.textField.text ?? "") :
+                vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
         

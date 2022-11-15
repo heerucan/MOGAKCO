@@ -9,6 +9,19 @@
 /* Begin PBXBuildFile section */
 		5B1394DE2921D0F70046013E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394DD2921D0F70046013E /* HomeViewModel.swift */; };
 		5B1394E0292242CE0046013E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394DF292242CE0046013E /* HomeView.swift */; };
+		5B1394E229225AAD0046013E /* MyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E129225AAD0046013E /* MyDetailViewController.swift */; };
+		5B1394E529225AD50046013E /* MyDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E429225AD50046013E /* MyDetailViewModel.swift */; };
+		5B1394E929225C470046013E /* PlainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E829225C470046013E /* PlainNavigationBar.swift */; };
+		5B1394EB292271EB0046013E /* MyDetailCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */; };
+		5B1394F2292284D10046013E /* MyDetailImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */; };
+		5B1394F4292285120046013E /* MyDetailTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F3292285120046013E /* MyDetailTitleTableViewCell.swift */; };
+		5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */; };
+		5B1394FD2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */; };
+		5B1395032922CE7D0046013E /* MyDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395022922CE7D0046013E /* MyDetailImageView.swift */; };
+		5B1395052922D5220046013E /* MyTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395042922D5220046013E /* MyTitleView.swift */; };
+		5B1395072922D5300046013E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395062922D5300046013E /* MyReviewView.swift */; };
+		5B1395092922D9500046013E /* MyStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395082922D9500046013E /* MyStudyView.swift */; };
+		5B13950B2923B5DF0046013E /* MyNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B13950A2923B5DF0046013E /* MyNameView.swift */; };
 		5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBA9291D6625007E38EA /* FirebaseAuth */; };
 		5B7FDBAC291D6625007E38EA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 5B7FDBAB291D6625007E38EA /* FirebaseMessaging */; };
@@ -68,7 +81,7 @@
 		5BC57D7E291919B0006CB05C /* OnboardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */; };
 		5BC57D812919224B006CB05C /* Onboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D802919224B006CB05C /* Onboard.swift */; };
 		5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D822919245D006CB05C /* OnboardViewModel.swift */; };
-		5BD11A6D291E71760011C5B5 /* UserRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A6C291E71750011C5B5 /* UserRouter.swift */; };
+		5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A6C291E71750011C5B5 /* AuthRouter.swift */; };
 		5BD11A74291E75DA0011C5B5 /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */; };
 		5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A75291ECE400011C5B5 /* GenericResponse.swift */; };
 		5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */; };
@@ -96,6 +109,19 @@
 /* Begin PBXFileReference section */
 		5B1394DD2921D0F70046013E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		5B1394DF292242CE0046013E /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5B1394E129225AAD0046013E /* MyDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailViewController.swift; sourceTree = "<group>"; };
+		5B1394E429225AD50046013E /* MyDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailViewModel.swift; sourceTree = "<group>"; };
+		5B1394E829225C470046013E /* PlainNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainNavigationBar.swift; sourceTree = "<group>"; };
+		5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailCardTableViewCell.swift; sourceTree = "<group>"; };
+		5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailImageTableViewCell.swift; sourceTree = "<group>"; };
+		5B1394F3292285120046013E /* MyDetailTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailTitleTableViewCell.swift; sourceTree = "<group>"; };
+		5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
+		5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		5B1395022922CE7D0046013E /* MyDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailImageView.swift; sourceTree = "<group>"; };
+		5B1395042922D5220046013E /* MyTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTitleView.swift; sourceTree = "<group>"; };
+		5B1395062922D5300046013E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
+		5B1395082922D9500046013E /* MyStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyView.swift; sourceTree = "<group>"; };
+		5B13950A2923B5DF0046013E /* MyNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNameView.swift; sourceTree = "<group>"; };
 		5B7FDBAD291D686C007E38EA /* MOGAKCO.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MOGAKCO.entitlements; sourceTree = "<group>"; };
 		5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsHelper.swift; sourceTree = "<group>"; };
 		5B95599A2920E8D000B34B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -149,7 +175,7 @@
 		5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardCollectionViewCell.swift; sourceTree = "<group>"; };
 		5BC57D802919224B006CB05C /* Onboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Onboard.swift; sourceTree = "<group>"; };
 		5BC57D822919245D006CB05C /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
-		5BD11A6C291E71750011C5B5 /* UserRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRouter.swift; sourceTree = "<group>"; };
+		5BD11A6C291E71750011C5B5 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
 		5BD11A75291ECE400011C5B5 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMatrix.swift; sourceTree = "<group>"; };
@@ -194,6 +220,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B1394E329225AB20046013E /* MyDetail */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394EC292284900046013E /* View */,
+				5B1394ED292284950046013E /* ViewModel */,
+				5B1394EE292284980046013E /* Controller */,
+			);
+			path = MyDetail;
+			sourceTree = "<group>";
+		};
+		5B1394EC292284900046013E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394EF292284A50046013E /* Cell */,
+				5B1395022922CE7D0046013E /* MyDetailImageView.swift */,
+				5B13950A2923B5DF0046013E /* MyNameView.swift */,
+				5B1395042922D5220046013E /* MyTitleView.swift */,
+				5B1395082922D9500046013E /* MyStudyView.swift */,
+				5B1395062922D5300046013E /* MyReviewView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5B1394ED292284950046013E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394E429225AD50046013E /* MyDetailViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B1394EE292284980046013E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394E129225AAD0046013E /* MyDetailViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5B1394EF292284A50046013E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */,
+				5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */,
+				5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */,
+				5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5B1394F929228C4A0046013E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		5B9559A02921179500B34B60 /* Tab */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +298,8 @@
 		5B9559A4292117C700B34B60 /* My */ = {
 			isa = PBXGroup;
 			children = (
-				5B9559A82921180A00B34B60 /* MyViewController.swift */,
+				5BC3661429240B0700A0A316 /* MyTab */,
+				5B1394E329225AB20046013E /* MyDetail */,
 			);
 			path = My;
 			sourceTree = "<group>";
@@ -226,6 +310,40 @@
 				5B9559A6292117E600B34B60 /* FriendViewController.swift */,
 			);
 			path = Friend;
+			sourceTree = "<group>";
+		};
+		5BC3661429240B0700A0A316 /* MyTab */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394F929228C4A0046013E /* Model */,
+				5BC3661729240D1800A0A316 /* View */,
+				5BC3661629240C3E00A0A316 /* ViewModel */,
+				5BC3661529240C3900A0A316 /* Controller */,
+			);
+			path = MyTab;
+			sourceTree = "<group>";
+		};
+		5BC3661529240C3900A0A316 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5B9559A82921180A00B34B60 /* MyViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5BC3661629240C3E00A0A316 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5BC3661729240D1800A0A316 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B1394F3292285120046013E /* MyDetailTitleTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		5BC57CEE2918E73D006CB05C = {
@@ -324,6 +442,7 @@
 				5BB16AEF2919726200EA3099 /* AuthReuseView.swift */,
 				5BC57D7029190AA9006CB05C /* PlainButton.swift */,
 				5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */,
+				5B1394E829225C470046013E /* PlainNavigationBar.swift */,
 			);
 			path = CTA;
 			sourceTree = "<group>";
@@ -499,8 +618,8 @@
 		5BC57D7229190D84006CB05C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5BC57D7C291919A6006CB05C /* Cell */,
 				5BC57D7729190DDC006CB05C /* OnboardView.swift */,
+				5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -521,14 +640,6 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		5BC57D7C291919A6006CB05C /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				5BC57D7D291919B0006CB05C /* OnboardCollectionViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		5BC57D7F29192243006CB05C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,20 +648,20 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		5BD11A6E291E731D0011C5B5 /* User */ = {
+		5BD11A6E291E731D0011C5B5 /* AuthAPI */ = {
 			isa = PBXGroup;
 			children = (
-				5BD11A6C291E71750011C5B5 /* UserRouter.swift */,
+				5BD11A6C291E71750011C5B5 /* AuthRouter.swift */,
 				5BC57D572918EE7A006CB05C /* Login.swift */,
 				5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */,
 			);
-			path = User;
+			path = AuthAPI;
 			sourceTree = "<group>";
 		};
 		5BD11A6F291E74B50011C5B5 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				5BD11A6E291E731D0011C5B5 /* User */,
+				5BD11A6E291E731D0011C5B5 /* AuthAPI */,
 			);
 			name = API;
 			path = Login/API;
@@ -857,7 +968,7 @@
 				5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */,
 				5BC57D452918EBE2006CB05C /* NSNotification+.swift in Sources */,
 				5BC5222C291D917C000A570B /* UserManager.swift in Sources */,
-				5BD11A6D291E71760011C5B5 /* UserRouter.swift in Sources */,
+				5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */,
 				5BEFE26D291BF7D400FD31E9 /* GenderViewController.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
 				5BEFE252291BAEC200FD31E9 /* PlainTextField.swift in Sources */,
@@ -869,27 +980,38 @@
 				5B9559AB2921320300B34B60 /* NetworkMonitor.swift in Sources */,
 				5BEFE26B291BF7CC00FD31E9 /* GenderViewModel.swift in Sources */,
 				5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */,
+				5B1394E229225AAD0046013E /* MyDetailViewController.swift in Sources */,
 				5BC57D3D2918EB53006CB05C /* Date+.swift in Sources */,
 				5BEFE286291C069B00FD31E9 /* Gender.swift in Sources */,
+				5B1394E529225AD50046013E /* MyDetailViewModel.swift in Sources */,
+				5B1395052922D5220046013E /* MyTitleView.swift in Sources */,
 				5BEFE269291BF7C200FD31E9 /* GenderView.swift in Sources */,
+				5B13950B2923B5DF0046013E /* MyNameView.swift in Sources */,
 				5B1394DE2921D0F70046013E /* HomeViewModel.swift in Sources */,
 				5BEFE27A291C027000FD31E9 /* BirthView.swift in Sources */,
 				5BEFE276291C018900FD31E9 /* EmailViewController.swift in Sources */,
+				5B1395072922D5300046013E /* MyReviewView.swift in Sources */,
+				5B1395032922CE7D0046013E /* MyDetailImageView.swift in Sources */,
 				5BC57D472918EBFF006CB05C /* UITextField+.swift in Sources */,
 				5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */,
 				5BC57D812919224B006CB05C /* Onboard.swift in Sources */,
 				5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */,
+				5B1394FD2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift in Sources */,
 				5BEFE25D291BEC2A00FD31E9 /* MessageView.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BD11A7C2920127B0011C5B5 /* HomeViewController.swift in Sources */,
 				5BC57D492918EC43006CB05C /* ReusableProtocol.swift in Sources */,
+				5B1394E929225C470046013E /* PlainNavigationBar.swift in Sources */,
+				5B1394EB292271EB0046013E /* MyDetailCardTableViewCell.swift in Sources */,
 				5BEFE280291C030400FD31E9 /* BirthViewModel.swift in Sources */,
 				5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */,
 				5B9559A7292117E600B34B60 /* FriendViewController.swift in Sources */,
+				5B1394F4292285120046013E /* MyDetailTitleTableViewCell.swift in Sources */,
 				5BC57D212918E96D006CB05C /* APIManager.swift in Sources */,
 				5B1394E0292242CE0046013E /* HomeView.swift in Sources */,
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
+				5B1394F2292284D10046013E /* MyDetailImageTableViewCell.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
 				5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
@@ -901,6 +1023,7 @@
 				5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */,
 				5BC57D4E2918ED93006CB05C /* Matrix.swift in Sources */,
 				5BC57D582918EE7A006CB05C /* Login.swift in Sources */,
+				5B1395092922D9500046013E /* MyStudyView.swift in Sources */,
 				5B95599F2921173A00B34B60 /* TabBarController.swift in Sources */,
 				5BEFE283291C04BF00FD31E9 /* GenderCollectionViewCell.swift in Sources */,
 				5B9559A92921180A00B34B60 /* MyViewController.swift in Sources */,
@@ -908,6 +1031,7 @@
 				5BB16AE52919670300EA3099 /* NicknameViewModel.swift in Sources */,
 				5BEFE27E291C02D500FD31E9 /* EmailViewModel.swift in Sources */,
 				5BEFE25B291BEC1A00FD31E9 /* MessageViewModel.swift in Sources */,
+				5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */,
 				5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */,
 				5BEFE274291BF9B200FD31E9 /* BirthViewController.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
