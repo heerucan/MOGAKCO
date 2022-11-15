@@ -23,9 +23,9 @@ extension APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .success:
-            return "성공"
+            return "🔔 성공"
         case .nicknameError:
-            return "사용불가닉네임"
+            return "🔔 사용불가 닉네임"
         case .expiredTokenError:
             return "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요."
         case .notCurrentUserError:
@@ -52,8 +52,8 @@ extension UIViewController {
             
         case .nicknameError:
             print(error.rawValue, error.errorDescription!)
-           
-            let viewControllers: [UIViewController] = self.navigationController?.viewControllers as! [UIViewController]
+            // TODO: - 리팩토링 시급한 부분
+            let viewControllers: [UIViewController] = (self.navigationController?.viewControllers) as! [UIViewController]
             self.navigationController!.popToViewController(viewControllers[viewControllers.count - 4], animated: true)
             viewControllers[viewControllers.count - 4].showToast(ToastMatrix.invalidNickname.description)
             

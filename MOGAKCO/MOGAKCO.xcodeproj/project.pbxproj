@@ -38,6 +38,7 @@
 		5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEB29196A8800EA3099 /* PhoneViewModel.swift */; };
 		5BB16AEE29196A8F00EA3099 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AED29196A8F00EA3099 /* PhoneViewController.swift */; };
 		5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEF2919726200EA3099 /* AuthReuseView.swift */; };
+		5BC3661A29240FC100A0A316 /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 5BC3661929240FC100A0A316 /* MultiSlider */; };
 		5BC5222C291D917C000A570B /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5222B291D917C000A570B /* UserManager.swift */; };
 		5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFA2918E73D006CB05C /* AppDelegate.swift */; };
 		5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */; };
@@ -211,6 +212,7 @@
 				5BC57D632918EF60006CB05C /* Alamofire in Frameworks */,
 				5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */,
 				5BC57D5E2918EF51006CB05C /* RxCocoa in Frameworks */,
+				5BC3661A29240FC100A0A316 /* MultiSlider in Frameworks */,
 				5BC57D5B2918EF23006CB05C /* Then in Frameworks */,
 				5BC57D662918EF73006CB05C /* SnapKit in Frameworks */,
 				5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -888,6 +890,7 @@
 				5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */,
 				5B7FDBA9291D6625007E38EA /* FirebaseAuth */,
 				5B7FDBAB291D6625007E38EA /* FirebaseMessaging */,
+				5BC3661929240FC100A0A316 /* MultiSlider */,
 			);
 			productName = MOGAKCO;
 			productReference = 5BC57CF72918E73D006CB05C /* MOGAKCO.app */;
@@ -925,6 +928,7 @@
 				5BC57D672918EF81006CB05C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				5BEFE255291BBC2A00FD31E9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */,
 			);
 			productRefGroup = 5BC57CF82918E73D006CB05C /* Products */;
 			projectDirPath = "";
@@ -1262,6 +1266,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yonat/MultiSlider.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		5BC57D592918EF23006CB05C /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then";
@@ -1327,6 +1339,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		5BC3661929240FC100A0A316 /* MultiSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */;
+			productName = MultiSlider;
 		};
 		5BC57D5A2918EF23006CB05C /* Then */ = {
 			isa = XCSwiftPackageProductDependency;

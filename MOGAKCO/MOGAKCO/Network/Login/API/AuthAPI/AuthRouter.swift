@@ -1,5 +1,5 @@
 //
-//  UserRouter.swift
+//  AuthRouter.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/11.
@@ -9,7 +9,8 @@ import Foundation
 
 import Alamofire
 
-enum UserRouter {
+// TODO: - 리팩토링 시급한 부분
+enum AuthRouter {
     case login
     //    case signup(phone: String, name: String, birth: String, fcm: String, email: String, gender: Int)
     case signup(_ signup: SignupRequest)
@@ -17,7 +18,7 @@ enum UserRouter {
     case updateFCMToken
 }
 
-extension UserRouter: URLRequestConvertible {
+extension AuthRouter: URLRequestConvertible {
     
     var baseURL: URL {
         return URL(string: APIKey.baseURL)!

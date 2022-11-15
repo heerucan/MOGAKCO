@@ -70,13 +70,44 @@ final class MyDetailViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = MyDetailViewModel.Input()
-        let output = myDetailViewModel.transform(input)
-        
+//        let input = MyDetailViewModel.Input(tap: .rx.tap)
+//        let output = homeViewModel.transform(input)
+//
+//        output.tap
+//            .withUnretained(self)
+//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+//            .subscribe { (vc,_) in
+//                vc.requestWithdraw()
+//            }
+//            .disposed(by: disposeBag)
     }
     
     // MARK: - Network
     
+    private func requestWithdraw() {
+        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let value):
+                print("🟣성공 ->>> \n", value)
+                self.handle(with: .success)
+                UserDefaultsHelper.standard.removeObject()
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                let viewController = OnboardingViewController()
+                sceneDelegate?.window?.rootViewController = viewController
+                sceneDelegate?.window?.makeKeyAndVisible()
+
+            case .failure(let error):
+                self.handle(with: error)
+                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                let viewController = OnboardingViewController()
+                sceneDelegate?.window?.rootViewController = viewController
+                sceneDelegate?.window?.makeKeyAndVisible()
+            }
+        }
+    }
     // MARK: - @objce
     
     @objc func touchupToggleButton(_ sender: UIButton) {
@@ -115,6 +146,7 @@ extension MyDetailViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             guard let infoCell = tableView.dequeueReusableCell(withIdentifier: MyDetailInfoTableViewCell.identifier, for: indexPath) as? MyDetailInfoTableViewCell
             else { return UITableViewCell() }
+//            infoCell.withdrawButton
             return infoCell
         }
     }
