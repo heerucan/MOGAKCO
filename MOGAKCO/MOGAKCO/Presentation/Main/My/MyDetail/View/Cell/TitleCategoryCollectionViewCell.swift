@@ -11,7 +11,7 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    let button = PlainButton(.fill, height: .h32)
+    let button = PlainButton(.grayLine, height: .h32)
     
     // MARK: - Initializer
     
@@ -28,7 +28,7 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
             make.edges.equalToSuperview()
         }
     }
-
+    
     // MARK: - setupData
     
     func setupData(_ data: String) {

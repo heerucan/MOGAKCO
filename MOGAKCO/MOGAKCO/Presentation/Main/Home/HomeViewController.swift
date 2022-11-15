@@ -16,9 +16,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - DisposeBag
     
     private let disposeBag = DisposeBag()
-    
-    let monitor = NetworkMonitor()
-    
+        
     // MARK: - Property
     
     let homeViewModel = HomeViewModel()
@@ -34,7 +32,6 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
         UserDefaultsHelper.standard.currentUser = true
-        monitor.checkNetworkStatus()
     }
     
     // MARK: - UI & Layout
@@ -70,7 +67,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - Network
     
     private func requestWithdraw() {
-        APIManager.shared.requestData(Int.self, UserRouter.withdraw) { [weak self] response in
+        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
             guard let self = self else { return }
             switch response {
             case .success(let value):
