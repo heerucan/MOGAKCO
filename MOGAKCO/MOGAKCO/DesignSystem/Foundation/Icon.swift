@@ -32,6 +32,8 @@ enum Icon {
     
     // MARK: - Icon
     static let arrow = UIImage(named: "arrow")
+    static let moreDown = UIImage(named: "more_down")
+    static let moreUp = UIImage(named: "more_up")
     static let bagde = UIImage(named: "bagde")
     static let bell = UIImage(named: "bell")
     static let cancelMatch = UIImage(named: "cancel_match")
@@ -61,4 +63,7 @@ enum Icon {
     
     // MARK: - SSAC Image
     static let imgSSAC = UIImage(named: "ssac")
+    
+    // MARK: - Background
+    static let sesacBg01 = UIImage(named: "sesac_bg_01")
 }

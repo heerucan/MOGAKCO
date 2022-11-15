@@ -15,6 +15,21 @@ import UIKit
 // MARK: - Enum
 
 @frozen
+enum HeightType {
+    case h48
+    case h32
+    
+    fileprivate var height: CGFloat {
+        switch self {
+        case .h48:
+            return 48
+        case .h32:
+            return 32
+        }
+    }
+}
+
+@frozen
 enum PlainButtonType {
     case fill // 배경색있는
     case outline // 테두리있는
@@ -69,6 +84,7 @@ final class PlainButton: UIButton {
     
     // MARK: - Property
     
+    private var height: HeightType = .h48
     private var type: PlainButtonType = .fill
     
     var title: String? {
@@ -85,10 +101,10 @@ final class PlainButton: UIButton {
         
     // MARK: - Initializer
     
-    init(_ type: PlainButtonType) {
+    init(_ type: PlainButtonType, height: HeightType) {
         super.init(frame: .zero)
         configureUI(type: type)
-        configureLayout()
+        configureLayout(height: height)
     }
     
     required init?(coder: NSCoder) {
@@ -105,9 +121,9 @@ final class PlainButton: UIButton {
         setTitleColor(Color.gray3, for: .highlighted)
     }
     
-    private func configureLayout() {
+    private func configureLayout(height: HeightType = .h48) {
         snp.makeConstraints { make in
-            make.height.equalTo(48)
+            make.height.equalTo(height.height)
         }
     }
     

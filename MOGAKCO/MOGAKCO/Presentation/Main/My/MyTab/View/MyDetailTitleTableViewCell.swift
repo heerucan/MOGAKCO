@@ -16,10 +16,6 @@ final class MyDetailTitleTableViewCell: BaseTableViewCell {
         $0.font = Font.title6.font
     }
     
-//    let collectionView = UICollectionView().then {
-//        $0.backgroundColor = .red
-//    }
-    
     let view = UIView().then {
         $0.backgroundColor = .red
     }
