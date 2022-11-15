@@ -17,14 +17,13 @@ final class MyNameView: BaseView {
     let nameLabel = UILabel().then {
         $0.textColor = Color.black
         $0.font = Font.title1.font
+        $0.text = "김새싹"
     }
         
-    let toggleButton = UIButton().then {
-        $0.setImage(Icon.moreDown, for: .normal)
+    let moreImageView = UIImageView().then {
+        $0.image = Icon.moreDown
     }
-    
-    let touchfulButton = UIButton()
-    
+        
     // MARK: - Initializer
     
     override init(frame: CGRect) {
@@ -34,20 +33,16 @@ final class MyNameView: BaseView {
     // MARK: - Configure UI & Layout
     
     override func configureLayout() {
-        self.addSubviews([nameLabel, toggleButton])
-        
-        toggleButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+        self.addSubviews([nameLabel, moreImageView])
+
         nameLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview()
+            make.edges.equalToSuperview()
+            make.height.equalTo(26)
         }
         
-        toggleButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(16)
+        moreImageView.snp.makeConstraints { make in
+            make.centerY.equalTo(nameLabel.snp.centerY)
+            make.trailing.equalToSuperview()
         }
     }
 }

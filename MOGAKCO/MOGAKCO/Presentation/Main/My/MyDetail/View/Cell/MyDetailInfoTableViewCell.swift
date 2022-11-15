@@ -10,13 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
-enum CellType {
-    case gender
-    case study
-    case number
-    case age
-    case withdraw
-}
+import SnapKit
+import Then
 
 final class MyDetailInfoTableViewCell: BaseTableViewCell {
     
@@ -58,6 +53,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     let ageLabel = UILabel().then {
         $0.font = Font.title3.font
         $0.textColor = Color.whiteGreen
+        $0.text = "18 - 35"
     }
 
     // MARK: - Initializer
@@ -74,7 +70,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         menuLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(16)
-            make.directionalVerticalEdges.equalToSuperview().inset(21)
+            make.directionalVerticalEdges.equalToSuperview().inset(13)
         }
     }
     
@@ -139,9 +135,22 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         }
         
         ageSlider.snp.makeConstraints { make in
-            make.top.equalTo(menuLabel.snp.bottom).offset(14)
+            make.top.equalTo(menuLabel.snp.bottom)
             make.leading.equalToSuperview().inset(17)
             make.trailing.equalToSuperview().inset(23)
+        }
+    }
+    
+    // MARK: - 회원탈퇴
+    func configureWithdraw() {
+        menuLabel.text = "회원탈퇴"
+        
+        menuLabel.snp.removeConstraints()
+        menuLabel.snp.remakeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.leading.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(29)
+            make.bottom.equalToSuperview().inset(13)
         }
     }
     

@@ -20,6 +20,7 @@ final class MyTitleView: BaseView {
                                                                      titleCollectionView]).then {
         $0.axis = .vertical
         $0.spacing = 16
+        $0.alignment = .fill
     }
     
     private let titleLabel = UILabel().then {
@@ -44,6 +45,10 @@ final class MyTitleView: BaseView {
         
         titleStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints { make in
+            make.height.equalTo(18)
         }
         
         titleCollectionView.snp.makeConstraints { make in

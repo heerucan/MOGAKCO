@@ -11,21 +11,22 @@ import SnapKit
 import Then
 
 final class MyDetailNameTableViewCell: BaseTableViewCell {
-        
+    
     // MARK: - Property
     
-    lazy var borderStackView = UIStackView(arrangedSubviews: [nameView,
-                                                              titleView,
-                                                              studyView,
-                                                              reviewView]).then {
-        $0.backgroundColor = .blue
-        $0.makeCornerStyle(width: 1, color: Color.gray2.cgColor, radius: 8)
-        $0.axis = .vertical
-        $0.spacing = 24
-        $0.alignment = .fill
-        $0.distribution = .equalSpacing
-    }
-      
+    private lazy var stackView = UIStackView(
+        arrangedSubviews: [nameView, titleView, studyView, reviewView]).then {
+            $0.makeCornerStyle(width: 1, color: Color.gray2.cgColor, radius: 8)
+            $0.axis = .vertical
+            $0.spacing = 24
+            $0.alignment = .fill
+            $0.distribution = .equalSpacing
+            $0.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+            $0.isLayoutMarginsRelativeArrangement = true
+        }
+    
+    let toggleButton = UIButton()
+    
     let nameView = MyNameView()
     
     let titleView = MyTitleView()
@@ -38,71 +39,40 @@ final class MyDetailNameTableViewCell: BaseTableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        nameView.backgroundColor = .orange
-        titleView.backgroundColor = .red
-        reviewView.backgroundColor = .yellow
-        studyView.backgroundColor = .green
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
-        contentView.makeCornerStyle(width: 1, color: Color.gray2.cgColor, radius: 8)
     }
     
     // MARK: -  UI & Layout
     
     override func configureLayout() {
-        contentView.addSubviews([nameView,
-                                 titleView,
-                                 studyView,
-                                 reviewView])
-//
-//        borderStackView.snp.makeConstraints { make in
-//            make.top.leading.trailing.equalToSuperview()
-//            make.bottom.equalToSuperview().offset(16)
-//        }
-
-//        nameLabel.snp.makeConstraints { make in
-//            make.top.equalToSuperview().inset(16)
-////            make.bottom.equalToSuperview().inset(16)
-//            make.leading.equalToSuperview()
-//            make.trailing.equalTo(toggleButton.snp.trailing).inset(20)
-//        }
-//
-//        nameLabel.snp.makeConstraints { make in
-//            make.directionalVerticalEdges.equalToSuperview().inset(16)
-//        }
+        contentView.addSubviews([stackView, toggleButton])
         
-        nameView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(16)
-            make.height.equalTo(26+16)
+        stackView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(16).priority(.low)
         }
         
-        titleView.snp.makeConstraints { make in
-            make.top.equalTo(nameView.snp.bottom).offset(8)
+        toggleButton.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(42)
         }
-        
-        studyView.snp.makeConstraints { make in
-            make.top.equalTo(titleView.snp.bottom).offset(24)
-        }
-        
-        reviewView.snp.makeConstraints { make in
-            make.top.equalTo(studyView.snp.bottom).offset(24)
-            make.bottom.equalToSuperview().offset(-32).priority(.low)
-        }
+    }
     
-        
-        // MARK: - 여기를 안해줘서 안됐던 것임
-        
-//        reviewView.snp.makeConstraints { make in
-//            make.bottom.equalToSuperview()
-//        }
-
-        [nameView, titleView, studyView, reviewView].forEach {
-            $0.snp.makeConstraints { make in
-                make.directionalHorizontalEdges.equalToSuperview().inset(16)
-            }
+    func changeView(isSelected: Bool) {
+        if isSelected {
+            titleView.isHidden = true
+            studyView.isHidden = true
+            reviewView.isHidden = true
+            nameView.moreImageView.image = Icon.moreDown
+        } else {
+            titleView.isHidden = false
+            studyView.isHidden = false
+            reviewView.isHidden = false
+            nameView.moreImageView.image = Icon.moreUp
         }
     }
 }

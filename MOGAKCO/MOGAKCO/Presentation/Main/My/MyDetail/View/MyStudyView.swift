@@ -20,6 +20,7 @@ final class MyStudyView: BaseView {
                                                                      studyCollectionView]).then {
         $0.axis = .vertical
         $0.spacing = 16
+        $0.alignment = .fill
     }
 
     private let studyLabel = UILabel().then {
@@ -46,6 +47,10 @@ final class MyStudyView: BaseView {
             make.edges.equalToSuperview()
         }
         
+        studyLabel.snp.makeConstraints { make in
+            make.height.equalTo(18)
+        }
+        
         studyCollectionView.snp.makeConstraints { make in
             make.height.equalTo(112)
         }
@@ -55,7 +60,8 @@ final class MyStudyView: BaseView {
     
     override func setupDelegate() {
         studyCollectionView.delegate = self
-        studyCollectionView.register(TitleCategoryCollectionViewCell.self, forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
+        studyCollectionView.register(TitleCategoryCollectionViewCell.self,
+                                     forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
     }
 }
 
