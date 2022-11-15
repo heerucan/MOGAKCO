@@ -10,25 +10,24 @@ import UIKit
 import SnapKit
 import Then
 
-import SnapKit
-import Then
-
 final class MyDetailInfoTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
     
-    let menuLabel = UILabel().then {
-        $0.text = "회원탈퇴"
-        $0.textColor = Color.black
-        $0.font = Font.title4.font
+    private let genderLabel = UILabel().then {
+        $0.text = "내 성별"
     }
     
-    let maleButton = PlainButton(.fill).then {
+    let maleButton = PlainButton(.fill, height: .h48).then {
         $0.title = "남자"
     }
     
-    let femaleButton = PlainButton(.fill).then {
+    let femaleButton = PlainButton(.fill, height: .h48).then {
         $0.title = "여자"
+    }
+    
+    private let studyLabel = UILabel().then {
+        $0.text = "자주 하는 스터디"
     }
     
     let textField = UITextField().then {
@@ -36,11 +35,15 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         $0.textColor = Color.black
         $0.addPadding(width: 12)
         $0.borderStyle = .none
-        $0.text = "알고리즘"
+        $0.placeholder = "스터디를 입력해 주세요"
     }
     
     let lineView = UIView().then {
         $0.backgroundColor = Color.gray3
+    }
+    
+    private let numberLabel = UILabel().then {
+        $0.text = "내 번호 검색 허용"
     }
     
     let numberSwitch = UISwitch().then {
@@ -48,12 +51,22 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         $0.onTintColor = Color.green
     }
     
+    private let ageLabel = UILabel().then {
+        $0.text = "상대방 연령대"
+    }
+    
     let ageSlider = UISlider()
     
-    let ageLabel = UILabel().then {
+    let rangeLabel = UILabel().then {
         $0.font = Font.title3.font
-        $0.textColor = Color.whiteGreen
+        $0.textColor = Color.green
         $0.text = "18 - 35"
+    }
+    
+    let withdrawButton = UIButton()
+    
+    private let withdrawLabel = UILabel().then {
+        $0.text = "회원탈퇴"
     }
 
     // MARK: - Initializer
@@ -61,99 +74,101 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+    }
 
     // MARK: - Configure UI & Layout
     
-    override func configureLayout() {
-        contentView.addSubview(menuLabel)
-        
-        menuLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(16)
-            make.directionalVerticalEdges.equalToSuperview().inset(13)
-        }
+    override func configureUI() {
+        super.configureUI()
+        configureMenuLabel([genderLabel, studyLabel, numberLabel, ageLabel, withdrawLabel])
     }
     
-    // MARK: - 내 성별
-    func configureGender() {
-        menuLabel.text = "내 성별"
-        contentView.addSubviews([maleButton, femaleButton])
+    override func configureLayout() {
+        contentView.addSubviews([genderLabel, maleButton, femaleButton,
+                                 studyLabel, textField, lineView,
+                                 numberLabel, numberSwitch,
+                                 ageLabel, rangeLabel, ageSlider,
+                                 withdrawLabel])
+        
+        genderLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(24)
+            make.leading.equalToSuperview()
+        }
         
         maleButton.snp.makeConstraints { make in
-            make.centerY.equalTo(menuLabel.snp.centerY)
+            make.centerY.equalTo(genderLabel.snp.centerY)
             make.width.equalTo(56)
-            make.height.equalTo(48)
             make.trailing.equalTo(femaleButton.snp.leading).offset(-8)
         }
         
         femaleButton.snp.makeConstraints { make in
-            make.centerY.equalTo(menuLabel.snp.centerY)
+            make.centerY.equalTo(genderLabel.snp.centerY)
             make.width.equalTo(56)
-            make.height.equalTo(48)
-            make.trailing.equalToSuperview().inset(16)
+            make.trailing.equalToSuperview()
         }
-    }
-    
-    // MARK: - 자주 하는 스터디
-    func configureStudy() {
-        menuLabel.text = "자주 하는 스터디"
-        contentView.addSubviews([textField, lineView])
         
+        studyLabel.snp.makeConstraints { make in
+            make.top.equalTo(genderLabel.snp.bottom).offset(42)
+            make.leading.equalToSuperview()
+        }
+
         textField.snp.makeConstraints { make in
             make.leading.equalTo(lineView.snp.leading)
             make.trailing.equalTo(lineView.snp.trailing)
-            make.centerY.equalTo(menuLabel.snp.centerY)
+            make.centerY.equalTo(studyLabel.snp.centerY)
         }
         
         lineView.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(16)
-            make.height.equalTo(1)
             make.top.equalTo(textField.snp.bottom).offset(12)
-            make.width.equalTo(164)
+            make.leading.equalTo(studyLabel.snp.trailing).offset(82)
+            make.trailing.equalToSuperview()
+            make.height.equalTo(1)
         }
-    }
-    
-    // MARK: - 내 번호 검색 허용
-    func configureNumber() {
-        menuLabel.text = "내 번호 검색 허용"
-        contentView.addSubview(numberSwitch)
-        
+
+        numberLabel.snp.makeConstraints { make in
+            make.top.equalTo(studyLabel.snp.bottom).offset(42)
+            make.leading.equalToSuperview()
+        }
+
         numberSwitch.snp.makeConstraints { make in
-            make.centerY.equalTo(menuLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(16)
+            make.centerY.equalTo(numberLabel.snp.centerY)
+            make.trailing.equalToSuperview()
         }
-    }
-    
-    // MARK: - 연령대
-    func configureAge() {
-        menuLabel.text = "상대방 연령대"
-        contentView.addSubviews([ageLabel, ageSlider])
-        
+
         ageLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(menuLabel.snp.centerY)
-            make.trailing.equalToSuperview().inset(16)
+            make.top.equalTo(numberLabel.snp.bottom).offset(42)
+            make.leading.equalToSuperview()
         }
-        
+
+        rangeLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(ageLabel.snp.centerY)
+            make.trailing.equalToSuperview()
+        }
+
         ageSlider.snp.makeConstraints { make in
-            make.top.equalTo(menuLabel.snp.bottom)
-            make.leading.equalToSuperview().inset(17)
-            make.trailing.equalToSuperview().inset(23)
+            make.top.equalTo(ageLabel.snp.bottom).offset(16)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview().inset(13)
+            make.height.equalTo(24)
         }
-    }
-    
-    // MARK: - 회원탈퇴
-    func configureWithdraw() {
-        menuLabel.text = "회원탈퇴"
-        
-        menuLabel.snp.removeConstraints()
-        menuLabel.snp.remakeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().inset(16)
-            make.top.equalToSuperview().inset(29)
-            make.bottom.equalToSuperview().inset(13)
+
+        withdrawLabel.snp.makeConstraints { make in
+            make.top.equalTo(ageSlider.snp.bottom).offset(29)
+            make.leading.equalToSuperview()
+            make.bottom.equalToSuperview().inset(67)
         }
     }
     
     // MARK: - Custom Method
-
+    
+    private func configureMenuLabel(_ label: [UILabel]) {
+        label.forEach {
+            $0.textColor = Color.black
+            $0.font = Font.title4.font
+        }
+    }
 }

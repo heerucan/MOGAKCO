@@ -11,7 +11,7 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    let button = PlainButton(.fill)
+    let button = PlainButton(.fill, height: .h32)
     
     // MARK: - Initializer
     
@@ -26,7 +26,6 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
 
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(32)
         }
     }
 

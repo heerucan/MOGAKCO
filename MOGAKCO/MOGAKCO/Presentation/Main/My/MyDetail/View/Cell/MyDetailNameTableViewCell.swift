@@ -28,11 +28,8 @@ final class MyDetailNameTableViewCell: BaseTableViewCell {
     let toggleButton = UIButton()
     
     let nameView = MyNameView()
-    
     let titleView = MyTitleView()
-    
     let studyView = MyStudyView()
-    
     let reviewView = MyReviewView()
     
     // MARK: - Initializer

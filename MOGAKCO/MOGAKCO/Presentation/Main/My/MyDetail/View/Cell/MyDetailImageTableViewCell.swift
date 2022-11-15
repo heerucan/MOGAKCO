@@ -39,6 +39,4 @@ final class MyDetailImageTableViewCell: BaseTableViewCell {
             make.height.equalTo(194)
         }
     }
-    
-    // MARK: - Custom Method
 }
