@@ -63,6 +63,11 @@ enum Icon {
     
     // MARK: - SSAC Image
     static let imgSSAC = UIImage(named: "ssac")
+    static let sesac_face_5 = "sesac_face_5"
+    static let sesac_face_4 = "sesac_face_4"
+    static let sesac_face_3 = "sesac_face_3"
+    static let sesac_face_2 = "sesac_face_2"
+    static let sesac_face_1 = "sesac_face_1"
     
     // MARK: - Background
     static let sesacBg01 = UIImage(named: "sesac_bg_01")
