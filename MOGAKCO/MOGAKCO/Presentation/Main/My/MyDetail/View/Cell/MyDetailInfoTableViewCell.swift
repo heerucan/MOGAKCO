@@ -65,10 +65,10 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     
     let ageSlider = MultiSlider().then {
         $0.orientation = .horizontal
+        $0.value = [1, 65]
         $0.minimumValue = 18
         $0.maximumValue = 65
         $0.outerTrackColor = Color.gray2
-        $0.value = [1, 65]
         $0.tintColor = Color.green
         $0.trackWidth = 4
         $0.showsThumbImageShadow = true
@@ -196,7 +196,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     // MARK: - @objc
     
     @objc func sliderChanged(_ sender: MultiSlider) {
-        print(sender.minimumValue, sender.maximumValue)
-        rangeLabel.text = "\(Int(sender.minimumValue))" + " - " + "\(Int(sender.maximumValue))"
+        print(sender.minimumValue, sender.maximumValue, sender.value)
+        rangeLabel.text = "\(Int(sender.value[0]))" + " - " + "\(Int(sender.value[1]))"
     }
 }

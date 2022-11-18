@@ -25,10 +25,6 @@ final class HomeViewController: BaseViewController {
     private let homeView = HomeView()
     private let homeViewModel = HomeViewModel()
     
-    private let geocoder = CLGeocoder()
-    
-    private let locationManager = CLLocationManager()
-    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -39,6 +35,12 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
         UserDefaultsHelper.standard.currentUser = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkUserMatchingState()
+        searchSSAC()
     }
     
     // MARK: - UI & Layout
@@ -73,6 +75,7 @@ final class HomeViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, item in
                 print(item)
+                vc.searchSSAC()
             }
             .disposed(by: disposeBag)
         
@@ -92,6 +95,7 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0.last?.coordinate } // 1차원 배열에서 nil 제거, 옵셔널 바인딩
             .withUnretained(self)
             .subscribe { vc, coordinate in
+                vc.searchSSAC()
                 vc.homeViewModel.locationSubject.onNext(coordinate)
                 vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
@@ -104,17 +108,18 @@ final class HomeViewController: BaseViewController {
             .subscribe(onNext: { vc, error in
                 print("😡 사용자의 위치를 가져오지 못했습니다.", error)
                 vc.homeViewModel.checkUserAuthorization(LocationManager.shared.authorizationStatus) { status in
-                    vc.showLocationServiceAlert()
+                   vc.showLocationServiceAlert()
                 }
             })
             .disposed(by: disposeBag)
         
+        // MARK: - 서버통신 코드 넣기
         LocationManager.shared.rx.didChangeAuthorizationStatus
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
                 if CLLocationManager.locationServicesEnabled() {
                     vc.homeViewModel.checkUserAuthorization(status) { status in
-                        vc.showLocationServiceAlert()
+                        status == .denied || status == .restricted ? vc.showLocationServiceAlert() : vc.searchSSAC()
                     }
                 } else {
                     vc.showLocationServiceAlert()
@@ -124,72 +129,97 @@ final class HomeViewController: BaseViewController {
         
         LocationManager.shared.startUpdatingLocation()
         
+        // MARK: - 서버통신
+        
         output.locationTap
             .compactMap { $0 }
             .withUnretained(self)
             .bind { vc, coordinate in
                 LocationManager.shared.startUpdatingLocation()
-                // TODO: - 여기 서버통신 데이터 붙이고 나서 고쳐야 함
-                vc.homeViewModel.requestQueue(params: SearchRequest(lat: Matrix.ssacLat, long: Matrix.ssacLong))
-                vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
+                // TODO: - 여기 서버통신 데이터 붙이고 나서 고쳐야 함, 임의로 영등포로 해둠
+                let target = self.homeView.mapView.cameraPosition.target
+                vc.homeViewModel.updateCurrentLocation(CLLocationCoordinate2D(latitude: Matrix.ssacLat, longitude: Matrix.ssacLong)) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
                 }
             }
             .disposed(by: disposeBag)
         
+        // MARK: - 어노테이션 꽂기
+        
         homeViewModel.searchResponse
             .withUnretained(self)
             .subscribe { vc, response in
-                print(response, "🐸")
                 vc.handle(with: .success)
+                response.fromQueueDB + response.fromQueueDBRequested
+                vc.setupMarker(response.fromQueueDB)
+                
             } onError: { [weak self] error in
                 guard let self = self else { return }
-                print(error, "🐸")
-                let error = error as! APIError
-                self.handle(with: error)
+                self.handle(with: error as! APIError)
             }
             .disposed(by: disposeBag)
-
-        
-        // TODO: - 카메라 중심 위치 서버 통신 시 전송하기
-        
-        //        homeView.mapView.cameraPosition
-        
-        // TODO: - 매칭 버튼 서버통신을 통해서 이미지 변경, 기능 변경
-        
-        // TODO: - 네이버맵 처리
-        
-        
-        
+    }
+    
+    // MARK: - 유저의 현재 매칭 상태 확인
+    
+    private func checkUserMatchingState() {
+        homeViewModel.requestQueueState()
+        homeViewModel.queueStateResponse
+            .withUnretained(self)
+            .subscribe { vc, state in
+                if state.matched == 1 {
+                    vc.homeView.matchingButton.setImage(Icon.search, for: .normal)
+                } else if state.matched == 0 {
+                    vc.homeView.matchingButton.setImage(Icon.antenna, for: .normal)
+                } else {
+                    vc.homeView.matchingButton.setImage(Icon.message, for: .normal)
+                }
+            } onError: { [weak self] error in
+                guard let self = self else { return }
+                self.handle(with: error as! APIError)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    // MARK: - 현재 지도 중심 좌표 기준으로 새싹 찾기
+    
+    private func searchSSAC() {
+        // MARK: - 이부분 고쳐야 함 -> SearchRequest(lat: target.lat, long: target.lng)
+        let target = self.homeView.mapView.cameraPosition.target
+        homeViewModel.requestSearch(params: SearchRequest(lat: Matrix.ssacLat, long: Matrix.ssacLong))
+    }
+    
+    // MARK: - 새싹 마커 꽂기
+    
+    private func setupMarker(_ fromQueueDB: [FromQueueDB]) {
+        for queue in fromQueueDB {
+            print(queue)
+            let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
+            let marker = NMFMarker()
+            marker.position = coordinate
+            marker.iconImage = NMFOverlayImage(name: Icon.sesac_face_1)
+            marker.mapView = homeView.mapView
+        }
     }
 }
 
 // MARK: - Naver Map Protocol
 
 extension HomeViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
+        searchSSAC()
+    }
     
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
+            print("카메라 대기 이벤트")
+        }
+    }
 }
 
 // MARK: - CLLocation Manager Protocol
 
 extension HomeViewController {
-    private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
-        switch authorizationStatus {
-        case .notDetermined:
-            print("아직 결정 X")
-            locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted, .denied:
-            print("거부 or 아이폰 설정 유도")
-            showLocationServiceAlert()
-        case .authorizedWhenInUse, .authorizedAlways:
-            print("🤩 WHEN IN USE or ALWAYS")
-            locationManager.startUpdatingLocation() // 정확도를 위해서 무한대로 호출
-        default:
-            print("DEFAULT")
-        }
-    }
-    
     private func showLocationServiceAlert() {
         let setting = UIAlertAction(title: "설정으로 이동", style: .destructive) { _ in
             if let setting = URL(string: UIApplication.openSettingsURLString) {

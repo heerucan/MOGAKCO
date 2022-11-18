@@ -1,5 +1,5 @@
 //
-//  MyDetailTitleTableViewCell.swift
+//  MyView.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/14.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MyDetailTitleTableViewCell: BaseTableViewCell {
+final class MyView: BaseTableViewCell {
 
     // MARK: - Property
     

@@ -20,6 +20,7 @@ final class HomeViewModel: ViewModelType {
     lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(latitude: Matrix.ssacLat,
                                                                                                       longitude: Matrix.ssacLong))
     let searchResponse = PublishSubject<Search>()
+    let queueStateResponse = PublishSubject<QueueState>()
     
     struct Input {
         let locationTap: ControlEvent<Void>
@@ -35,14 +36,13 @@ final class HomeViewModel: ViewModelType {
         
         let myLocationButtonTap = input.locationTap
             .withLatestFrom(locationSubject)
-        
+                
         return Output(locationTap: myLocationButtonTap, tagList: tagList)
     }
     
     // MARK: - Network
 
-    func requestQueue(params: SearchRequest) {
-        print(#function)
+    func requestSearch(params: SearchRequest) {
         APIManager.shared.request(Search.self, QueueRouter.search(params)) { [weak self] data, status, error in
             guard let self = self else { return }
             guard let status = status else { return }
@@ -52,6 +52,20 @@ final class HomeViewModel: ViewModelType {
             
             if let error = error {
                 self.searchResponse.onError(error)
+            }
+        }
+    }
+    
+    func requestQueueState() {
+        APIManager.shared.request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
+            guard let self = self else { return }
+            guard let status = status else { return }
+            if let data = data {
+                self.queueStateResponse.onNext(data)
+            }
+            
+            if let error = error {
+                self.queueStateResponse.onError(error)
             }
         }
     }
