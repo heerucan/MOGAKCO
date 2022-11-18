@@ -9,6 +9,7 @@ import UIKit
 
 import CoreLocation
 import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 import NMapsMap
@@ -26,12 +27,7 @@ final class HomeViewController: BaseViewController {
     
     private let geocoder = CLGeocoder()
     
-    private let locationManager = CLLocationManager().then {
-        $0.distanceFilter = 10000
-    }
-    
-    private lazy var myLatitude = locationManager.location?.coordinate.latitude
-    private lazy var myLongtitude = locationManager.location?.coordinate.longitude
+    private let locationManager = CLLocationManager()
     
     // MARK: - LifeCycle
     
@@ -46,28 +42,82 @@ final class HomeViewController: BaseViewController {
     }
     
     // MARK: - UI & Layout
-    
-    override func configureUI() {
-        view.backgroundColor = .red
-    }
-    
-    override func configureLayout() {
-        
-    }
-    
+
     override func setupDelegate() {
-        locationManager.delegate = self
         homeView.setupMapDelegate(self, self)
-//        homeView.setupCollectionViewDelegate(self, self)
     }
     
     // MARK: - Bind
     
     override func bindViewModel() {
         
-//        let input = HomeViewModel.Input(tap: button.rx.tap)
-//        let output = homeViewModel.transform(input)
+        let input = HomeViewModel.Input(tap: homeView.locationButton.rx.tap)
+        let output = homeViewModel.transform(input)
 
+        // TODO: - 컬렉션뷰 처리
+        
+        output.tagList
+            .bind(to: homeView.collectionView.rx.items(
+                cellIdentifier: HomeTagCollectionViewCell.identifier,
+                cellType: HomeTagCollectionViewCell.self)) { index, item, cell in
+                    cell.setupData(data: item)
+                }
+                .disposed(by: disposeBag)
+        
+        homeView.collectionView.rx.itemSelected
+            .withUnretained(self)
+            .bind { vc, item in
+                print(item)
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: - 로케이션 매니저 처리
+        
+        // 뷰모델에서 코디네이트 가져와서 맵뷰 초기값 세팅
+        homeViewModel.locationSubject // output
+            .compactMap { $0 } // 옵셔널 바인딩
+            .withUnretained(self)
+            .subscribe { vc, coordinate in
+                vc.homeView.mapView.latitude = coordinate.latitude
+                vc.homeView.mapView.longitude = coordinate.longitude
+            }
+            .disposed(by: disposeBag)
+        
+        locationManager.rx.didUpdateLocations
+            .compactMap { $0.last?.coordinate } // 1차원 배열에서 nil 제거, 옵셔널 바인딩
+            .withUnretained(self)
+            .subscribe { vc, coordinate in
+                vc.homeViewModel.locationSubject.onNext(coordinate)
+                print(coordinate.latitude, coordinate.longitude)
+                vc.updateCurrentLocation()
+            }
+            .disposed(by: disposeBag)
+
+        locationManager.rx.didFailWithError
+            .withUnretained(self)
+            .subscribe(onNext: { vc, error in
+                print("😡 사용자의 위치를 가져오지 못했습니다.", error)
+                vc.checkUserCurrentLocationAuthorization(vc.locationManager.authorizationStatus)
+            })
+            .disposed(by: disposeBag)
+        
+        locationManager.rx.didChangeAuthorizationStatus
+            .withUnretained(self)
+            .subscribe(onNext: { vc, status in
+                if CLLocationManager.locationServicesEnabled() {
+                    vc.checkUserCurrentLocationAuthorization(status)
+                } else {
+                    vc.showLocationServiceAlert()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        locationManager.startUpdatingLocation()
+        
+        // TODO: - 네이버맵 처리
+        
+        
+        
     }
     
     // MARK: - Map
@@ -83,7 +133,6 @@ final class HomeViewController: BaseViewController {
     }
 }
 
-
 // MARK: - Naver Map Protocol
 
 extension HomeViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
@@ -92,44 +141,7 @@ extension HomeViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate 
 
 // MARK: - CLLocation Manager Protocol
 
-extension HomeViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let coordinate = locations.last?.coordinate {
-            myLatitude = coordinate.latitude
-            myLongtitude = coordinate.longitude
-            updateCurrentLocation()
-        }
-        locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("😡 사용자의 위치를 가져오지 못했습니다.")
-        checkUserCurrentLocationAuthorization(locationManager.authorizationStatus)
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        checkUserDeviceLocationServiceAuthorization()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkUserDeviceLocationServiceAuthorization()
-    }
-}
-
-// MARK: - 위치 서비스 활성화 체크
-
 extension HomeViewController {
-    private func checkUserDeviceLocationServiceAuthorization() {
-        let authorizationStatus: CLAuthorizationStatus
-        authorizationStatus = locationManager.authorizationStatus
-        
-        if CLLocationManager.locationServicesEnabled() {
-            checkUserCurrentLocationAuthorization(authorizationStatus)
-        } else {
-            showLocationServiceAlert()
-        }
-    }
-    
     private func checkUserCurrentLocationAuthorization(_ authorizationStatus: CLAuthorizationStatus) {
         switch authorizationStatus {
         case .notDetermined:
@@ -154,7 +166,7 @@ extension HomeViewController {
             }
         }
         showAlert(title: "위치 정보 이용",
-                  message: "",
+                  message: Matrix.settingMessage,
                   actions: [setting],
                   preferredStyle: .alert)
     }
