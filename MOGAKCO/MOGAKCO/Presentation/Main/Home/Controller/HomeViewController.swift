@@ -51,7 +51,7 @@ final class HomeViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = HomeViewModel.Input(tap: homeView.locationButton.rx.tap)
+        let input = HomeViewModel.Input(locationTap: homeView.locationButton.rx.tap)
         let output = homeViewModel.transform(input)
 
         // TODO: - 컬렉션뷰 처리
@@ -83,25 +83,27 @@ final class HomeViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        locationManager.rx.didUpdateLocations
+        LocationManager.shared.rx.didUpdateLocations
             .compactMap { $0.last?.coordinate } // 1차원 배열에서 nil 제거, 옵셔널 바인딩
             .withUnretained(self)
             .subscribe { vc, coordinate in
-                vc.homeViewModel.locationSubject.onNext(coordinate)
                 print(coordinate.latitude, coordinate.longitude)
-                vc.updateCurrentLocation()
+                vc.homeViewModel.locationSubject.onNext(coordinate)
+                vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
+                    vc.homeView.mapView.moveCamera(cameraUpdate)
+                }
             }
             .disposed(by: disposeBag)
 
-        locationManager.rx.didFailWithError
+        LocationManager.shared.rx.didFailWithError
             .withUnretained(self)
             .subscribe(onNext: { vc, error in
                 print("😡 사용자의 위치를 가져오지 못했습니다.", error)
-                vc.checkUserCurrentLocationAuthorization(vc.locationManager.authorizationStatus)
+                vc.checkUserCurrentLocationAuthorization(LocationManager.shared.authorizationStatus)
             })
             .disposed(by: disposeBag)
         
-        locationManager.rx.didChangeAuthorizationStatus
+        LocationManager.shared.rx.didChangeAuthorizationStatus
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
                 if CLLocationManager.locationServicesEnabled() {
@@ -112,24 +114,25 @@ final class HomeViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        locationManager.startUpdatingLocation()
+        LocationManager.shared.startUpdatingLocation()
+                
+        output.locationTap
+            .compactMap { $0 }
+            .withUnretained(self)
+            .bind { vc, coordinate in
+                LocationManager.shared.startUpdatingLocation()
+                vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
+                    vc.homeView.mapView.moveCamera(cameraUpdate)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // TODO: - 매칭 버튼 서버통신을 통해서 이미지 변경, 기능 변경
         
         // TODO: - 네이버맵 처리
         
         
         
-    }
-    
-    // MARK: - Map
-    
-    private func updateCurrentLocation() {
-        guard let lat = locationManager.location?.coordinate.latitude,
-              let long = locationManager.location?.coordinate.longitude else { return }
-        locationManager.stopUpdatingLocation()
-        let coordinate = NMGLatLng(lat: lat, lng: long)
-        let cameraUpdate = NMFCameraUpdate(scrollTo: coordinate, zoomTo: 14)
-        cameraUpdate.animation = .linear
-        homeView.mapView.moveCamera(cameraUpdate)
     }
 }
 
