@@ -31,30 +31,6 @@ final class HomeView: BaseView {
         layout.scrollDirection = .vertical
         return layout
     }()
-    
-    private lazy var buttonStackView = UIStackView(arrangedSubviews: [allButton, maleButton, femaleButton]).then {
-        $0.axis = .vertical
-        $0.spacing = 0
-        $0.alignment = .fill
-        $0.distribution = .fillEqually
-        $0.makeShadow(color: Color.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
-    }
-    
-    let allButton = PlainButton(.fill, height: .h48) .then {
-        $0.title = "전체"
-        $0.isSelected = true
-    }
-    
-    let maleButton = PlainButton(.fill, height: .h48) .then {
-        $0.title = "남자"
-        $0.isSelected = false
-        $0.layer.cornerRadius = 0
-    }
-    
-    let femaleButton = PlainButton(.fill, height: .h48) .then {
-        $0.title = "여자"
-        $0.isSelected = false
-    }
         
     lazy var mapView = NMFMapView(frame: self.frame).then {
         $0.minZoomLevel = 9
@@ -78,6 +54,10 @@ final class HomeView: BaseView {
         $0.backgroundColor = Color.black
         $0.makeShadow(color: Color.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
     }
+    
+    let markerImageView = UIImageView().then {
+        $0.image = Icon.mapMarker
+    }
         
     // MARK: - Initializer
     
@@ -88,7 +68,11 @@ final class HomeView: BaseView {
     // MARK: - UI & Layout
     
    override func configureLayout() {
-       self.addSubviews([mapView, collectionView, locationButton, matchingButton])
+       self.addSubviews([mapView,
+                         collectionView,
+                         locationButton,
+                         matchingButton,
+                         markerImageView])
        
        mapView.snp.makeConstraints { make in
            make.top.leading.trailing.equalToSuperview()
@@ -111,6 +95,10 @@ final class HomeView: BaseView {
        matchingButton.snp.makeConstraints { make in
            make.bottom.trailing.equalToSuperview().inset(16)
            make.width.height.equalTo(64)
+       }
+       
+       markerImageView.snp.makeConstraints { make in
+           make.center.equalTo(mapView)
        }
     }
     

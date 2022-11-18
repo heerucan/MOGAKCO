@@ -15,9 +15,11 @@ import NMapsMap
 
 final class HomeViewModel: ViewModelType {
     
-    let ssacCoordinate = CLLocationCoordinate2D(latitude: Matrix.ssacLat, longitude: Matrix.ssacLong)
     let tagList = Observable.just(["전체", "남자", "여자"])
-    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: ssacCoordinate)
+        
+    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(latitude: Matrix.ssacLat,
+                                                                                                      longitude: Matrix.ssacLong))
+    let searchResponse = PublishSubject<Search>()
     
     struct Input {
         let locationTap: ControlEvent<Void>
@@ -37,6 +39,42 @@ final class HomeViewModel: ViewModelType {
         return Output(locationTap: myLocationButtonTap, tagList: tagList)
     }
     
+    // MARK: - Network
+
+    func requestQueue(params: SearchRequest) {
+        print(#function)
+        APIManager.shared.request(Search.self, QueueRouter.search(params)) { [weak self] data, status, error in
+            guard let self = self else { return }
+            guard let status = status else { return }
+            if let data = data {
+                self.searchResponse.onNext(data)
+            }
+            
+            if let error = error {
+                self.searchResponse.onError(error)
+            }
+        }
+    }
+    
+    // MARK: - Location Authorization
+    
+    func checkUserAuthorization(_ status: CLAuthorizationStatus, completion: @escaping ((CLAuthorizationStatus?) -> ())) {
+        switch status {
+        case .notDetermined:
+            print("아직 결정 X")
+            LocationManager.shared.desiredAccuracy = kCLLocationAccuracyBest
+            LocationManager.shared.requestWhenInUseAuthorization()
+        case .restricted, .denied:
+            print("거부 or 아이폰 설정 유도")
+            completion(status)
+        case .authorizedWhenInUse, .authorizedAlways:
+            print("🤩 WHEN IN USE or ALWAYS")
+            LocationManager.shared.startUpdatingLocation() // 정확도를 위해서 무한대로 호출
+        default:
+            print("DEFAULT")
+        }
+    }
+    
     func updateCurrentLocation(_ coordinate: CLLocationCoordinate2D, completion: @escaping ((NMFCameraUpdate) -> ())) {
         LocationManager.shared.stopUpdatingLocation()
         let coordinate = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
@@ -45,4 +83,3 @@ final class HomeViewModel: ViewModelType {
         completion(cameraUpdate)
     }
 }
-

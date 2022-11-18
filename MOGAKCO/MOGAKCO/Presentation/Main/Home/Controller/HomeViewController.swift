@@ -19,7 +19,7 @@ final class HomeViewController: BaseViewController {
     // MARK: - DisposeBag
     
     private let disposeBag = DisposeBag()
-        
+    
     // MARK: - Property
     
     private let homeView = HomeView()
@@ -42,7 +42,12 @@ final class HomeViewController: BaseViewController {
     }
     
     // MARK: - UI & Layout
-
+    
+    override func configureUI() {
+        super.configureUI()
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     override func setupDelegate() {
         homeView.setupMapDelegate(self, self)
     }
@@ -53,7 +58,7 @@ final class HomeViewController: BaseViewController {
         
         let input = HomeViewModel.Input(locationTap: homeView.locationButton.rx.tap)
         let output = homeViewModel.transform(input)
-
+        
         // TODO: - 컬렉션뷰 처리
         
         output.tagList
@@ -87,19 +92,20 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0.last?.coordinate } // 1차원 배열에서 nil 제거, 옵셔널 바인딩
             .withUnretained(self)
             .subscribe { vc, coordinate in
-                print(coordinate.latitude, coordinate.longitude)
                 vc.homeViewModel.locationSubject.onNext(coordinate)
                 vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
                 }
             }
             .disposed(by: disposeBag)
-
+        
         LocationManager.shared.rx.didFailWithError
             .withUnretained(self)
             .subscribe(onNext: { vc, error in
                 print("😡 사용자의 위치를 가져오지 못했습니다.", error)
-                vc.checkUserCurrentLocationAuthorization(LocationManager.shared.authorizationStatus)
+                vc.homeViewModel.checkUserAuthorization(LocationManager.shared.authorizationStatus) { status in
+                    vc.showLocationServiceAlert()
+                }
             })
             .disposed(by: disposeBag)
         
@@ -107,7 +113,9 @@ final class HomeViewController: BaseViewController {
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
                 if CLLocationManager.locationServicesEnabled() {
-                    vc.checkUserCurrentLocationAuthorization(status)
+                    vc.homeViewModel.checkUserAuthorization(status) { status in
+                        vc.showLocationServiceAlert()
+                    }
                 } else {
                     vc.showLocationServiceAlert()
                 }
@@ -115,17 +123,37 @@ final class HomeViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         LocationManager.shared.startUpdatingLocation()
-                
+        
         output.locationTap
             .compactMap { $0 }
             .withUnretained(self)
             .bind { vc, coordinate in
                 LocationManager.shared.startUpdatingLocation()
+                // TODO: - 여기 서버통신 데이터 붙이고 나서 고쳐야 함
+                vc.homeViewModel.requestQueue(params: SearchRequest(lat: Matrix.ssacLat, long: Matrix.ssacLong))
                 vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
                 }
             }
             .disposed(by: disposeBag)
+        
+        homeViewModel.searchResponse
+            .withUnretained(self)
+            .subscribe { vc, response in
+                print(response, "🐸")
+                vc.handle(with: .success)
+            } onError: { [weak self] error in
+                guard let self = self else { return }
+                print(error, "🐸")
+                let error = error as! APIError
+                self.handle(with: error)
+            }
+            .disposed(by: disposeBag)
+
+        
+        // TODO: - 카메라 중심 위치 서버 통신 시 전송하기
+        
+        //        homeView.mapView.cameraPosition
         
         // TODO: - 매칭 버튼 서버통신을 통해서 이미지 변경, 기능 변경
         
