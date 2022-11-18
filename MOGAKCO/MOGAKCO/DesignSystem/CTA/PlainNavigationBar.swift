@@ -5,13 +5,16 @@
 //  Created by heerucan on 2022/11/14.
 //
 
-import Foundation
 import UIKit
+
+import SnapKit
+import Then
 
 final class PlainNavigationBar: BaseView {
     
     // MARK: - Enum
     
+    @frozen
     enum NavigationType {
         case my
         case myDetail
@@ -45,6 +48,8 @@ final class PlainNavigationBar: BaseView {
             }
         }
     }
+    
+    // MARK: - Property
     
     let titleLabel = UILabel().then {
         $0.font = Font.title3.font

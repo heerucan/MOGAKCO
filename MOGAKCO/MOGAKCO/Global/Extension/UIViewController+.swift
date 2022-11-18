@@ -51,7 +51,7 @@ extension UIViewController {
     
     func showToast(_ message: String) {
         let toastLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.size.width/2-(UIScreen.main.bounds.size.width-32)/2,
-                                               y: 70,
+                                               y: 100,
                                                width: UIScreen.main.bounds.size.width-32,
                                                height: 40)).then {
             $0.backgroundColor = Color.black.withAlphaComponent(0.89)
