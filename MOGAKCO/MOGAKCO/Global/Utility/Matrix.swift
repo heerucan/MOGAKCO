@@ -35,4 +35,10 @@ enum Matrix {
     static let idToken = "idToken"
     static let verificationID = "authVerificationID"
     static let FCMtoken = "FCMtoken"
+    
+    // MARK: - 위도/경도
+    static let ssacLat = 37.517819364682694
+    static let ssacLong = 126.88647317074734
+    static let settingMessage = "위치 서비스를 사용할 수 없습니다. 기기의 '설정>개인정보 보호'에서 위치 서비스를 켜주세요."
+
 }
