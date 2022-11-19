@@ -19,18 +19,20 @@ final class PlainNavigationBar: BaseView {
         case my
         case myDetail
         case common
+        case findSSAC
         
         fileprivate var title: String {
             switch self {
             case .my: return "내정보"
             case .myDetail: return "정보 관리"
             case .common: return ""
+            case .findSSAC: return "새싹찾기"
             }
         }
         
         fileprivate var rightButton: UIImage? {
             switch self {
-            case .my, .myDetail, .common:
+            case .my, .myDetail, .common, .findSSAC:
                 return nil
             }
         }
@@ -39,11 +41,13 @@ final class PlainNavigationBar: BaseView {
             switch self {
             case .myDetail: return "저장"
             case .my, .common: return nil
+            case .findSSAC: return "찾기 중단"
             }
         }
         
         fileprivate var leftButton: UIImage? {
             switch self {
+            case .my: return nil
             default: return Icon.arrow
             }
         }

@@ -60,6 +60,7 @@ enum Icon {
     static let settingAlarm = UIImage(named: "setting_alarm")
     static let siren = UIImage(named: "siren")
     static let write = UIImage(named: "write")
+    static let refresh = UIImage(named: "refresh")
     
     // MARK: - SSAC Image
     static let imgSSAC = UIImage(named: "ssac")
@@ -68,6 +69,7 @@ enum Icon {
     static let sesac_face_3 = "sesac_face_3"
     static let sesac_face_2 = "sesac_face_2"
     static let sesac_face_1 = "sesac_face_1"
+    static let sprout = UIImage(named: "sprout1")
     
     // MARK: - Background
     static let sesacBg01 = UIImage(named: "sesac_bg_01")

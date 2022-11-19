@@ -46,6 +46,21 @@ final class NearEmptyStateView: BaseView {
         $0.textColor = Color.gray7
     }
     
+    private lazy var stackView = UIStackView(arrangedSubviews: [changeButton, refreshButton]).then {
+        $0.axis = .vertical
+        $0.spacing = 8
+        $0.alignment = .fill
+        $0.distribution = .equalSpacing
+    }
+    
+    let changeButton = PlainButton(.fill, height: .h48).then {
+        $0.title = "스터디 변경하기"
+    }
+    
+    let refreshButton = PlainButton(.outline, height: .h48).then {
+        $0.setImage(Icon.refresh, for: .normal)
+    }
+    
     // MARK: - Initializer
     
     init(type: NearViewType) {
@@ -58,7 +73,8 @@ final class NearEmptyStateView: BaseView {
     override func configureLayout() {
         self.addSubviews([imageView,
                          titleLabel,
-                          subTitleLabel])
+                          subTitleLabel,
+                          stackView])
         
         imageView.snp.makeConstraints { make in
             make.top.equalToSuperview()
@@ -67,13 +83,21 @@ final class NearEmptyStateView: BaseView {
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(imageView.snp.bottom).offset(45)
-            make.directionalHorizontalEdges.equalToSuperview()
+            make.centerX.equalToSuperview()
         }
         
         subTitleLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.directionalHorizontalEdges.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.directionalHorizontalEdges.equalToSuperview().inset(48)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
+            make.directionalHorizontalEdges.equalToSuperview().inset(16)
+        }
+        
+        refreshButton.snp.makeConstraints { make in
+            make.width.equalTo(48)
         }
     }
     
