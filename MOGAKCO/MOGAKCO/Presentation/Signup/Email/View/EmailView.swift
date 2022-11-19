@@ -14,7 +14,7 @@ final class EmailView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.emailTitle, subtitle: Matrix.emailSubtitle).then {
+    let reuseView = AuthReuseView(Matrix.emailTitle, subtitle: Matrix.emailSubtitle, topInset: 168).then {
         $0.buttonTitle = Matrix.nextButtonTitle
     }
     

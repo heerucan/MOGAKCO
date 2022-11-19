@@ -12,7 +12,8 @@ import RxCocoa
 
 final class GenderViewModel: ViewModelType {
     
-    let signResult: PublishSubject<GenericResponse<VoidType>> = PublishSubject()
+    typealias SignupCompletion = (Int?, APIError?)
+    let signupResponse = PublishSubject<SignupCompletion>()
     
     struct Input {
         let genderIndex: ControlEvent<IndexPath>
@@ -33,5 +34,27 @@ final class GenderViewModel: ViewModelType {
             .withLatestFrom(genderIndex)
         
         return Output(gender: genderList, tap: nextTap, genderIndex: genderIndex)
+    }
+    
+    func requestSignup() {
+    
+        let params = SignupRequest(phoneNumber: UserDefaultsHelper.standard.phone ?? "",
+                                   FCMtoken: APIKey.FCMtoken,
+                                   nick: UserDefaultsHelper.standard.nickname ?? "",
+                                   birth: UserDefaultsHelper.standard.birthday ?? "",
+                                   email: UserDefaultsHelper.standard.email ?? "",
+                                   gender: UserDefaultsHelper.standard.gender)
+        
+        APIManager.shared.request(SignupRequest.self, AuthRouter.signup(params)) { [weak self] data, status, error in
+            guard let self = self else { return }
+            guard let data = data else { return }
+            guard let error = error else { return }
+
+            if let status = status {
+                self.signupResponse.onNext(SignupCompletion(status, error))
+            } else {
+                self.signupResponse.onError(error)
+            }
+        }
     }
 }

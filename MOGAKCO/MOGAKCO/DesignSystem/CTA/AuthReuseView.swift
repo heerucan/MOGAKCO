@@ -20,11 +20,7 @@ final class AuthReuseView: BaseView {
         }
     }
     
-    var topInset: CGFloat = 168 {
-        didSet {
-            configureLayout(topInset: topInset)
-        }
-    }
+    var topInset: CGFloat?
     
     private let titleLabel = UILabel().then {
         $0.font = Font.display1.font
@@ -44,7 +40,7 @@ final class AuthReuseView: BaseView {
     
     // MARK: - Initializer
     
-    init(_ title: String, subtitle: String? = nil) {
+    init(_ title: String, subtitle: String? = nil, topInset: CGFloat) {
         super.init(frame: .zero)
         configureLayout(topInset: topInset)
         titleLabel.text = title
@@ -71,7 +67,6 @@ final class AuthReuseView: BaseView {
         okButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().inset(347)
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
-            make.height.equalTo(48)
         }
     }
 }

@@ -26,6 +26,10 @@ final class GenderViewController: BaseViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Int, Gender>?
     
+    private lazy var navigationBar = PlainNavigationBar(type: .common).then {
+        $0.viewController = self
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -39,6 +43,15 @@ final class GenderViewController: BaseViewController {
     }
     
     // MARK: - UI & Layout
+        
+    override func configureLayout() {
+        view.addSubview(navigationBar)
+        
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide)
+            make.directionalHorizontalEdges.equalToSuperview()
+        }
+    }
     
     override func setupDelegate() {
         genderView.setupDelegate(self)
@@ -76,48 +89,28 @@ final class GenderViewController: BaseViewController {
             .bind { (vc, gender) in
                 if gender.item == 0 {
                     UserDefaultsHelper.standard.gender = 1
-                    vc.requestSignup()
+                    vc.genderViewModel.requestSignup()
                 } else {
                     UserDefaultsHelper.standard.gender = 0
-                    vc.requestSignup()
+                    vc.genderViewModel.requestSignup()
                 }
             }
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Network
-    
-    // TODO: - 리팩토링 시급한 부분
-    private func requestSignup() {
-        let parameters: [String: Any] = [
-            "phoneNumber": UserDefaultsHelper.standard.phone ?? "",
-            "FCMtoken": APIKey.FCMtoken,
-            "nick": UserDefaultsHelper.standard.nickname ?? "",
-            "birth": UserDefaultsHelper.standard.birthday ?? "",
-            "email": UserDefaultsHelper.standard.email ?? "",
-            "gender": UserDefaultsHelper.standard.gender]
         
-        APIManager.shared.requestStatusData(type: SignupRequest.self,
-                                            method: .post,
-                                            url: URL(string: APIKey.baseURL+"/v1/user")!,
-                                            parameters: parameters,
-                                            headers: ["idtoken": UserDefaultsHelper.standard.idToken!]) { [weak self] response, status in
-            guard let self = self else { return }
-            switch response {
-            case .success(let value):
-                print("🟣🟣Sign Response Data ->>> ", value, status as Any)
-                self.handle(with: .success)
-                let vc = HomeViewController()
-                self.transition(vc, .push)
-                
-            case .failure(let error):
-                //TODO: - 여기에 코드를 넣어야 하는지 아니면 handle에 넣어야 하는지
-                self.handle(with: error)
-                
-            case .none:
-                break
+        genderViewModel.signupResponse
+            .withUnretained(self)
+            .subscribe { vc, response in
+                if let status = response.0 {
+                    let home = HomeViewController()
+                    vc.transition(home, .push)
+                    print("🟣🟣Signup ->>> ", status)
+                }
+            } onError: { [weak self] error in
+                guard let self = self else { return }
+                self.handle(with: error as! APIError)
+                print("🟣🟣 error ->>>", error)
             }
-        }
+            .disposed(by: disposeBag)
     }
 }
 

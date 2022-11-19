@@ -14,10 +14,9 @@ final class BirthView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.birthTitle).then {
+    let reuseView = AuthReuseView(Matrix.birthTitle, topInset: 185).then {
         $0.buttonTitle = Matrix.nextButtonTitle
         $0.okButton.isEnable = false
-        $0.topInset = 185
     }
     
     lazy var datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: 216)).then {

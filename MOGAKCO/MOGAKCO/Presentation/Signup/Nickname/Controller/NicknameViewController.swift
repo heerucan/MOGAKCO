@@ -23,6 +23,10 @@ final class NicknameViewController: BaseViewController {
     private let nicknameView = NicknameView()
     private let nicknameViewModel = NicknameViewModel()
     
+    private lazy var navigationBar = PlainNavigationBar(type: .common).then {
+        $0.viewController = self
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -32,6 +36,17 @@ final class NicknameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+    }
+    
+    // MARK: - UI & Layout
+    
+    override func configureLayout() {
+        view.addSubview(navigationBar)
+        
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide)
+            make.directionalHorizontalEdges.equalToSuperview()
+        }
     }
     
     // MARK: - Bind

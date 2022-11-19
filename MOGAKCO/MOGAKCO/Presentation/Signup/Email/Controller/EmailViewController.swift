@@ -23,6 +23,10 @@ final class EmailViewController: BaseViewController {
     private let emailView = EmailView()
     private let emailViewModel = EmailViewModel()
     
+    private lazy var navigationBar = PlainNavigationBar(type: .common).then {
+        $0.viewController = self
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -32,6 +36,17 @@ final class EmailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+    }
+    
+    // MARK: - UI & Layout
+    
+    override func configureLayout() {
+        view.addSubview(navigationBar)
+        
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide)
+            make.directionalHorizontalEdges.equalToSuperview()
+        }
     }
     
     // MARK: - Bind

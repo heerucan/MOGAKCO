@@ -33,12 +33,7 @@ final class OnboardingViewController: BaseViewController {
     }
     
     // MARK: - UI & Layout
-    
-    override func configureUI() {
-        super.configureUI()
-        navigationController?.navigationBar.isHidden = true
-    }
-    
+
     override func setupDelegate() {
         onboardView.collectionView.delegate = self
     }

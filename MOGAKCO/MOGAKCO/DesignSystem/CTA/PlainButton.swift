@@ -18,6 +18,7 @@ import UIKit
 enum HeightType {
     case h48
     case h32
+    case h40
     
     fileprivate var height: CGFloat {
         switch self {
@@ -25,6 +26,8 @@ enum HeightType {
             return 48
         case .h32:
             return 32
+        case .h40:
+            return 40
         }
     }
 }
