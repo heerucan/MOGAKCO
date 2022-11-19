@@ -31,6 +31,7 @@ class BaseViewController: UIViewController, BaseMethodProtocol {
     func configureUI() {
         view.backgroundColor = .white
         navigationController?.navigationBar.topItem?.title = " "
+        navigationController?.isNavigationBarHidden = true
     }
     func configureLayout() { }
     func bindViewModel() { }
