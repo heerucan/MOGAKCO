@@ -6,3 +6,21 @@
 //
 
 import Foundation
+
+import RxSwift
+import RxCocoa
+
+final class NearViewModel: ViewModelType {
+    
+    struct Input {
+        
+    }
+    
+    struct Output {
+        
+    }
+    
+    func transform(_ input: Input) -> Output {
+        return Output()
+    }
+}

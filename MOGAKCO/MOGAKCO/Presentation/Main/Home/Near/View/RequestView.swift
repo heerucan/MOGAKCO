@@ -7,14 +7,52 @@
 
 import UIKit
 
-class RequestView: UIView {
+import SnapKit
+import Then
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+final class RequestView: BaseView {
+    
+//    var tasks: Results<Record>! {
+//        didSet {
+//            tableView.reloadData()
+//        }
+//    }
+    
+    // MARK: - Property
+    
+    let tableView = UITableView(frame: .zero, style: .plain).then {
+        $0.register(RequestTableViewCell.self, forCellReuseIdentifier: RequestTableViewCell.identifier)
+        $0.separatorStyle = .none
+        $0.allowsSelection = false
     }
-    */
+    
+    let emptyStateView = NearEmptyStateView(type: .request)
+    
+    // MARK: - Initializer
+    
+    override init(frame: CGRect) {
+        super.init(frame: .zero)
+    }
 
+    // MARK: - Configure UI & Layout
+    
+    override func configureLayout() {
+        self.addSubviews([tableView,
+                          emptyStateView])
+        
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        emptyStateView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(183)
+            make.centerX.equalToSuperview()
+        }
+    }
+
+    func configureTableViewDelegate(_ delegate: UITableViewDelegate,
+                                    _ datasource: UITableViewDataSource) {
+        tableView.delegate = delegate
+        tableView.dataSource = datasource
+    }
 }

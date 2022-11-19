@@ -21,7 +21,7 @@ final class HomeViewModel: ViewModelType {
     let queueStateResponse = PublishSubject<QueueStateCompletion>()
     
     let tagList = Observable.just(["전체", "남자", "여자"])
-        
+    
     lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(
         latitude: Matrix.ssacLat, longitude: Matrix.ssacLong))
     
@@ -46,20 +46,19 @@ final class HomeViewModel: ViewModelType {
         
         let itemSelected = input.itemSelected
         
-                
-        return Output(locationTap: myLocationButtonTap, itemSelected: itemSelected, tagList: tagList, searchResponse: searchResponse, queueStateResponse: queueStateResponse)
+        return Output(locationTap: myLocationButtonTap,
+                      itemSelected: itemSelected,
+                      tagList: tagList,
+                      searchResponse: searchResponse,
+                      queueStateResponse: queueStateResponse)
     }
     
     // MARK: - Network
-
+    
     func requestSearch(params: SearchRequest) {
         APIManager.shared.request(Search.self, QueueRouter.search(params)) { [weak self] data, status, error in
             guard let self = self else { return }
-            guard let status = status else { return }
-            if let data = data {
-                self.searchResponse.onNext(SearchCompletion(data, status, error))
-            }
-            
+            self.searchResponse.onNext(SearchCompletion(data, status, error))
             if let error = error {
                 self.searchResponse.onError(error)
             }
@@ -69,11 +68,7 @@ final class HomeViewModel: ViewModelType {
     func requestQueueState() {
         APIManager.shared.request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
             guard let self = self else { return }
-            guard let status = status else { return }
-            if let data = data {
-                self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
-            }
-            
+            self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
             if let error = error {
                 self.queueStateResponse.onError(error)
             }
@@ -93,7 +88,7 @@ final class HomeViewModel: ViewModelType {
             completion(status)
         case .authorizedWhenInUse, .authorizedAlways:
             print("🤩 WHEN IN USE or ALWAYS")
-            LocationManager.shared.startUpdatingLocation() // 정확도를 위해서 무한대로 호출
+            LocationManager.shared.startUpdatingLocation()
         default:
             print("DEFAULT")
         }

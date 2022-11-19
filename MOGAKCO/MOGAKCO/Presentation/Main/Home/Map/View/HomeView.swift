@@ -18,13 +18,14 @@ final class HomeView: BaseView {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.backgroundColor = .white
         $0.makeShadow(color: Color.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
-        $0.makeCornerStyle(width: 0, radius: 8)
+//        $0.makeCornerStyle(width: 0, radius: 8)
         $0.register(HomeTagCollectionViewCell.self, forCellWithReuseIdentifier: HomeTagCollectionViewCell.identifier)
     }
     
     private let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 48, height: 48)
+//        layout.
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.zero
@@ -83,7 +84,7 @@ final class HomeView: BaseView {
            make.top.equalToSuperview().inset(52)
            make.leading.equalToSuperview().inset(16)
            make.width.equalTo(48)
-           make.height.equalTo(144)
+           make.height.equalTo(48*3)
        }
        
        locationButton.snp.makeConstraints { make in
@@ -107,6 +108,4 @@ final class HomeView: BaseView {
         mapView.touchDelegate = touchDelegate
         mapView.addCameraDelegate(delegate: cameraDelegate)
     }
-    
-    // MARK: - Custom Method
 }

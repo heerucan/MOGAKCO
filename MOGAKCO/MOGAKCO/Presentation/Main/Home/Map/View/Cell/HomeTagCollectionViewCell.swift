@@ -14,7 +14,7 @@ final class HomeTagCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
         
-    let tagLabel = UILabel().then {
+    private let tagLabel = UILabel().then {
         $0.textColor = Color.black
         $0.font = Font.title4.font
     }
@@ -33,6 +33,10 @@ final class HomeTagCollectionViewCell: BaseCollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        contentView.backgroundColor = .red
+        contentView.snp.makeConstraints { make in
+            make.width.height.equalTo(48)
+        }
     }
     
     // MARK: - Configure UI & Layout

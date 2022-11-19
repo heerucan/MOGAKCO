@@ -37,6 +37,7 @@ final class HomeViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
         UserDefaultsHelper.standard.currentUser = true
+        print(UserDefaultsHelper.standard.idToken)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +72,7 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0.last?.coordinate }
             .withUnretained(self)
             .subscribe { vc, coordinate in
-//                vc.searchSSAC()
+                vc.searchSSAC()
                 vc.homeViewModel.locationSubject.onNext(coordinate)
                 vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
@@ -115,7 +116,6 @@ final class HomeViewController: BaseViewController {
         output.itemSelected
             .withUnretained(self)
             .bind { vc, indexPath in
-                print(indexPath)
                 indexPath.item
                 // TODO: - 선택 시마다 gender filtering
                 vc.searchSSAC()
@@ -139,35 +139,37 @@ final class HomeViewController: BaseViewController {
         output.searchResponse
             .withUnretained(self)
             .subscribe { vc, response in
-                guard let search = response.0 else { return }
-                vc.handle(with: .success)
-                vc.setupMarker(0, search.fromQueueDB)
-                vc.setupMarker(0, search.fromQueueDBRequested)
-            } onError: { [weak self] error in
-                guard let self = self else { return }
-                self.handle(with: error as! APIError)
+                if let search = response.0 {
+                    vc.setupMarker(search.fromQueueDB)
+                    vc.setupMarker(search.fromQueueDBRequested)
+                }
+                if let error = response.2 {
+                    vc.handle(with: error)
+                }
             }
             .disposed(by: disposeBag)
+        
         
         output.queueStateResponse
             .withUnretained(self)
             .subscribe { vc, response in
-                guard let state = response.0 else { return }
-                guard let status = response.1 else { return }
-                // TODO: - 리팩토링 요망
-                if status == 201 {
+                // TODO: - 화면전환 뷰컨 만들고 대응할 것
+                if let status = response.1 { // 201 -> 검색뷰
                     vc.homeView.matchingButton.setImage(Icon.search, for: .normal)
-//                    vc.transition(SearchViewController(), .push)
-                } else if status == 200 && state.matched == 0 {
-                    vc.homeView.matchingButton.setImage(Icon.antenna, for: .normal)
-//                    vc.transition(SearchViewController(), .push)
-                } else {
-                    vc.homeView.matchingButton.setImage(Icon.message, for: .normal)
-//                    vc.transition(SearchViewController(), .push)
+ //                    vc.transition(SearchViewController(), .push)
                 }
-            } onError: { [weak self] error in
-                guard let self = self else { return }
-                self.handle(with: error as! APIError)
+                if let state = response.0 { // 200
+                    if state.matched == 1 { // 채팅뷰
+                        vc.homeView.matchingButton.setImage(Icon.message, for: .normal)
+ //                    vc.transition(SearchViewController(), .push)
+                    } else if state.matched == 0 { // 새싹찾기뷰
+                        vc.homeView.matchingButton.setImage(Icon.antenna, for: .normal)
+                        vc.transition(NearViewController(), .push)
+                    }
+                }
+                if let error = response.2 {
+                    vc.handle(with: error)
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -180,17 +182,15 @@ final class HomeViewController: BaseViewController {
         homeViewModel.requestSearch(params: SearchRequest(lat: Matrix.ssacLat, long: Matrix.ssacLong))
     }
     
-    private func setupMarker(_ gender: Int? = 0, _ queueDB: [FromQueueDB]) {
+    private func setupMarker(_ queueDB: [FromQueueDB]) {
         for queue in queueDB {
-            if queue.gender == gender {
-                let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
-                let marker = NMFMarker()
-                marker.position = coordinate
-                marker.width = 83
-                marker.height = 83
-                marker.iconImage = NMFOverlayImage(name: "sesac_face_\(queue.sesac-1)")
-                marker.mapView = homeView.mapView
-            }
+            let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
+            let marker = NMFMarker()
+            marker.position = coordinate
+            marker.width = 83
+            marker.height = 83
+            marker.iconImage = NMFOverlayImage(name: "sesac_face_\(queue.sesac+1)")
+            marker.mapView = homeView.mapView
         }
     }
 }
@@ -199,12 +199,12 @@ final class HomeViewController: BaseViewController {
 
 extension HomeViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraIsChangingByReason reason: Int) {
-        searchSSAC()
+        //        searchSSAC()
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-            print("카메라 대기 이벤트")
+            //            print("카메라 대기 이벤트")
         }
     }
 }
