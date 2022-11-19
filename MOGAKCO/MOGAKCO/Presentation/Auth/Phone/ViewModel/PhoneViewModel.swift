@@ -49,7 +49,10 @@ final class PhoneViewModel: ViewModelType {
             .withLatestFrom(text)
             .share()
         
-        return Output(phoneText: text, tap: nextTap, userDefaults: userDefaults, phoneValid: phoneValid)
+        return Output(phoneText: text,
+                      tap: nextTap,
+                      userDefaults: userDefaults,
+                      phoneValid: phoneValid)
     }
     
     func addHyphen(text: String) -> String {

@@ -15,9 +15,8 @@ final class PhoneView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.phoneTitle).then {
+    let reuseView = AuthReuseView(Matrix.phoneTitle, topInset: 169).then {
         $0.buttonTitle = Matrix.phoneButtonTitle
-        $0.topInset = 169
     }
     
     var textField = PlainTextField(.line).then {

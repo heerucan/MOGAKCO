@@ -27,7 +27,7 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .findQueue, .stopQueue: return "/v1/queue"
         case .search: return "/v1/queue/search"
-        case .myQueueState: return "/v1/queue/QueueState"
+        case .myQueueState: return "/v1/queue/myQueueState"
         }
     }
     
@@ -59,8 +59,6 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .findQueue:
             return URLEncoding(arrayEncoding: .noBrackets)
-        case .search:
-            return JSONEncoding.default
         default: return JSONEncoding.default
         }
     }

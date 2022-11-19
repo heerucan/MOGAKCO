@@ -7,6 +7,8 @@
 
 import UIKit
 
+// TODO: - search 재귀호출 체크해보기
+
 import CoreLocation
 import RxSwift
 import RxCocoa
@@ -39,16 +41,11 @@ final class HomeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkUserMatchingState()
+        homeViewModel.requestQueueState()
         searchSSAC()
     }
     
     // MARK: - UI & Layout
-    
-    override func configureUI() {
-        super.configureUI()
-        navigationController?.isNavigationBarHidden = true
-    }
     
     override func setupDelegate() {
         homeView.setupMapDelegate(self, self)
@@ -58,32 +55,11 @@ final class HomeViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = HomeViewModel.Input(locationTap: homeView.locationButton.rx.tap)
+        let input = HomeViewModel.Input(locationTap: homeView.locationButton.rx.tap, itemSelected: homeView.collectionView.rx.itemSelected)
         let output = homeViewModel.transform(input)
         
-        // TODO: - 컬렉션뷰 처리
-        
-        output.tagList
-            .bind(to: homeView.collectionView.rx.items(
-                cellIdentifier: HomeTagCollectionViewCell.identifier,
-                cellType: HomeTagCollectionViewCell.self)) { index, item, cell in
-                    cell.setupData(data: item)
-                }
-                .disposed(by: disposeBag)
-        
-        homeView.collectionView.rx.itemSelected
-            .withUnretained(self)
-            .bind { vc, item in
-                print(item)
-                vc.searchSSAC()
-            }
-            .disposed(by: disposeBag)
-        
-        // TODO: - 로케이션 매니저 처리
-        
-        // 뷰모델에서 코디네이트 가져와서 맵뷰 초기값 세팅
-        homeViewModel.locationSubject // output
-            .compactMap { $0 } // 옵셔널 바인딩
+        homeViewModel.locationSubject
+            .compactMap { $0 }
             .withUnretained(self)
             .subscribe { vc, coordinate in
                 vc.homeView.mapView.latitude = coordinate.latitude
@@ -92,10 +68,10 @@ final class HomeViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         LocationManager.shared.rx.didUpdateLocations
-            .compactMap { $0.last?.coordinate } // 1차원 배열에서 nil 제거, 옵셔널 바인딩
+            .compactMap { $0.last?.coordinate }
             .withUnretained(self)
             .subscribe { vc, coordinate in
-                vc.searchSSAC()
+//                vc.searchSSAC()
                 vc.homeViewModel.locationSubject.onNext(coordinate)
                 vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
                     vc.homeView.mapView.moveCamera(cameraUpdate)
@@ -108,12 +84,11 @@ final class HomeViewController: BaseViewController {
             .subscribe(onNext: { vc, error in
                 print("😡 사용자의 위치를 가져오지 못했습니다.", error)
                 vc.homeViewModel.checkUserAuthorization(LocationManager.shared.authorizationStatus) { status in
-                   vc.showLocationServiceAlert()
+                    vc.showLocationServiceAlert()
                 }
             })
             .disposed(by: disposeBag)
         
-        // MARK: - 서버통신 코드 넣기
         LocationManager.shared.rx.didChangeAuthorizationStatus
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
@@ -127,9 +102,26 @@ final class HomeViewController: BaseViewController {
             })
             .disposed(by: disposeBag)
         
-        LocationManager.shared.startUpdatingLocation()
+        //        LocationManager.shared.startUpdatingLocation()
         
-        // MARK: - 서버통신
+        output.tagList
+            .bind(to: homeView.collectionView.rx.items(
+                cellIdentifier: HomeTagCollectionViewCell.identifier,
+                cellType: HomeTagCollectionViewCell.self)) { index, item, cell in
+                    cell.setupData(data: item)
+                }
+                .disposed(by: disposeBag)
+        
+        output.itemSelected
+            .withUnretained(self)
+            .bind { vc, indexPath in
+                print(indexPath)
+                indexPath.item
+                // TODO: - 선택 시마다 gender filtering
+                vc.searchSSAC()
+            }
+            .disposed(by: disposeBag)
+        
         
         output.locationTap
             .compactMap { $0 }
@@ -144,35 +136,34 @@ final class HomeViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        // MARK: - 어노테이션 꽂기
-        
-        homeViewModel.searchResponse
+        output.searchResponse
             .withUnretained(self)
             .subscribe { vc, response in
+                guard let search = response.0 else { return }
                 vc.handle(with: .success)
-                response.fromQueueDB + response.fromQueueDBRequested
-                vc.setupMarker(response.fromQueueDB)
-                
+                vc.setupMarker(0, search.fromQueueDB)
+                vc.setupMarker(0, search.fromQueueDBRequested)
             } onError: { [weak self] error in
                 guard let self = self else { return }
                 self.handle(with: error as! APIError)
             }
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - 유저의 현재 매칭 상태 확인
-    
-    private func checkUserMatchingState() {
-        homeViewModel.requestQueueState()
-        homeViewModel.queueStateResponse
+        
+        output.queueStateResponse
             .withUnretained(self)
-            .subscribe { vc, state in
-                if state.matched == 1 {
+            .subscribe { vc, response in
+                guard let state = response.0 else { return }
+                guard let status = response.1 else { return }
+                // TODO: - 리팩토링 요망
+                if status == 201 {
                     vc.homeView.matchingButton.setImage(Icon.search, for: .normal)
-                } else if state.matched == 0 {
+//                    vc.transition(SearchViewController(), .push)
+                } else if status == 200 && state.matched == 0 {
                     vc.homeView.matchingButton.setImage(Icon.antenna, for: .normal)
+//                    vc.transition(SearchViewController(), .push)
                 } else {
                     vc.homeView.matchingButton.setImage(Icon.message, for: .normal)
+//                    vc.transition(SearchViewController(), .push)
                 }
             } onError: { [weak self] error in
                 guard let self = self else { return }
@@ -181,7 +172,7 @@ final class HomeViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    // MARK: - 현재 지도 중심 좌표 기준으로 새싹 찾기
+    // MARK: - Custom Method
     
     private func searchSSAC() {
         // MARK: - 이부분 고쳐야 함 -> SearchRequest(lat: target.lat, long: target.lng)
@@ -189,16 +180,17 @@ final class HomeViewController: BaseViewController {
         homeViewModel.requestSearch(params: SearchRequest(lat: Matrix.ssacLat, long: Matrix.ssacLong))
     }
     
-    // MARK: - 새싹 마커 꽂기
-    
-    private func setupMarker(_ fromQueueDB: [FromQueueDB]) {
-        for queue in fromQueueDB {
-            print(queue)
-            let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
-            let marker = NMFMarker()
-            marker.position = coordinate
-            marker.iconImage = NMFOverlayImage(name: Icon.sesac_face_1)
-            marker.mapView = homeView.mapView
+    private func setupMarker(_ gender: Int? = 0, _ queueDB: [FromQueueDB]) {
+        for queue in queueDB {
+            if queue.gender == gender {
+                let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
+                let marker = NMFMarker()
+                marker.position = coordinate
+                marker.width = 83
+                marker.height = 83
+                marker.iconImage = NMFOverlayImage(name: "sesac_face_\(queue.sesac-1)")
+                marker.mapView = homeView.mapView
+            }
         }
     }
 }

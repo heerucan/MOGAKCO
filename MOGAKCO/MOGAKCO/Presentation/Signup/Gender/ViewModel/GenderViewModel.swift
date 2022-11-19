@@ -24,6 +24,7 @@ final class GenderViewModel: ViewModelType {
         let gender: Observable<[Gender]>
         let tap: Observable<ControlEvent<IndexPath>.Element>
         let genderIndex: ControlEvent<IndexPath>
+        let response: PublishSubject<SignupCompletion>
     }
     
     func transform(_ input: Input) -> Output {
@@ -32,12 +33,16 @@ final class GenderViewModel: ViewModelType {
         
         let nextTap = input.tap
             .withLatestFrom(genderIndex)
-        
-        return Output(gender: genderList, tap: nextTap, genderIndex: genderIndex)
+                
+        return Output(gender: genderList,
+                      tap: nextTap,
+                      genderIndex: genderIndex,
+                      response: signupResponse)
     }
     
-    func requestSignup() {
+    // MARK: - Network
     
+    func requestSignup() {
         let params = SignupRequest(phoneNumber: UserDefaultsHelper.standard.phone ?? "",
                                    FCMtoken: APIKey.FCMtoken,
                                    nick: UserDefaultsHelper.standard.nickname ?? "",
@@ -47,12 +52,8 @@ final class GenderViewModel: ViewModelType {
         
         APIManager.shared.request(SignupRequest.self, AuthRouter.signup(params)) { [weak self] data, status, error in
             guard let self = self else { return }
-            guard let data = data else { return }
-            guard let error = error else { return }
-
-            if let status = status {
-                self.signupResponse.onNext(SignupCompletion(status, error))
-            } else {
+            self.signupResponse.onNext(SignupCompletion(status, error))
+            if let error = error {
                 self.signupResponse.onError(error)
             }
         }

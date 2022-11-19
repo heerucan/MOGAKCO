@@ -9,10 +9,9 @@ import Foundation
 
 import Alamofire
 
-// TODO: - 리팩토링 시급한 부분
+@frozen
 enum AuthRouter {
     case login
-    //    case signup(phone: String, name: String, birth: String, fcm: String, email: String, gender: Int)
     case signup(_ signup: SignupRequest)
     case withdraw
     case updateFCMToken
@@ -41,7 +40,7 @@ extension AuthRouter: URLRequestConvertible {
         }
     }
     
-    var parameter: [String: String]? {
+    var parameter: Parameters? {
         switch self {
         case .signup(let signup):
             return ["phoneNumber": signup.phoneNumber,
@@ -51,6 +50,14 @@ extension AuthRouter: URLRequestConvertible {
                     "email": signup.email,
                     "gender": "\(signup.gender)"]
         default: return nil
+        }
+    }
+
+    var encoding: ParameterEncoding {
+        switch self {
+        case .signup:
+            return JSONEncoding.default
+        default: return JSONEncoding.default
         }
     }
     
@@ -64,7 +71,9 @@ extension AuthRouter: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.method = method
         request.headers = headers
-        request = try URLEncodedFormParameterEncoder().encode(parameter, into: request)
+        if let parameter = parameter {
+            return try encoding.encode(request, with: parameter)
+        }
         return request
     }
 }

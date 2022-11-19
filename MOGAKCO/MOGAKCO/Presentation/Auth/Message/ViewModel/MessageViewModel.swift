@@ -12,7 +12,8 @@ import RxCocoa
 
 final class MessageViewModel: ViewModelType {
     
-    let loginResponse = PublishSubject<Result<Login, APIError>>()
+    typealias LoginCompletion = (Login?, Int?, APIError?)
+    let loginResponse = PublishSubject<LoginCompletion>()
     
     struct Input {
         let messageText: ControlProperty<String?>
@@ -23,7 +24,7 @@ final class MessageViewModel: ViewModelType {
         let messageText: ControlProperty<String>
         let tap: Observable<Bool>
         let messageValid: Driver<Bool>
-        let loginResponse: PublishSubject<Result<Login, APIError>>
+        let response: PublishSubject<LoginCompletion>
     }
     
     func transform(_ input: Input) -> Output {
@@ -35,27 +36,24 @@ final class MessageViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: false)
         
         let text = input.messageText.orEmpty
-        
         let nextTap = input.tap
             .withLatestFrom(messageValid)
-        
-        let response = loginResponse
-                
-        return Output(messageText: text, tap: nextTap, messageValid: messageValid, loginResponse: response)
+                        
+        return Output(messageText: text,
+                      tap: nextTap,
+                      messageValid: messageValid,
+                      response: loginResponse)
     }
     
-    // TODO: - 리팩토링 시급한 부분
+    // MARK: - Network
+    
     func requestLogin() {
-        APIManager.shared.requestData(Login.self, AuthRouter.login) { result  in
-            self.loginResponse.onNext(result)
-//            switch result {
-//            case .success(let value):
-//                print(value)
-//                self.loginResponse.onNext(value)
-//            case .failure(let error):
-//                self.loginResponse.onError(error)
-//                print("VM ->>>", error.errorDescription)
-//            }
+        APIManager.shared.request(Login.self, AuthRouter.login) { [weak self] data, status, error in
+            guard let self = self else { return }
+            self.loginResponse.onNext(LoginCompletion(data, status, error))
+            if let error = error {
+                self.loginResponse.onError(error)
+            }
         }
     }
 }

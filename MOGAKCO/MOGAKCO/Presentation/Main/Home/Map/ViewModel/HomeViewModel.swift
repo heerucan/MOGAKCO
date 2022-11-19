@@ -15,20 +15,27 @@ import NMapsMap
 
 final class HomeViewModel: ViewModelType {
     
+    typealias SearchCompletion = (Search?, Int?, APIError?)
+    typealias QueueStateCompletion = (QueueState?, Int?, APIError?)
+    let searchResponse = PublishSubject<SearchCompletion>()
+    let queueStateResponse = PublishSubject<QueueStateCompletion>()
+    
     let tagList = Observable.just(["전체", "남자", "여자"])
         
-    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(latitude: Matrix.ssacLat,
-                                                                                                      longitude: Matrix.ssacLong))
-    let searchResponse = PublishSubject<Search>()
-    let queueStateResponse = PublishSubject<QueueState>()
+    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(
+        latitude: Matrix.ssacLat, longitude: Matrix.ssacLong))
     
     struct Input {
         let locationTap: ControlEvent<Void>
+        let itemSelected: ControlEvent<IndexPath>
     }
     
     struct Output {
         let locationTap: Observable<CLLocationCoordinate2D?>
+        let itemSelected: ControlEvent<IndexPath>
         let tagList: Observable<[String]>
+        let searchResponse: PublishSubject<SearchCompletion>
+        let queueStateResponse: PublishSubject<QueueStateCompletion>
     }
     
     func transform(_ input: Input) -> Output {
@@ -36,8 +43,11 @@ final class HomeViewModel: ViewModelType {
         
         let myLocationButtonTap = input.locationTap
             .withLatestFrom(locationSubject)
+        
+        let itemSelected = input.itemSelected
+        
                 
-        return Output(locationTap: myLocationButtonTap, tagList: tagList)
+        return Output(locationTap: myLocationButtonTap, itemSelected: itemSelected, tagList: tagList, searchResponse: searchResponse, queueStateResponse: queueStateResponse)
     }
     
     // MARK: - Network
@@ -47,7 +57,7 @@ final class HomeViewModel: ViewModelType {
             guard let self = self else { return }
             guard let status = status else { return }
             if let data = data {
-                self.searchResponse.onNext(data)
+                self.searchResponse.onNext(SearchCompletion(data, status, error))
             }
             
             if let error = error {
@@ -61,7 +71,7 @@ final class HomeViewModel: ViewModelType {
             guard let self = self else { return }
             guard let status = status else { return }
             if let data = data {
-                self.queueStateResponse.onNext(data)
+                self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
             }
             
             if let error = error {

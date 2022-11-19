@@ -41,9 +41,7 @@ extension APIError: LocalizedError {
 // MARK: - Error Handling
 
 extension UIViewController {
-    
-    typealias Completion = (() -> Void)
-    
+        
     func handle(with error: APIError) {
         
         switch error {

@@ -9,49 +9,30 @@ import Foundation
 
 import Alamofire
 
-// TODO: - 리팩토링 시급한 부분
-
 final class APIManager {
     private init() { }
     static let shared = APIManager()
     
-    typealias Completion<T> = ((Result<T, APIError>) -> Void)
-    typealias StatusCompletion<T> = ((Result<T, APIError>?, Int?) -> Void)
+    typealias Completions<T> = ((T?, Int?, APIError?) -> Void)
     
-    func requestData<T: Decodable>(_ type: T.Type = T.self,
-                                 _ convertible: URLRequestConvertible,
-                                 completion: @escaping Completion<T>) {
+    func request<T: Decodable>(_ type: T.Type = T.self,
+                               _ convertible: URLRequestConvertible,
+                               completion: @escaping Completions<T>) {
+        
         AF.request(convertible)
             .responseDecodable(of: type) { response in
                 guard let statusCode = response.response?.statusCode else { return }
+                completion(nil, statusCode, nil)
+                print("🐹 상태코드만!!! ->>>\n" statusCode)
                 switch response.result {
                 case .success(let data):
-                    completion(.success(data))
-                    
+                    completion(data, statusCode, nil)
+                    print("🐹 성공!!! ->>>\n", data, statusCode)
                 case .failure(_):
                     guard let error = APIError(rawValue: statusCode) else { return }
-                    completion(.failure(error))
+                    completion(nil, statusCode, error)
+                    print("🐹 실패!!! ->>>\n", error, error.localizedDescription, statusCode)
                 }
             }
-    }
-
-    func requestStatusData<T: Decodable>(type: T.Type = T.self,
-                               method: HTTPMethod,
-                               url: URL,
-                               parameters: [String: Any]?,
-                               headers: HTTPHeaders,
-                               completion: @escaping StatusCompletion<T>) {
-        AF.request(url, method: method, parameters: parameters, headers: headers)
-            .responseDecodable(of: T.self) { response in
-            guard let statusCode = response.response?.statusCode else { return }
-            switch response.result {
-            case .success(let data):
-                completion(.success(data), statusCode)
-                
-            case .failure(_):
-                guard let error = APIError(rawValue: statusCode) else { return }
-                completion(.failure(error), statusCode)
-            }
-        }
     }
 }

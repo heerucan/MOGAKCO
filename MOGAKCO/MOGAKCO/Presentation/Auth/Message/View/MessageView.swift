@@ -13,8 +13,8 @@ import Then
 final class MessageView: BaseView {
     
     // MARK: - Property
-    
-    let reuseView = AuthReuseView(Matrix.messageTitle).then {
+        
+    let reuseView = AuthReuseView(Matrix.messageTitle, topInset: 169).then {
         $0.buttonTitle = Matrix.messageButtonTitle
     }
     
@@ -31,7 +31,7 @@ final class MessageView: BaseView {
         $0.addSubview(timerLabel)
     }
     
-    let resendButton = PlainButton(.fill, height: .h48).then {
+    let resendButton = PlainButton(.fill, height: .h40).then {
         $0.title = "재전송"
     }
     
@@ -69,7 +69,6 @@ final class MessageView: BaseView {
         
         resendButton.snp.makeConstraints { make in
             make.width.equalTo(72)
-            make.height.equalTo(40)
         }
         
         timerLabel.snp.makeConstraints { make in

@@ -34,7 +34,7 @@ final class PhoneViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
-    
+
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -72,8 +72,10 @@ final class PhoneViewController: BaseViewController {
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, phone) in
-                let phoneNumber = phone.replacingOccurrences(of: "-", with: "")
-                UserDefaultsHelper.standard.phone = "+82" + phoneNumber.suffix(phoneNumber.count-1)
+                if !phone.isEmpty {
+                    let phoneNumber = phone.replacingOccurrences(of: "-", with: "")
+                    UserDefaultsHelper.standard.phone = "+82" + phoneNumber.suffix(phoneNumber.count-1)
+                }
             })
             .disposed(by: disposeBag)
     }

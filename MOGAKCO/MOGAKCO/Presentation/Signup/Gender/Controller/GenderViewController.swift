@@ -97,18 +97,17 @@ final class GenderViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        genderViewModel.signupResponse
+        output.response
             .withUnretained(self)
             .subscribe { vc, response in
                 if let status = response.0 {
-                    let home = HomeViewController()
-                    vc.transition(home, .push)
-                    print("🟣🟣Signup ->>> ", status)
+                    print("🟣Signup ->>> ", status)
+                    let tabVC = TabBarController()
+                    vc.transition(tabVC, .push)
                 }
-            } onError: { [weak self] error in
-                guard let self = self else { return }
-                self.handle(with: error as! APIError)
-                print("🟣🟣 error ->>>", error)
+                if let error = response.1 {
+                    vc.handle(with: error)
+                }
             }
             .disposed(by: disposeBag)
     }

@@ -24,6 +24,10 @@ final class MessageViewController: BaseViewController {
     private let messageView = MessageView()
     private let messageViewModel = MessageViewModel()
     
+    private lazy var navigationBar = PlainNavigationBar(type: .common).then {
+        $0.viewController = self
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -35,11 +39,23 @@ final class MessageViewController: BaseViewController {
         bindViewModel()
     }
     
+    // MARK: - UI & Layout
+    
+    override func configureLayout() {
+        view.addSubview(navigationBar)
+        
+        navigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.layoutMarginsGuide)
+            make.directionalHorizontalEdges.equalToSuperview()
+        }
+    }
+    
     // MARK: - Bind
     
     override func bindViewModel() {
         
-        let input = MessageViewModel.Input(messageText: messageView.textField.rx.text, tap: messageView.reuseView.okButton.rx.tap)
+        let input = MessageViewModel.Input(messageText: messageView.textField.rx.text,
+                                           tap: messageView.reuseView.okButton.rx.tap)
         let output = messageViewModel.transform(input)
         
         output.messageText
@@ -52,6 +68,7 @@ final class MessageViewController: BaseViewController {
         
         output.messageText
             .withUnretained(self)
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .bind { (vc, code) in
                 vc.verifyID(code)
             }
@@ -61,33 +78,28 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, isValid) in
-                isValid ? vc.requestLogin() : vc.showToast(ToastMatrix.phoneTypeError.description)
+                isValid ? vc.messageViewModel.requestLogin() : vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
-    }
-    
-    // MARK: - Network
-    
-    // TODO: - 리팩토링 시급한 부분
-    private func requestLogin() {
-        APIManager.shared.requestData(Login.self, AuthRouter.login) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let value):
-                print("🟣Login Response Data ->>> \n", value)
-                self.handle(with: .success)
-                let vc = HomeViewController()
-                self.transition(vc, .push)
-                
-            case .failure(let error):
-                self.handle(with: error)
+        
+        output.response
+            .withUnretained(self)
+            .subscribe { vc, response in
+                if let login = response.0 {
+                    print("🟣Login ->>> \n", login)
+                    let tabVC = TabBarController()
+                    vc.transition(tabVC, .push)
+                }
+                if let error = response.2 {
+                    vc.handle(with: error)
+                }
             }
-        }
+            .disposed(by: disposeBag)
     }
 }
 
 // MARK: - Firebase Auth
-
+// TODO: - 여기 있는 코드가 사실 뷰모델로 가도 되잖아?! 리팩토링 요망
 extension MessageViewController {
     private func verifyID(_ code: String) {
         let verificationID = UserDefaultsHelper.standard.verificationID!
