@@ -51,17 +51,23 @@ final class PlainNavigationBar: BaseView {
     
     // MARK: - Property
     
-    let titleLabel = UILabel().then {
+    private let titleLabel = UILabel().then {
         $0.font = Font.title3.font
         $0.textColor = Color.black
         $0.textAlignment = .center
     }
     
-    let leftButton = UIButton()
+    private let leftButton = UIButton()
     let rightButton = UIButton()
     
     private let lineView = UIView().then {
         $0.backgroundColor = Color.gray2
+    }
+    
+    var viewController: UIViewController?
+    
+    private lazy var backAction = UIAction { _ in
+        self.viewController?.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Initializer
@@ -69,6 +75,7 @@ final class PlainNavigationBar: BaseView {
     init(type: NavigationType) {
         super.init(frame: .zero)
         titleLabel.text = type.title
+        leftButton.addAction(backAction, for: .touchUpInside)
         leftButton.setImage(type.leftButton, for: .normal)
         rightButton.setImage(type.rightButton, for: .normal)
         rightButton.setTitle(type.rightButtonText, for: .normal)
@@ -76,7 +83,7 @@ final class PlainNavigationBar: BaseView {
         rightButton.titleLabel?.font = Font.title3.font
         rightButton.setTitleColor(Color.gray3, for: .highlighted)
     }
-    
+
     // MARK: - Configure UI & Layout
     
     override func configureLayout() {
