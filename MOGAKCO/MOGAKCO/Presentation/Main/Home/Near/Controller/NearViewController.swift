@@ -90,7 +90,7 @@ final class NearViewController: BaseViewController {
         lineView.snp.makeConstraints { make in
             make.top.equalTo(segmentedControl.snp.bottom)
             make.directionalHorizontalEdges.equalToSuperview()
-            make.height.equalTo(1)
+            make.height.equalTo(2)
         }
         
         pageViewController.view.snp.makeConstraints { make in

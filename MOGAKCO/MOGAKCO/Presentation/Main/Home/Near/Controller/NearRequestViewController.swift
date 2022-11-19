@@ -27,6 +27,10 @@ final class NearRequestViewController: BaseViewController {
     
     // MARK: - LifeCycle
     
+    override func loadView() {
+        self.view = requestView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()

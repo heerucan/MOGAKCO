@@ -24,6 +24,7 @@ final class UserView: BaseView {
         $0.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
         $0.separatorStyle = .none
         $0.allowsSelection = false
+        $0.backgroundColor = .white
     }
     
     let emptyStateView = NearEmptyStateView(type: .user)
@@ -45,14 +46,7 @@ final class UserView: BaseView {
         }
         
         emptyStateView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(183)
-            make.centerX.equalToSuperview()
+            make.edges.equalToSuperview()
         }
-    }
-
-    func configureTableViewDelegate(_ delegate: UITableViewDelegate,
-                                    _ datasource: UITableViewDataSource) {
-        tableView.delegate = delegate
-        tableView.dataSource = datasource
     }
 }
