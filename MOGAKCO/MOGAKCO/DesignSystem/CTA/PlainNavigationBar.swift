@@ -20,19 +20,20 @@ final class PlainNavigationBar: BaseView {
         case myDetail
         case common
         case findSSAC
+        case search
         
         fileprivate var title: String {
             switch self {
             case .my: return "내정보"
             case .myDetail: return "정보 관리"
-            case .common: return ""
+            case .common, .search: return ""
             case .findSSAC: return "새싹찾기"
             }
         }
         
         fileprivate var rightButton: UIImage? {
             switch self {
-            case .my, .myDetail, .common, .findSSAC:
+            case .my, .myDetail, .common, .findSSAC, .search:
                 return nil
             }
         }
@@ -40,7 +41,7 @@ final class PlainNavigationBar: BaseView {
         fileprivate var rightButtonText: String? {
             switch self {
             case .myDetail: return "저장"
-            case .my, .common: return nil
+            case .my, .common, .search: return nil
             case .findSSAC: return "찾기 중단"
             }
         }
@@ -49,6 +50,13 @@ final class PlainNavigationBar: BaseView {
             switch self {
             case .my: return nil
             default: return Icon.arrow
+            }
+        }
+        
+        fileprivate var lineViewBackgroundColor: UIColor {
+            switch self {
+            case .search: return .clear
+            default: return Color.gray2
             }
         }
     }
@@ -61,12 +69,10 @@ final class PlainNavigationBar: BaseView {
         $0.textAlignment = .center
     }
     
-    private let leftButton = UIButton()
+    let leftButton = UIButton()
     let rightButton = UIButton()
     
-    private let lineView = UIView().then {
-        $0.backgroundColor = Color.gray2
-    }
+    private let lineView = UIView()
     
     var viewController: UIViewController?
     
@@ -79,6 +85,7 @@ final class PlainNavigationBar: BaseView {
     init(type: NavigationType) {
         super.init(frame: .zero)
         titleLabel.text = type.title
+        lineView.backgroundColor = type.lineViewBackgroundColor
         leftButton.addAction(backAction, for: .touchUpInside)
         leftButton.setImage(type.leftButton, for: .normal)
         rightButton.setImage(type.rightButton, for: .normal)

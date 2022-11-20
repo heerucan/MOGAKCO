@@ -38,6 +38,7 @@ enum PlainButtonType {
     case outline // 테두리있는
     case grayLine
     case cancel // 취소버튼
+    case redOutline
     
     fileprivate var titleColor: UIColor {
         switch self {
@@ -47,6 +48,8 @@ enum PlainButtonType {
             return Color.green
         case .grayLine:
             return Color.black
+        case .redOutline:
+            return Color.error
         case .cancel:
             return Color.black
         }
@@ -59,6 +62,8 @@ enum PlainButtonType {
         case .outline:
             return .white
         case .grayLine:
+            return .white
+        case .redOutline:
             return .white
         case .cancel:
             return Color.gray2
@@ -73,6 +78,8 @@ enum PlainButtonType {
             return Color.green
         case .grayLine:
             return Color.gray4
+        case .redOutline:
+            return Color.error
         case .cancel:
             return .clear
         }
@@ -82,7 +89,7 @@ enum PlainButtonType {
         switch self {
         case .fill, .cancel:
             return 0
-        case .outline, .grayLine:
+        case .outline, .grayLine, .redOutline:
             return 1
         }
     }
@@ -91,7 +98,7 @@ enum PlainButtonType {
         switch self {
         case .fill:
             return Color.green
-        case .outline:
+        case .outline, .redOutline:
             return .white
         case .grayLine:
             return Color.green
@@ -123,7 +130,6 @@ final class PlainButton: UIButton {
     override var isSelected: Bool {
         didSet {
             configureSelectedColor(type: type)
-            print("선택")
         }
     }
         
@@ -142,6 +148,7 @@ final class PlainButton: UIButton {
     // MARK: - UI & Layout
     
     private func configureUI(type: PlainButtonType) {
+//        titleEdgeInsets = UIEdgeInsets(top: 5, left: 16, bottom: 5, right: 16)
         titleLabel?.font = Font.body3.font
         setTitleColor(type.titleColor, for: .normal)
         backgroundColor = type.backgroundColor
