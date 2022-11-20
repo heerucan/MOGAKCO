@@ -14,6 +14,13 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
     
+    let profileImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.clipsToBounds = true
+        $0.image = Icon.sesacBg01
+        $0.makeCornerStyle(width: 0, radius: 8)
+    }
+    
     private lazy var stackView = UIStackView(
         arrangedSubviews: [nameView, titleView, studyView, reviewView]).then {
             $0.makeCornerStyle(width: 1, color: Color.gray2.cgColor, radius: 8)
@@ -46,16 +53,26 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     // MARK: -  UI & Layout
     
     override func configureLayout() {
-        contentView.addSubviews([stackView, toggleButton])
+        contentView.addSubviews([profileImageView,
+                                 stackView,
+                                 toggleButton])
+        
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview()
+        }
         
         stackView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
+            make.top.equalTo(profileImageView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview().inset(16).priority(.low)
         }
         
         toggleButton.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(42)
+            make.top.equalTo(nameView.snp.top).offset(-16)
+            make.leading.equalTo(nameView.snp.leading).offset(-16)
+            make.bottom.equalTo(nameView.snp.bottom).offset(16)
+            make.trailing.equalTo(nameView.snp.trailing).offset(16)
         }
     }
     

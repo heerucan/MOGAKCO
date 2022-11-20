@@ -33,7 +33,7 @@ final class MyDetailImageView: BaseView {
         self.addSubview(profileImageView)
         
         profileImageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(16)
+            make.top.leading.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
             make.width.equalTo(343)
             make.height.equalTo(194)

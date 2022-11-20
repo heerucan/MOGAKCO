@@ -21,11 +21,11 @@ final class MyDetailViewController: BaseViewController {
         
     private let myDetailViewModel = MyDetailViewModel()
     
-    private let navigationBar = PlainNavigationBar(type: .myDetail).then {
-        $0.rightButton.setTitle("저장", for: .normal)
+    private lazy var navigationBar = PlainNavigationBar(type: .myDetail).then {
+        $0.viewController = self
     }
     
-    private let tableView = UITableView(frame: .zero, style: .grouped).then {
+    private let tableView = UITableView(frame: .zero, style: .plain).then {
         $0.separatorStyle = .none
         $0.showsVerticalScrollIndicator = false
         $0.sectionHeaderTopPadding = 0
@@ -85,35 +85,35 @@ final class MyDetailViewController: BaseViewController {
     // MARK: - Network
     
     private func requestWithdraw() {
-        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
-            guard let self = self else { return }
-            switch response {
-            case .success(let value):
-                print("🟣성공 ->>> \n", value)
-                self.handle(with: .success)
-                UserDefaultsHelper.standard.removeObject()
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                let viewController = OnboardingViewController()
-                sceneDelegate?.window?.rootViewController = viewController
-                sceneDelegate?.window?.makeKeyAndVisible()
-
-            case .failure(let error):
-                self.handle(with: error)
-                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                let viewController = OnboardingViewController()
-                sceneDelegate?.window?.rootViewController = viewController
-                sceneDelegate?.window?.makeKeyAndVisible()
-            }
-        }
+//        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
+//            guard let self = self else { return }
+//            switch response {
+//            case .success(let value):
+//                print("🟣성공 ->>> \n", value)
+//                self.handle(with: .success)
+//                UserDefaultsHelper.standard.removeObject()
+//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//                let viewController = OnboardingViewController()
+//                sceneDelegate?.window?.rootViewController = viewController
+//                sceneDelegate?.window?.makeKeyAndVisible()
+//
+//            case .failure(let error):
+//                self.handle(with: error)
+//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//                let viewController = OnboardingViewController()
+//                sceneDelegate?.window?.rootViewController = viewController
+//                sceneDelegate?.window?.makeKeyAndVisible()
+//            }
+//        }
     }
     // MARK: - @objce
     
     @objc func touchupToggleButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! MyDetailCardTableViewCell
-        cell.toggleButton.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
+        sender.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
         tableView.reloadSections(IndexSet(), with: .fade)
     }
 }
@@ -122,20 +122,20 @@ final class MyDetailViewController: BaseViewController {
 
 extension MyDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch section {
-        case 0: return MyDetailImageView()
-        default: return UIView()
-        }
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        switch section {
+//        case 0: return MyDetailImageView()
+//        default: return UIView()
+//        }
+//    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
