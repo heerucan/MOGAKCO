@@ -22,11 +22,11 @@ final class NearViewController: BaseViewController {
     
     private let nearViewModel = NearViewModel()
     
-    var dataViewControllers: [UIViewController] {
+    private var dataViewControllers: [UIViewController] {
         [firstViewController, secondViewController]
     }
     
-    lazy var currentPage: Int = 0 {
+    private lazy var currentPage: Int = 0 {
         didSet {
             let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
             self.pageViewController.setViewControllers([dataViewControllers[self.currentPage]],
@@ -46,7 +46,7 @@ final class NearViewController: BaseViewController {
         $0.viewController = self
     }
     
-    let segmentedControl = PlainSegmentedControl(items: ["주변 새싹", "받은 요청"]).then {
+    private let segmentedControl = PlainSegmentedControl(items: ["주변 새싹", "받은 요청"]).then {
         $0.selectedSegmentIndex = 0
         $0.addTarget(self, action: #selector(changeValue(control:)), for: .valueChanged)
     }
@@ -84,13 +84,14 @@ final class NearViewController: BaseViewController {
         segmentedControl.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.directionalHorizontalEdges.equalToSuperview()
-            make.height.equalTo(43)
+            make.height.equalTo(44)
         }
         
         lineView.snp.makeConstraints { make in
-            make.top.equalTo(segmentedControl.snp.bottom)
-            make.directionalHorizontalEdges.equalToSuperview()
+            make.top.equalTo(segmentedControl.snp.bottom).offset(-2)
+            make.leading.equalToSuperview()
             make.height.equalTo(2)
+            make.width.equalTo(view.frame.width/2)
         }
         
         pageViewController.view.snp.makeConstraints { make in
@@ -107,10 +108,19 @@ final class NearViewController: BaseViewController {
     
     // MARK: - Custom Method
     
-    
+    private func changeLinePosition() {
+        let segmentIndex = CGFloat(segmentedControl.selectedSegmentIndex)
+        let segmentWidth = segmentedControl.frame.width / 2
+        let leadingDistance = segmentWidth * segmentIndex
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
+            self.lineView.transform = CGAffineTransform(translationX: leadingDistance, y: 0)
+        })
+    }
     // MARK: - @objc
     
     @objc private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
+        changeLinePosition()
     }
 }

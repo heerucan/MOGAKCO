@@ -47,10 +47,10 @@ final class NearEmptyStateView: BaseView {
     }
     
     private lazy var stackView = UIStackView(arrangedSubviews: [changeButton, refreshButton]).then {
-        $0.axis = .vertical
+        $0.axis = .horizontal
         $0.spacing = 8
         $0.alignment = .fill
-        $0.distribution = .equalSpacing
+        $0.distribution = .fill
     }
     
     let changeButton = PlainButton(.fill, height: .h48).then {
@@ -77,7 +77,7 @@ final class NearEmptyStateView: BaseView {
                           stackView])
         
         imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview()
+            make.top.equalToSuperview().inset(187)
             make.centerX.equalToSuperview()
         }
         
@@ -92,7 +92,7 @@ final class NearEmptyStateView: BaseView {
         }
         
         stackView.snp.makeConstraints { make in
-            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
+            make.bottom.equalTo(self.safeAreaLayoutGuide.snp.bottom).inset(16)
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
         }
         

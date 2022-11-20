@@ -33,13 +33,7 @@ final class NearUserViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
-    
-    // MARK: - UI & Layout
-   
-    override func configureLayout() {
-        
-    }
-    
+
     // MARK: - Bind
     
     override func bindViewModel() {

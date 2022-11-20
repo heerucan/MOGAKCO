@@ -104,7 +104,7 @@ final class PlainNavigationBar: BaseView {
         
         rightButton.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().inset(16)
             make.width.equalTo(56)
             make.height.equalTo(44)
         }

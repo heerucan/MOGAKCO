@@ -7,7 +7,15 @@
 
 import UIKit
 
+import Then
+
 final class PlainSegmentedControl: UISegmentedControl {
+    
+    // MARK: - Property
+    
+    private let lineView = UIView().then {
+        $0.backgroundColor = Color.gray2
+    }
     
     // MARK: - Initializer
     
@@ -15,13 +23,14 @@ final class PlainSegmentedControl: UISegmentedControl {
         super.init(items: items)
         removeBackground()
         configureUI()
+        configureLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Configure UI & Layout
+    // MARK: - UI & Layout
     
     private func removeBackground() {
         let image = UIImage()
@@ -36,5 +45,15 @@ final class PlainSegmentedControl: UISegmentedControl {
                                     NSAttributedString.Key.font: Font.title3.font], for: .selected)
         self.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Color.gray6,
                                      NSAttributedString.Key.font: Font.title4.font], for: .normal)
+    }
+    
+    private func configureLayout() {
+        addSubview(lineView)
+        
+        lineView.snp.makeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.equalTo(1)
+        }
     }
 }
