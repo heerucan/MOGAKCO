@@ -25,6 +25,7 @@ final class UserView: BaseView {
         $0.separatorStyle = .none
         $0.allowsSelection = false
         $0.backgroundColor = .white
+        $0.register(MyDetailCardTableViewCell.self, forCellReuseIdentifier: MyDetailCardTableViewCell.identifier)
     }
     
     let emptyStateView = NearEmptyStateView(type: .user)

@@ -12,6 +12,8 @@ import RxCocoa
 
 final class NearViewModel: ViewModelType {
     
+    let userList = Observable.just([1, 2, 3])
+    
     struct Input {
         
     }

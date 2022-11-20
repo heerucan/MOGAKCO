@@ -44,32 +44,30 @@ final class NearUserViewController: BaseViewController {
         nearViewModel.userList
             .withUnretained(self)
             .bind { vc, data in
-                print(data, data.count)
                 vc.userView.emptyStateView.isHidden = data.count == 0 ? false : true
             }
             .disposed(by: disposeBag)
-        
+
         nearViewModel.userList
             .bind(to: userView.tableView.rx.items(
-                cellIdentifier: UserTableViewCell.identifier,
-                cellType: UserTableViewCell.self)) { row, element, cell in
-//                    cell.setupData(data: )
-                    cell.textLabel?.text = "\(element)"
+                cellIdentifier: MyDetailCardTableViewCell.identifier,
+                cellType: MyDetailCardTableViewCell.self)) { [weak self] row, element, cell in
+                    cell.toggleButton.tag = row
+                    cell.toggleButton.addTarget(self, action: #selector(self?.touchupToggleButton(_:)), for: .touchUpInside)
+                    cell.toggleButton.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
                 }
                 .disposed(by: disposeBag)
-        
-        userView.tableView.rx.itemSelected
-            .withUnretained(self)
-            .bind { vc, indexPath in
-                indexPath.item
-            }
-            .disposed(by: disposeBag)
-        
     }
     
     // MARK: - Custom Method
     
     
     // MARK: - @objc
+    
+    @objc func touchupToggleButton(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        let cell = userView.tableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! MyDetailCardTableViewCell
+        sender.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
+        userView.tableView.reloadSections(IndexSet(), with: .fade)
+    }
 }
-
