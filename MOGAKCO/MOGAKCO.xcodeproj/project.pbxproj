@@ -7,17 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B0683012929B8F500C162D6 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 5B0683002929B8F500C162D6 /* RxDataSources */; };
 		5B1394DE2921D0F70046013E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394DD2921D0F70046013E /* HomeViewModel.swift */; };
 		5B1394E0292242CE0046013E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394DF292242CE0046013E /* HomeView.swift */; };
 		5B1394E229225AAD0046013E /* MyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E129225AAD0046013E /* MyDetailViewController.swift */; };
 		5B1394E529225AD50046013E /* MyDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E429225AD50046013E /* MyDetailViewModel.swift */; };
 		5B1394E929225C470046013E /* PlainNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394E829225C470046013E /* PlainNavigationBar.swift */; };
 		5B1394EB292271EB0046013E /* MyDetailCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */; };
-		5B1394F2292284D10046013E /* MyDetailImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */; };
 		5B1394F4292285120046013E /* MyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F3292285120046013E /* MyView.swift */; };
 		5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */; };
 		5B1394FD2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */; };
-		5B1395032922CE7D0046013E /* MyDetailImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395022922CE7D0046013E /* MyDetailImageView.swift */; };
 		5B1395052922D5220046013E /* MyTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395042922D5220046013E /* MyTitleView.swift */; };
 		5B1395072922D5300046013E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395062922D5300046013E /* MyReviewView.swift */; };
 		5B1395092922D9500046013E /* MyStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395082922D9500046013E /* MyStudyView.swift */; };
@@ -137,11 +136,9 @@
 		5B1394E429225AD50046013E /* MyDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailViewModel.swift; sourceTree = "<group>"; };
 		5B1394E829225C470046013E /* PlainNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainNavigationBar.swift; sourceTree = "<group>"; };
 		5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailCardTableViewCell.swift; sourceTree = "<group>"; };
-		5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailImageTableViewCell.swift; sourceTree = "<group>"; };
 		5B1394F3292285120046013E /* MyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyView.swift; sourceTree = "<group>"; };
 		5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		5B1395022922CE7D0046013E /* MyDetailImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDetailImageView.swift; sourceTree = "<group>"; };
 		5B1395042922D5220046013E /* MyTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTitleView.swift; sourceTree = "<group>"; };
 		5B1395062922D5300046013E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
 		5B1395082922D9500046013E /* MyStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyView.swift; sourceTree = "<group>"; };
@@ -250,6 +247,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BEFE257291BBC2A00FD31E9 /* IQKeyboardManagerSwift in Frameworks */,
+				5B0683012929B8F500C162D6 /* RxDataSources in Frameworks */,
 				5BC57D692918EF81006CB05C /* Kingfisher in Frameworks */,
 				5B7FDBAC291D6625007E38EA /* FirebaseMessaging in Frameworks */,
 				5BC57D602918EF51006CB05C /* RxSwift in Frameworks */,
@@ -281,7 +279,6 @@
 			isa = PBXGroup;
 			children = (
 				5B1394EF292284A50046013E /* Cell */,
-				5B1395022922CE7D0046013E /* MyDetailImageView.swift */,
 				5B13950A2923B5DF0046013E /* MyNameView.swift */,
 				5B1395042922D5220046013E /* MyTitleView.swift */,
 				5B1395082922D9500046013E /* MyStudyView.swift */,
@@ -309,7 +306,6 @@
 		5B1394EF292284A50046013E /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				5B1394F1292284D10046013E /* MyDetailImageTableViewCell.swift */,
 				5B1394EA292271EB0046013E /* MyDetailCardTableViewCell.swift */,
 				5B1394F7292285520046013E /* MyDetailInfoTableViewCell.swift */,
 				5B1394FC2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift */,
@@ -644,8 +640,8 @@
 				5BC57D7029190AA9006CB05C /* PlainButton.swift */,
 				5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */,
 				5B1394E829225C470046013E /* PlainNavigationBar.swift */,
-				5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */,
 				5B7B03FE29291EA9008B265B /* PlainSegmentControl.swift */,
+				5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */,
 			);
 			path = CTA;
 			sourceTree = "<group>";
@@ -1104,6 +1100,7 @@
 				5B7FDBA9291D6625007E38EA /* FirebaseAuth */,
 				5B7FDBAB291D6625007E38EA /* FirebaseMessaging */,
 				5BC3661929240FC100A0A316 /* MultiSlider */,
+				5B0683002929B8F500C162D6 /* RxDataSources */,
 			);
 			productName = MOGAKCO;
 			productReference = 5BC57CF72918E73D006CB05C /* MOGAKCO.app */;
@@ -1142,6 +1139,7 @@
 				5BEFE255291BBC2A00FD31E9 /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */,
+				5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 5BC57CF82918E73D006CB05C /* Products */;
 			projectDirPath = "";
@@ -1261,7 +1259,6 @@
 				5BEFE27A291C027000FD31E9 /* BirthView.swift in Sources */,
 				5BEFE276291C018900FD31E9 /* EmailViewController.swift in Sources */,
 				5B1395072922D5300046013E /* MyReviewView.swift in Sources */,
-				5B1395032922CE7D0046013E /* MyDetailImageView.swift in Sources */,
 				5BC57D472918EBFF006CB05C /* UITextField+.swift in Sources */,
 				5BC57D7629190D9E006CB05C /* OnboardingViewController.swift in Sources */,
 				5BC57D812919224B006CB05C /* Onboard.swift in Sources */,
@@ -1283,7 +1280,6 @@
 				5B1394E0292242CE0046013E /* HomeView.swift in Sources */,
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
-				5B1394F2292284D10046013E /* MyDetailImageTableViewCell.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
 				5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
@@ -1537,6 +1533,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1604,6 +1608,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5B0683002929B8F500C162D6 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
 		5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

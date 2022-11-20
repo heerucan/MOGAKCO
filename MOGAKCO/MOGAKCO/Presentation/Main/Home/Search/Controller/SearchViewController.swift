@@ -12,7 +12,7 @@ import Then
 import RxSwift
 import RxCocoa
 
-final class StudyViewController: BaseViewController {
+final class SearchViewController: BaseViewController {
     
     // MARK: - DisposeBag
     

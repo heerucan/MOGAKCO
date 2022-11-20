@@ -14,13 +14,22 @@ import Then
 
 final class MyViewController: BaseViewController {
     
+    // MARK: - DisposeBag
+    
+    private let disposeBag = DisposeBag()
+    
     // MARK: - Property
     
-    let button = UIButton().then {
-        $0.setTitle("탈퇴", for: .normal)
+    private let myViewModel = MyViewModel()
+    
+    private lazy var navigationBar = PlainNavigationBar(type: .my).then {
+        $0.viewController = self
     }
     
-    private let navigationBar = PlainNavigationBar(type: .my)
+    private let tableView = UITableView(frame: .zero, style: .plain).then {
+        $0.separatorStyle = .none
+        $0.register(MyProfileTableViewCell.self, forCellReuseIdentifier: MyProfileTableViewCell.identifier)
+    }
     
     // MARK: - Initializer
 
@@ -30,20 +39,19 @@ final class MyViewController: BaseViewController {
     }
     
     // MARK: - UI & Layout
-    
-    override func configureUI() {
-        super.configureUI()
-        navigationController?.isNavigationBarHidden = true
-        navigationController?.navigationBar.backgroundColor = .orange
-        navigationBar.backgroundColor = .yellow
-    }
    
     override func configureLayout() {
-        view.addSubviews([navigationBar])
+        view.addSubviews([navigationBar, tableView])
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.layoutMarginsGuide)
             make.directionalHorizontalEdges.equalToSuperview()
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(navigationBar.snp.bottom)
+            make.directionalHorizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }    
     
@@ -51,11 +59,25 @@ final class MyViewController: BaseViewController {
     
     override func bindViewModel() {
 
-//        let input = MyDetailViewModel.Input()
-//        let output = myDetailViewModel.transform(input)
-
+        let input = MyViewModel.Input(itemSelected: tableView.rx.itemSelected)
+        let output = myViewModel.transform(input)
+        
+        output.myProfileList
+            .bind(to: tableView.rx.items(
+                cellIdentifier: MyProfileTableViewCell.identifier,
+                cellType: MyProfileTableViewCell.self)) { row, element, cell in
+                    cell.setupData(data: element)
+                    row == 0 ? cell.configureNameLayout() : cell.configureMenuLayout()
+                }
+                .disposed(by: disposeBag)
+        
+        output.itemSelected
+            .withUnretained(self)
+            .bind { vc, indexPath in
+                if indexPath.row == 0 {
+                    vc.transition(MyDetailViewController(), .push)
+                }
+            }
+            .disposed(by: disposeBag)
     }
-    
-    // MARK: - Network
-
 }
