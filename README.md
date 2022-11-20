@@ -208,13 +208,84 @@ $0.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
 
 ## 11/16
 > 오늘의 개발
+- 너무 쉬고 싶어서 휴식을 취했다.
+> 좋았던 점
+- 몸이 개운한 것이 이것이 인생인가 싶었다.
+> 어려운 점
+- 내일의 내가 걱정이다...
+
+## 11/17
+> 오늘의 개발
+- 홈 뷰 화면 구현
+- Rx+MVVM으로 CoreLocation을 통해 사용자 위치 권한 로직 처리
+- LocationManager 싱글톤 클래스로 관리
+> 좋았던 점
+- RxCoreLocation을 써보는 것이 안돼서 소깡이에게 알게 된 DelegateProxy를 긁어다가 extension으로 넣어서 Rx로 CoreLocation 구현했다. 신기한 점은 Rx에서 자체적으로 제공하는 것도 내 엑코 버전에서는 오류가 발생해서 사용하지 못해서 이렇게 해결했음
+- compactMap을 사용해서 coordinate 값을 받아오는 처리를 해줬음. compactMap은 1차원 배열에서 옵셔널 바인딩 처리해주는 장점이 있어서 간편하다.
+- behaviorSubject.onNext(~)는 새로운 값을 추가해주는 거다! 기억!
+> 어려운 점
+- RxCoreLocation을 써보려고 했는데 iOS11.0 이상에서는 Rx.. keypath 부분 사용에 오류가 발생한다는 이상한 오류가 발생해서 삽질하다가 소깡, 희철님한테 도움을 받았는데 알고보니 엑코 버전 때문에 생기는 문제였다.
+덕분에 시간 와방하게 날림
+
+## 11/18
+> 오늘의 개발
+- 홈 내 주변 새싹 / 내 현재 상태 서버 통신
+- 홈 기능 다수 구현(마커 꽂기, 현재 상태 체크 등)
+> 좋았던 점
+- 기획명세서를 항상 자세하게 읽자! 현재 상태 통신하면서 응답값 중 초기에 값이 안들어오는 애가 있는데 그냥 응답값 긁어다가 구조체로 변환해서 넣어줬는데 아무리 해도 decodingError가 뜨길래 명세서 다시 보고 알게 됐다. decodeIfPresent로 처리했다.
+> 어려운 점
+- 한걸음 한걸음이 어려운 것 투성이라.. 기억이 안남.
+
+## 11/19
+> 오늘의 개발
+- 네트워크 코드 리팩토링
+- 홈 뷰 기능 input/output 패턴으로 리팩토링
+- 커스텀 네비게이션바에 backButton 기능 구현
+- 네비바/버튼/auth 재사용 뷰에서 발생하는 스냅킷 오류 잡기
+- 내 주변 새싹 찾기 뷰 초기 세팅 : 상단 커스텀 탭바와 엠티뷰, 테이블뷰 세팅
+- 내 주변 새싹 찾기 뷰를 위한 PlainSegmentedControl, EmptyStateView 재사용으로 분리해서 구현
+> 좋았던 점
+- 사실 이게 맞는 방식인지 모르겠으나, 기존에 VC에서 처리하던 네트워크 코드를 VM로 옮겼다. 그리고 응답값들이 있는 경우에 PublishSubject를 통해서 VM로 받아서 output을 거쳐서 VC에서 처리한다. 이게 맞는 방식인지 잘 모르겠지만 그래도 네트워크 코드 및 로직 처리 코드가 VC에서 사라져서 맘이 한결 가볍군...
+- 커스텀 네비바를 만들었으니 backButton도 커스텀 내에서 동작되도록 구현하는 법을 찾아보다가 UIButton에서 addTarget 이외에 addAction(UIAlertVC에서 액션 주는 것처럼)을 통해서도 할 수 있단 걸 알았다. UIAction은 클로저를 통해서 기능을 구현할 수 있는데 덕분에 코드가 줄었다.
+```
+    var viewController: UIViewController?
+    
+    private lazy var backAction = UIAction { _ in
+        self.viewController?.navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Initializer
+    
+    init(type: NavigationType) {
+        super.init(frame: .zero)
+        titleLabel.text = type.title
+        leftButton.addAction(backAction, for: .touchUpInside)
+```
+- 커스텀 탭바에서 line을 어떻게 이동시킬까 고민했는데 UIView.animate를 통해서 lineView의 leading값을 transform을 통해 변경할 수 있게 했다. leading값에는 (세그먼트 컨트롤의 width / 현재 세그먼트의 인덱스)로 값을 넣었다.
+```
+    private func changeLinePosition() {
+        let segmentIndex = CGFloat(segmentedControl.selectedSegmentIndex)
+        let segmentWidth = segmentedControl.frame.width / 2
+        let leadingDistance = segmentWidth * segmentIndex
+        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+            guard let self = self else { return }
+            self.lineView.transform = CGAffineTransform(translationX: leadingDistance, y: 0)
+        })
+    }
+```
+- 별개로 스냅킷 오류 잡기 재밌네...
+> 어려운 점
+- myQueueState에서 201 응답값이 안넘어와서 서버 코드 리팩을 했다.(사실 여전히 마음에 들지 않는다.)
+디코딩해줄 데이터가 없어서 ResultType에서 success 시에도 데이터가 nil로 넘어오는 경우가 있는데 그게 myQueueState에서 201인 경우다. 근데 그걸 캐치하지 못하고 조금 삽질을 와방하게 하다가 success/failure이 아닐 때 completion(nil, status, nil)을 넘겨주면 된다는 걸 깨달았다.
+해당 방법 말고도, alamofire에서 responseDecodable 대신에 responseData를 사용해서 디코딩해 줄 데이터가 있다면 JSONDecoder를, 없으면 그냥 위와 같이 completion을 넘겨주는 방식도 가능하다.
+그나저나 삽질하다가 네트워크 코드만 몇 번이나 갈아엎는 건지... 에효ㅠ 여전히 맘에 안든다.. 그동안 Moya만 써와서 이번에는 Alamofire+URLRequestConvertible로 쓰고 싶었는데 아직 개념이 덜 들어왔는갑다.. 으악!
+
+## 11/20
+> 오늘의 개발
 
 > 좋았던 점
 
 > 어려운 점
-
-
-
 
 
 
