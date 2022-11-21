@@ -106,6 +106,13 @@ enum PlainButtonType {
             return Color.gray2
         }
     }
+    
+    fileprivate var selectedTitleColor: UIColor {
+        switch self {
+        case .fill: return .white
+        default: return Color.black
+        }
+    }
 }
 
 final class PlainButton: UIButton {
@@ -171,6 +178,7 @@ final class PlainButton: UIButton {
     
     private func configureSelectedColor(type: PlainButtonType) {
         backgroundColor = isSelected ? type.selectedColor : type.backgroundColor
+        setTitleColor(type.selectedTitleColor, for: .selected)
         makeCornerStyle(width: 0, color: type.borderColor.cgColor, radius: 8)
     }
 }
