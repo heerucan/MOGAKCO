@@ -8,9 +8,7 @@
 import UIKit
 
 class BaseTableViewCell: UITableViewCell, BaseMethodProtocol {
-    
-    // MARK: - Initializer
-    
+        
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
