@@ -51,8 +51,6 @@ final class SearchView: BaseView {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: SearchHeaderSupplementaryView.identifier)
     }
-    
-    // MARK: - Custom Method
 }
 
 // MARK: - Compositional Layout

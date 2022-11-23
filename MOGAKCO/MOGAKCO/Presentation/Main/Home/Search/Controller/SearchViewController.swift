@@ -12,8 +12,8 @@ import Then
 import RxSwift
 import RxCocoa
 
-final class SearchViewController: BaseViewController, OkButtonDelegate {
-    
+final class SearchViewController: BaseViewController {
+
     // MARK: - DisposeBag
     
     private let disposeBag = DisposeBag()
@@ -112,34 +112,41 @@ final class SearchViewController: BaseViewController, OkButtonDelegate {
         searchView.collectionView.rx.contentOffset
             .asDriver()
             .drive { [weak self] _ in
-                self?.searchView.findButton.transform = .identity
+                guard let self = self else { return }
+                UIView.animate(withDuration: 0.2) {
+                    self.searchView.findButton.makeCornerStyle(width: 0, radius: 8)
+                    self.searchView.findButton.snp.updateConstraints { make in
+                        make.directionalHorizontalEdges.equalToSuperview().inset(16)
+                        make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(16)
+                    }
+                    self.view.layoutIfNeeded()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        searchView.findButton.rx.tap
+            .withUnretained(self)
+            .bind { vc,_ in
+                print("화면전환")
+                vc.transition(SearchViewController(), .push)
             }
             .disposed(by: disposeBag)
 
     }
-    
-    // MARK: - Custom Method
-    
-    func touchupOkButton() {
-        let vc = SearchViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
+
     // MARK: - @objc
     
     @objc override func keyboardWillShow(_ notification: NSNotification) {
         super.keyboardWillShow(notification)
-        UIView.animate(withDuration: 0.1) {
-            self.searchView.findButton.transform = CGAffineTransform(translationX: 0, y: 32-(self.keyboardHeight))
+        UIView.animate(withDuration: 0.2) {
+            let bottomInset = self.keyboardHeight-self.view.safeAreaInsets.bottom
+            self.searchView.findButton.snp.updateConstraints { make in
+                make.directionalHorizontalEdges.equalToSuperview()
+                make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(bottomInset)
+            }
+            self.searchView.findButton.makeCornerStyle(width: 0, radius: 0)
+            self.view.layoutIfNeeded()
         }
-    }
-    
-    @objc func touchupRequestButton(_ sender: UIButton) {
-        let vc = PlainAlertViewController()
-        vc.alertType = .studyAccept
-        vc.okButtonDelegate = self
-        vc.modalPresentationStyle = .overCurrentContext
-        present(vc, animated: false)
     }
 }
 
