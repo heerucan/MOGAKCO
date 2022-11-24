@@ -23,8 +23,9 @@ final class GenderViewController: BaseViewController {
     private let gender = GenderData()
     private let genderView = GenderView()
     private let genderViewModel = GenderViewModel()
-    
     private var dataSource: UICollectionViewDiffableDataSource<Int, Gender>?
+    
+    // MARK: - UI Property
     
     private lazy var navigationBar = PlainNavigationBar(type: .common).then {
         $0.viewController = self

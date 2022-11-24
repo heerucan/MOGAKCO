@@ -50,7 +50,8 @@ final class GenderViewModel: ViewModelType {
                                    email: UserDefaultsHelper.standard.email ?? "",
                                    gender: UserDefaultsHelper.standard.gender)
         
-        APIManager.shared.request(SignupRequest.self, AuthRouter.signup(params)) { [weak self] data, status, error in
+        APIManager.shared
+            .request(SignupRequest.self, AuthRouter.signup(params)) { [weak self] data, status, error in
             guard let self = self else { return }
             self.signupResponse.onNext(SignupCompletion(status, error))
             if let error = error {

@@ -23,6 +23,8 @@ final class NicknameViewController: BaseViewController {
     private let nicknameView = NicknameView()
     private let nicknameViewModel = NicknameViewModel()
     
+    // MARK: - UI Property
+    
     private lazy var navigationBar = PlainNavigationBar(type: .common).then {
         $0.viewController = self
     }

@@ -23,6 +23,8 @@ final class EmailViewController: BaseViewController {
     private let emailView = EmailView()
     private let emailViewModel = EmailViewModel()
     
+    // MARK: - UI Property
+    
     private lazy var navigationBar = PlainNavigationBar(type: .common).then {
         $0.viewController = self
     }

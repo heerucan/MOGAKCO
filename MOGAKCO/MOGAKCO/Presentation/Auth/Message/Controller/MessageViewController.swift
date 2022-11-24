@@ -24,6 +24,8 @@ final class MessageViewController: BaseViewController {
     private let messageView = MessageView()
     private let messageViewModel = MessageViewModel()
     
+    // MARK: - UI Property
+    
     private lazy var navigationBar = PlainNavigationBar(type: .common).then {
         $0.viewController = self
     }
@@ -78,7 +80,9 @@ final class MessageViewController: BaseViewController {
             .withUnretained(self)
             .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (vc, isValid) in
-                isValid ? vc.messageViewModel.requestLogin() : vc.showToast(ToastMatrix.phoneTypeError.description)
+                isValid ?
+                vc.messageViewModel.requestLogin() :
+                vc.showToast(ToastMatrix.phoneTypeError.description)
             })
             .disposed(by: disposeBag)
         

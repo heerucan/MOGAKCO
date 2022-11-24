@@ -23,6 +23,8 @@ final class BirthViewController: BaseViewController {
     private let birthView = BirthView()
     private let birthViewModel = BirthViewModel()
     
+    // MARK: - UI Property
+
     private lazy var navigationBar = PlainNavigationBar(type: .common).then {
         $0.viewController = self
     }

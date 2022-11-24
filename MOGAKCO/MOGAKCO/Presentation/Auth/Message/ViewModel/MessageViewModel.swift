@@ -12,7 +12,7 @@ import RxCocoa
 
 final class MessageViewModel: ViewModelType {
     
-    typealias LoginCompletion = (Login?, Int?, APIError?)
+    typealias LoginCompletion = (User?, Int?, APIError?)
     let loginResponse = PublishSubject<LoginCompletion>()
     
     struct Input {
@@ -48,7 +48,8 @@ final class MessageViewModel: ViewModelType {
     // MARK: - Network
     
     func requestLogin() {
-        APIManager.shared.request(Login.self, AuthRouter.login) { [weak self] data, status, error in
+        APIManager.shared
+            .request(User.self, AuthRouter.login) { [weak self] data, status, error in
             guard let self = self else { return }
             self.loginResponse.onNext(LoginCompletion(data, status, error))
             if let error = error {
