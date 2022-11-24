@@ -10,28 +10,16 @@ import UIKit
 import SnapKit
 import Then
 
-// MARK: - Enum
-
-@frozen
-enum NearViewType {
-    case user
-    case request
-    
-    var title: String {
-        switch self {
-        case .user:
-            return "아쉽게도 주변에 새싹이 없어요ㅠ"
-        case .request:
-            return "아직 받은 요청이 없어요ㅠ"
-        }
-    }
-}
+/**
+ NearEmptyStateView
+ - 새싹 찾기 뷰에 사용되는 엠티스테이트 뷰
+ */
 
 final class NearEmptyStateView: BaseView {
     
     // MARK: - Property
     
-    let viewType: NearViewType = .user
+    let viewType: EmptyViewType = .user
     
     let imageView = UIImageView().then {
         $0.image = Icon.sprout
@@ -65,7 +53,7 @@ final class NearEmptyStateView: BaseView {
     
     // MARK: - Initializer
     
-    init(type: NearViewType) {
+    init(type: EmptyViewType) {
         super.init(frame: .zero)
         titleLabel.text = type.title
     }
@@ -102,6 +90,4 @@ final class NearEmptyStateView: BaseView {
             make.width.equalTo(48)
         }
     }
-    
-    // MARK: - Custom Method
 }

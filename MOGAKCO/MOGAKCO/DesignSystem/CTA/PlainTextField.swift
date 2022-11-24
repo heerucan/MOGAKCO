@@ -12,39 +12,6 @@ import UIKit
  - 밑줄만 있는 텍스트 필드
  */
 
-@frozen
-enum TextFieldType {
-    case line
-    case fill
-    
-    fileprivate var backgroundColor: UIColor {
-        switch self {
-        case .line:
-            return .white
-        case .fill:
-            return Color.gray1
-        }
-    }
-    
-    fileprivate var font: UIFont {
-        switch self {
-        case .line:
-            return Font.title4.font
-        case .fill:
-            return Font.body3.font
-        }
-    }
-    
-    fileprivate var placeholderColor: UIColor {
-        switch self {
-        case .line:
-            return UIColor(red: 0.533, green: 0.533, blue: 0.533, alpha: 1)
-        case .fill:
-            return Color.gray7
-        }
-    }
-}
-
 final class PlainTextField: UITextField {
     
     // MARK: - Property

@@ -10,54 +10,10 @@ import UIKit
 import SnapKit
 import Then
 
-// MARK: - Enum
-
-@frozen
-enum NavigationType {
-    case my
-    case myDetail
-    case common
-    case findSSAC
-    case search
-    
-    fileprivate var title: String {
-        switch self {
-        case .my: return "내정보"
-        case .myDetail: return "정보 관리"
-        case .common, .search: return ""
-        case .findSSAC: return "새싹찾기"
-        }
-    }
-    
-    fileprivate var rightButton: UIImage? {
-        switch self {
-        case .my, .myDetail, .common, .findSSAC, .search:
-            return nil
-        }
-    }
-    
-    fileprivate var rightButtonText: String? {
-        switch self {
-        case .myDetail: return "저장"
-        case .my, .common, .search: return nil
-        case .findSSAC: return "찾기 중단"
-        }
-    }
-    
-    fileprivate var leftButton: UIImage? {
-        switch self {
-        case .my: return nil
-        default: return Icon.arrow
-        }
-    }
-    
-    fileprivate var lineViewBackgroundColor: UIColor {
-        switch self {
-        case .search: return .clear
-        default: return Color.gray2
-        }
-    }
-}
+/**
+ PlainNavigationBar
+ - 커스텀 네비게이션바
+ */
 
 final class PlainNavigationBar: BaseView {
     

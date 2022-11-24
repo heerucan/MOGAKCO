@@ -9,6 +9,11 @@ import UIKit
 
 import Then
 
+/**
+ PlainSegmentedControl
+ - 새싹 찾기 뷰에 사용되는 세그먼트 컨트롤
+ */
+
 final class PlainSegmentedControl: UISegmentedControl {
     
     // MARK: - Property

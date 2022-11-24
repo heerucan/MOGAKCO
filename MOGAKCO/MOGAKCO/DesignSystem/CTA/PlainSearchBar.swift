@@ -7,10 +7,12 @@
 
 import UIKit
 
+/**
+ PlainSearchBar
+ - 커스텀 서치바
+ */
+
 final class PlainSearchBar: UISearchBar {
-    
-    // MARK: - Property
-    
     
     // MARK: - Initializer
     
@@ -39,9 +41,5 @@ final class PlainSearchBar: UISearchBar {
             attributes: [.foregroundColor: Color.gray6,
                          .font: Font.title4.font])
         searchTextField.attributedPlaceholder = attributedString
-//        searchTextField.leftView = .none
     }
-    
-    // MARK: - Custom Method
-    
 }

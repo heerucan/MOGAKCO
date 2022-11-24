@@ -10,6 +10,11 @@ import UIKit
 import SnapKit
 import Then
 
+/**
+ AuthReuseView
+ - 인증 단계 재사용뷰
+ */
+
 final class AuthReuseView: BaseView {
     
     // MARK: - Property

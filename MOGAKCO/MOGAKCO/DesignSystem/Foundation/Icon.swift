@@ -72,5 +72,7 @@ enum Icon {
     static let sprout = UIImage(named: "sprout1")
     
     // MARK: - Background
-    static let sesacBg01 = UIImage(named: "sesac_bg_01")
+    static let sesacBg01 = "sesac_bg_01"
+    static let sesac_background_1 = "sesac_background_1"
+    
 }
