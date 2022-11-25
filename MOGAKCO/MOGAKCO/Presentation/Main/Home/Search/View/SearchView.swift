@@ -38,7 +38,7 @@ final class SearchView: BaseView {
             make.top.equalTo(self.safeAreaLayoutGuide).offset(68)
             make.leading.bottom.trailing.equalToSuperview()
         }
-        
+
         findButton.snp.makeConstraints { make in
             make.directionalHorizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
@@ -60,12 +60,12 @@ extension SearchView {
         return UICollectionViewCompositionalLayout { (sectionIndex, NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemSize = NSCollectionLayoutSize(
                 widthDimension: .estimated(58),
-                heightDimension: .estimated(128))
+                heightDimension: .estimated(32))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(4/5),
-                heightDimension: .estimated(128))
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .estimated(32))
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
                 subitems: [item])
