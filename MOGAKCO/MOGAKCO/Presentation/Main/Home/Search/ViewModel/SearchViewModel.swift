@@ -99,15 +99,6 @@ final class SearchViewModel: ViewModelType {
     
     // 추천 스터디 개수 가져와서 색 나눠주기
     func recommendCount() -> Int {
-//        var list: [String] = []
-//        searchResponse.bind { result in
-//            list.append(contentsOf: result.fromRecommend)
-//        }
-//        .disposed(by: disposeBag)
-        
-        
-        
-//        return list.count
         return nearStudyListRelay.value.count
     }
 

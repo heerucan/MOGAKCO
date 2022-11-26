@@ -114,9 +114,6 @@ final class SearchViewController: BaseViewController {
         searchViewModel.myStudyListRelay
             .withUnretained(self)
             .bind { vc, value in
-                vc.searchViewModel.myStudyCount(value) { toast in
-                    <#code#>
-                }
                 if value.count <= 8 {
                     vc.snapshot.appendItems(value, toSection: 1)
                     vc.dataSource.apply(vc.snapshot)
@@ -160,12 +157,15 @@ final class SearchViewController: BaseViewController {
 
                 default: // 스터디 삭제
                     vc.snapshot.deleteItems([selectedItem])
-                    vc.snapshot.appendItems([selectedItem], toSection: 0)
+                    if vc.searchViewModel.nearStudyListRelay.value.contains(selectedItem) ||
+                        vc.searchViewModel.friendStudyListRelay.value.contains(selectedItem) {
+                        vc.snapshot.appendItems([selectedItem], toSection: 0)
+                    }
                     vc.searchViewModel.myStudyList.remove(at: indexPath.item)
                     vc.searchViewModel.myStudyListRelay.accept(vc.searchViewModel.myStudyList)
                 }
+                vc.configureDataSource()
                 vc.dataSource.apply(vc.snapshot)
-                
             }
             .disposed(by: disposeBag)
         
@@ -237,15 +237,12 @@ extension SearchViewController: UICollectionViewDelegate {
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
             cell.setupData(data: itemIdentifier)
-            switch indexPath.section {
-            case 0:
-                if indexPath.item > self.searchViewModel.recommendCount()-1 {
-                    cell.tagButton.type = .gray
-                } else {
-                    cell.tagButton.type = .red
-                }
-            default:
+            if self.searchViewModel.myStudyListRelay.value.contains(itemIdentifier) {
                 cell.tagButton.type = .green
+            } else if self.searchViewModel.nearStudyListRelay.value.contains(itemIdentifier) {
+                cell.tagButton.type = .red
+            } else {
+                cell.tagButton.type = .gray
             }
             return cell
         })
