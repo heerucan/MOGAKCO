@@ -17,6 +17,8 @@ final class SearchViewModel: ViewModelType {
     let searchResponse = BehaviorSubject<Search>(value: Search(fromQueueDB: [], fromQueueDBRequested: [], fromRecommend: []))
     let queueResponse = PublishRelay<Int>()
     
+    let nearStudyListRelay = BehaviorRelay<[String]>(value: [])
+    let friendStudyListRelay = BehaviorRelay<[String]>(value: [])
     let myStudyListRelay = BehaviorRelay<[String]>(value: [])
     var myStudyList: [String] = []
 
@@ -55,7 +57,7 @@ final class SearchViewModel: ViewModelType {
     func requestFindQueue(long: Double, lat: Double, studylist: [String]) {
         
         let params = FindRequest(long: long, lat: lat, studylist: studylist)
-        
+        print(params, "===============================>>")
         APIManager.shared.request(Int.self, QueueRouter.findQueue(params)) { [weak self] data, status, error in
             guard let self = self else { return }
             if let status = status {
@@ -67,6 +69,7 @@ final class SearchViewModel: ViewModelType {
     // MARK: - Business Logic
     
     // 지금 주변에는 - 중복된 스터디 제거
+    @discardableResult
     func deleteDuplicateStudy(_ value: Search) -> [String] {
         var friendList: [String] = []
         
@@ -84,18 +87,36 @@ final class SearchViewModel: ViewModelType {
         let recommendSet = Set(value.fromRecommend)
         let friendSet = Set(friendList.map { $0.lowercased() }.sorted(by: >))
         let resultSet = friendSet.subtracting(recommendSet.map { $0.lowercased()})
+        friendStudyListRelay.accept(Array(resultSet))
+        
+        var array: [String] = []
+        array.append(contentsOf: value.fromRecommend)
+        array.append(contentsOf: Array(resultSet))
+        nearStudyListRelay.accept(value.fromRecommend)
+        
         return Array(resultSet)
     }
     
     // 추천 스터디 개수 가져와서 색 나눠주기
     func recommendCount() -> Int {
-        var list: [String] = []
-        searchResponse.bind { result in
-            list.append(contentsOf: result.fromRecommend)
-        }
-        .disposed(by: disposeBag)
+//        var list: [String] = []
+//        searchResponse.bind { result in
+//            list.append(contentsOf: result.fromRecommend)
+//        }
+//        .disposed(by: disposeBag)
         
-        return list.count
+        
+        
+//        return list.count
+        return nearStudyListRelay.value.count
+    }
+
+    // 스터디가 빈배열인 경우 "anything" 전송
+    func checkStudyListIsEmpty() -> [String] {
+        var studylist: [String] = []
+        let currentStudylist = myStudyListRelay.value
+        currentStudylist.isEmpty ? studylist.append("anything") : studylist.append(contentsOf: currentStudylist)
+        return studylist
     }
     
     // 내 스터디 글자 개수 체크 + 기존에 등록된 스터디 체크

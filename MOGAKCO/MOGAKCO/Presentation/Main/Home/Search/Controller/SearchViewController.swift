@@ -100,11 +100,11 @@ final class SearchViewController: BaseViewController {
         searchViewModel.searchResponse
             .withUnretained(self)
             .subscribe { (vc, value) in
-                let friendStudyList = vc.searchViewModel.deleteDuplicateStudy(value)
+                vc.searchViewModel.deleteDuplicateStudy(value)
                 vc.snapshot = NSDiffableDataSourceSnapshot<Int, String>()
                 vc.snapshot.appendSections([0, 1])
-                vc.snapshot.appendItems(value.fromRecommend, toSection: 0)
-                vc.snapshot.appendItems(friendStudyList, toSection: 0)
+                vc.snapshot.appendItems(vc.searchViewModel.nearStudyListRelay.value, toSection: 0)
+                vc.snapshot.appendItems(vc.searchViewModel.friendStudyListRelay.value, toSection: 0)
                 vc.dataSource?.apply(vc.snapshot)
             }
             .disposed(by: disposeBag)
@@ -114,6 +114,9 @@ final class SearchViewController: BaseViewController {
         searchViewModel.myStudyListRelay
             .withUnretained(self)
             .bind { vc, value in
+                vc.searchViewModel.myStudyCount(value) { toast in
+                    <#code#>
+                }
                 if value.count <= 8 {
                     vc.snapshot.appendItems(value, toSection: 1)
                     vc.dataSource.apply(vc.snapshot)
@@ -138,23 +141,33 @@ final class SearchViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        // 컬렉션뷰 셀 선택 시에 내가 하고픈 스터디로 추가
+        // 컬렉션뷰 셀 선택 시에 내가 하고픈 스터디로 추가 및 삭제
         
         searchView.collectionView.rx.itemSelected
-            .bind{ [weak self] indexPath in
-//                self?.searchViewModel.myStudyList.accept([model])
-                print(indexPath, "하하하하")
-//                self?.searchViewModel.searchResponse.fromRecommend
-//                let friendStudyList = self?.searchViewModel.deleteDuplicateStudy(value)
-//                if indexPath.section == 0 {
-//                    self?.searchViewModel.
-//                }
+            .withUnretained(self)
+            .bind{ vc, indexPath in
+                guard let selectedItem = vc.dataSource.itemIdentifier(for: indexPath) else { return }
+                switch indexPath.section {
+                case 0: // 스터디 추가
+                    vc.searchViewModel.myStudyList.append(selectedItem)
+                    if vc.searchViewModel.myStudyList.count <= 8 {
+                        vc.snapshot.appendItems([selectedItem], toSection: 1)
+                        vc.searchViewModel.myStudyListRelay.accept(vc.searchViewModel.myStudyList)
+                    } else {
+                        vc.searchViewModel.myStudyList.removeLast()
+                        vc.showToast(ToastMatrix.overStudy.description)
+                    }
+
+                default: // 스터디 삭제
+                    vc.snapshot.deleteItems([selectedItem])
+                    vc.snapshot.appendItems([selectedItem], toSection: 0)
+                    vc.searchViewModel.myStudyList.remove(at: indexPath.item)
+                    vc.searchViewModel.myStudyListRelay.accept(vc.searchViewModel.myStudyList)
+                }
+                vc.dataSource.apply(vc.snapshot)
+                
             }
             .disposed(by: disposeBag)
-        
-        // 내가 하고픈 스터디에서 삭제시키기
-        
-        
         
         // POST - Queue 새싹찾기 서버통신
         
@@ -164,7 +177,7 @@ final class SearchViewController: BaseViewController {
                 vc.searchViewModel.requestFindQueue(
                     long: Matrix.ssacLong,
                     lat: Matrix.ssacLong,
-                    studylist: vc.searchViewModel.myStudyListRelay.value)
+                    studylist: vc.searchViewModel.checkStudyListIsEmpty())
             }
             .disposed(by: disposeBag)
         
@@ -177,18 +190,13 @@ final class SearchViewController: BaseViewController {
                     vc.transition(nearVC, .push)
                 } else {
                     print("화면전환 실패", status)
-//                    vc.handle(with: status)
+                    //                    vc.handle(with: status)
                 }
             }
             .disposed(by: disposeBag)
-        
     }
     
     // MARK: - Custom Method
-    
-    @objc func touchupTagButton(_ sender: UIButton) {
-        print(sender.tag)
-    }
     
     private func resignResponder() {
         UIView.animate(withDuration: 0.2) {
@@ -214,15 +222,6 @@ final class SearchViewController: BaseViewController {
             self.searchView.findButton.makeCornerStyle(width: 0, radius: 0)
             self.view.layoutIfNeeded()
         }
-    }
-}
-
-extension Reactive where Base: UICollectionView {
-    public func modelAndIndexSelected<T>(_ modelType: T.Type) -> ControlEvent<(T, IndexPath)> {
-        ControlEvent(events: Observable.zip(
-            self.modelSelected(modelType),
-            self.itemSelected
-        ))
     }
 }
 
