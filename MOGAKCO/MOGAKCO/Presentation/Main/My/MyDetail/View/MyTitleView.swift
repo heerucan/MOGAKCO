@@ -14,14 +14,16 @@ final class MyTitleView: BaseView {
     
     // MARK: - Property
     
+    var titleData: [Int] = [] // 타이틀뷰의 버튼의 isSelected를 받는 배열
+    
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>?
     
-    private lazy var titleStackView = UIStackView(arrangedSubviews: [titleLabel,
-                                                                     titleCollectionView]).then {
-        $0.axis = .vertical
-        $0.spacing = 16
-        $0.alignment = .fill
-    }
+    private lazy var titleStackView = UIStackView(
+        arrangedSubviews: [titleLabel, titleCollectionView]).then {
+            $0.axis = .vertical
+            $0.spacing = 16
+            $0.alignment = .fill
+        }
     
     private let titleLabel = UILabel().then {
         $0.textColor = Color.black
@@ -29,7 +31,7 @@ final class MyTitleView: BaseView {
         $0.text = "새싹 타이틀"
     }
     
-    lazy var titleCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+    private lazy var titleCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     // MARK: - Initializer
     
@@ -37,7 +39,7 @@ final class MyTitleView: BaseView {
         super.init(frame: .zero)
         configureDataSource()
     }
-
+    
     // MARK: - Configure UI & Layout
     
     override func configureLayout() {
@@ -56,12 +58,16 @@ final class MyTitleView: BaseView {
         }
     }
     
-    // MARK: - Custom Method
-    
     override func setupDelegate() {
         titleCollectionView.delegate = self
         titleCollectionView.register(TitleCategoryCollectionViewCell.self, forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
     }
+    
+    // MARK: - Set up Data
+    
+    func setupData() {
+    }
+    
 }
 
 // MARK: - CollectionView Layout
@@ -108,19 +114,16 @@ extension MyTitleView {
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: titleCollectionView,
-                                                        cellProvider: { collectionView, indexPath, itemIdentifier in
+                                                        cellProvider: { [self] collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
-            cell.setupData(itemIdentifier)
+            cell.setupData(itemIdentifier, reputation: self.titleData[indexPath.item])
             return cell
         })
         
-        // TODO: - rx/mvvm으로 리팩토링해야 할 것 + 모델 부분 데이터 따로 분리하기
         var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
         snapShot.appendSections([0])
         snapShot.appendItems(["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"], toSection: 0)
         dataSource?.apply(snapShot)
-        
-        // TODO: - 하고 싶은 스터디 부분 셀 등록하고, 데이터 세팅해줘야 함 + leftAligned + 동적높이까지 체크
     }
 }

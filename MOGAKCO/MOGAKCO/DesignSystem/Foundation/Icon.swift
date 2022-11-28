@@ -76,3 +76,35 @@ enum Icon {
     static let sesac_background_1 = "sesac_background_1"
     
 }
+
+enum SesacFace: Int, CaseIterable {
+    case sesac_face_5 = 5
+    case sesac_face_4 = 4
+    case sesac_face_3 = 3
+    case sesac_face_2 = 2
+    case sesac_face_1 = 1
+    
+    var image: UIImage? {
+        return UIImage(named: "sesac_face_\(self.rawValue)")
+    }
+}
+
+enum SesacBackground: Int, CaseIterable {
+    case sesac_background_1 = 1
+    case sesac_background_2
+    case sesac_background_3
+
+    var image: UIImage? {
+        return UIImage(named: "sesac_background_\(self.rawValue)")
+    }
+}
+
+enum SesacOnboarding: Int {
+    case onboarding1 = 1
+    case onboarding2
+    case onboarding3
+    
+    var image: UIImage? {
+        return  UIImage(named: "onboarding_img\(self.rawValue)")
+    }
+}

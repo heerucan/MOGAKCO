@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 import Then
 import RxSwift
+import RxCocoa
 
 final class MyDetailViewController: BaseViewController {
     
@@ -20,19 +21,29 @@ final class MyDetailViewController: BaseViewController {
     // MARK: - Property
         
     private let myDetailViewModel = MyDetailViewModel()
+    private let messageViewModel = MessageViewModel()
+    
+    // MARK: - UI Property
     
     private lazy var navigationBar = PlainNavigationBar(type: .myDetail).then {
         $0.viewController = self
     }
     
     private let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.separatorStyle = .none
-        $0.showsVerticalScrollIndicator = false
-        $0.sectionHeaderTopPadding = 0
         $0.backgroundColor = .white
+        $0.separatorStyle = .none
+        $0.sectionHeaderTopPadding = 0
         $0.bounces = false
         $0.allowsSelection =  false
+        $0.showsVerticalScrollIndicator = false
         $0.rowHeight = UITableView.automaticDimension
+        $0.register(MyDetailCardTableViewCell.self, forCellReuseIdentifier: MyDetailCardTableViewCell.identifier)
+        $0.register(MyDetailInfoTableViewCell.self, forCellReuseIdentifier: MyDetailInfoTableViewCell.identifier)
+    }
+    
+    private lazy var withdrawAction = UIAction { _ in
+        print("탈퇴버튼")
+//        self.myDetailViewModel.requestWithdraw()
     }
     
     // MARK: - LifeCycle
@@ -59,99 +70,61 @@ final class MyDetailViewController: BaseViewController {
         }
     }
     
-    override func setupDelegate() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(MyDetailCardTableViewCell.self, forCellReuseIdentifier: MyDetailCardTableViewCell.identifier)
-        tableView.register(MyDetailInfoTableViewCell.self, forCellReuseIdentifier: MyDetailInfoTableViewCell.identifier)
-    }
-    
     // MARK: - Bind
     
     override func bindViewModel() {
         
-//        let input = MyDetailViewModel.Input(tap: .rx.tap)
-//        let output = homeViewModel.transform(input)
-//
-//        output.tap
-//            .withUnretained(self)
-//            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-//            .subscribe { (vc,_) in
-//                vc.requestWithdraw()
-//            }
-//            .disposed(by: disposeBag)
+        myDetailViewModel.requestUser()
+        
+        // user get
+        myDetailViewModel.userResponse
+            .withUnretained(self)
+            .bind { vc, value in
+                print(value, "유저응답값")
+            }
+            .disposed(by: disposeBag)
+        
+        myDetailViewModel.userResponse
+            .bind(to: tableView.rx.items) { [weak self] (tableView, row, item) -> UITableViewCell in
+                guard let self = self else { return UITableViewCell() }
+                if row == 0 {
+                    let cell = self.tableView.dequeueReusableCell(
+                        withIdentifier: MyDetailCardTableViewCell.identifier,
+                        for: IndexPath(row: row, section: 0)) as! MyDetailCardTableViewCell
+                    cell.setupData(item)
+                    cell.toggleButton.addTarget(self, action: #selector(self.touchupToggleButton(_:)), for: .touchUpInside)
+                    return cell
+                } else {
+                    let cell = self.tableView.dequeueReusableCell(
+                        withIdentifier: MyDetailInfoTableViewCell.identifier,
+                        for: IndexPath(row: row, section: 0)) as! MyDetailInfoTableViewCell
+                    cell.setupData(item)
+                    cell.withdrawButton.addAction(self.withdrawAction, for: .touchUpInside)
+                    return cell
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        // 탈퇴
+        myDetailViewModel.withdrawResponse
+            .withUnretained(self)
+            .bind { cell, status in
+                print(status)
+            }
+            .disposed(by: disposeBag)
+        
+        // 정보 저장
+        
+        
+        
     }
-    
-    // MARK: - Network
-    
-    private func requestWithdraw() {
-//        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
-//            guard let self = self else { return }
-//            switch response {
-//            case .success(let value):
-//                print("🟣성공 ->>> \n", value)
-//                self.handle(with: .success)
-//                UserDefaultsHelper.standard.removeObject()
-//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                let viewController = OnboardingViewController()
-//                sceneDelegate?.window?.rootViewController = viewController
-//                sceneDelegate?.window?.makeKeyAndVisible()
-//
-//            case .failure(let error):
-//                self.handle(with: error)
-//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                let viewController = OnboardingViewController()
-//                sceneDelegate?.window?.rootViewController = viewController
-//                sceneDelegate?.window?.makeKeyAndVisible()
-//            }
-//        }
-    }
-    // MARK: - @objce
+        
+    // MARK: - @objc
     
     @objc func touchupToggleButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! MyDetailCardTableViewCell
-        sender.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
+        cell.changeView(sender.isSelected)
         tableView.reloadSections(IndexSet(), with: .fade)
-    }
-}
-
-// MARK: - TableView
-
-extension MyDetailViewController: UITableViewDelegate, UITableViewDataSource {
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return 1
-//    }
-//
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        switch section {
-//        case 0: return MyDetailImageView()
-//        default: return UIView()
-//        }
-//    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            guard let nameCell = tableView.dequeueReusableCell(withIdentifier: MyDetailCardTableViewCell.identifier, for: indexPath) as? MyDetailCardTableViewCell
-            else { return UITableViewCell() }
-            nameCell.toggleButton.addTarget(self, action: #selector(touchupToggleButton(_:)), for: .touchUpInside)
-            return nameCell
-        } else {
-            guard let infoCell = tableView.dequeueReusableCell(withIdentifier: MyDetailInfoTableViewCell.identifier, for: indexPath) as? MyDetailInfoTableViewCell
-            else { return UITableViewCell() }
-//            infoCell.withdrawButton
-            return infoCell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

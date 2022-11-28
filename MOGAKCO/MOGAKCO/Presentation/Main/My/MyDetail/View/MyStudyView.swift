@@ -14,14 +14,14 @@ final class MyStudyView: BaseView {
     
     // MARK: - Property
     
-    private var dataSource: UICollectionViewDiffableDataSource<Int, String>?
-    
-    private lazy var studyStackView = UIStackView(arrangedSubviews: [studyLabel,
-                                                                     studyCollectionView]).then {
-        $0.axis = .vertical
-        $0.spacing = 16
-        $0.alignment = .fill
+    var studyData: [String] = [] {
+        didSet {
+            configureDataSource()
+        }
     }
+    
+    private var snapShot: NSDiffableDataSourceSnapshot<Int, String>!
+    private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
 
     private let studyLabel = UILabel().then {
         $0.textColor = Color.black
@@ -29,7 +29,7 @@ final class MyStudyView: BaseView {
         $0.text = "하고 싶은 스터디"
     }
 
-    lazy var studyCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+    private lazy var studyCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     // MARK: - Initializer
     
@@ -41,18 +41,18 @@ final class MyStudyView: BaseView {
     // MARK: - Configure UI & Layout
     
     override func configureLayout() {
-        self.addSubviews([studyStackView])
-        
-        studyStackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
+        self.addSubviews([studyLabel, studyCollectionView])
+
         studyLabel.snp.makeConstraints { make in
+            make.top.leading.equalToSuperview()
             make.height.equalTo(18)
         }
         
         studyCollectionView.snp.makeConstraints { make in
-            make.height.equalTo(112)
+            make.top.equalTo(studyLabel.snp.bottom).offset(16)
+            make.directionalHorizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.height.lessThanOrEqualTo(32)
         }
     }
     
@@ -60,8 +60,11 @@ final class MyStudyView: BaseView {
     
     override func setupDelegate() {
         studyCollectionView.delegate = self
-        studyCollectionView.register(TitleCategoryCollectionViewCell.self,
-                                     forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
+        studyCollectionView.register(SearchCollectionViewCell.self,
+                                     forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
+        studyCollectionView.register(SearchHeaderSupplementaryView.self,
+                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                    withReuseIdentifier: SearchHeaderSupplementaryView.identifier)
     }
 }
 
@@ -70,24 +73,33 @@ final class MyStudyView: BaseView {
 extension MyStudyView: UICollectionViewDelegate {
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionIndex, NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
-            let spacing = 8.0
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(1))
+                widthDimension: .estimated(58),
+                heightDimension: .estimated(32))
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
+
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(32))
+                heightDimension: .estimated(32))
             let group = NSCollectionLayoutGroup.horizontal(
                 layoutSize: groupSize,
-                subitem: item,
-                count: 2)
-            group.interItemSpacing = NSCollectionLayoutSpacing.fixed(spacing)
+                subitems: [item])
+            group.interItemSpacing = NSCollectionLayoutSpacing.fixed(8)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .absolute(18))
+            let header = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top
+            )
             
             let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = spacing
+            section.boundarySupplementaryItems = [header]
+            section.interGroupSpacing = 8
+            section.contentInsets = NSDirectionalEdgeInsets(
+                top: 16, leading: 16, bottom: 24, trailing: 16)
             return section
         }
     }
@@ -105,23 +117,33 @@ extension MyStudyView: UICollectionViewDelegate {
 
 extension MyStudyView {
     private func configureDataSource() {
-        let cellRegistration = UICollectionView.CellRegistration<TitleCategoryCollectionViewCell, String> { cell, indexPath, itemIdentifier in
+        let cellRegistration = UICollectionView.CellRegistration<SearchCollectionViewCell, String> { cell, indexPath, itemIdentifier in
         }
         
         dataSource = UICollectionViewDiffableDataSource(collectionView: studyCollectionView,
                                                         cellProvider: { collectionView, indexPath, itemIdentifier in
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
-            cell.setupData(itemIdentifier)
+            cell.tagButton.type = .gray
+            cell.setupData(data: itemIdentifier)
             return cell
         })
         
-        // TODO: - rx/mvvm으로 리팩토링해야 할 것 + 모델 부분 데이터 따로 분리하기
+        let supplementaryRegistration = UICollectionView.SupplementaryRegistration
+        <SearchHeaderSupplementaryView>(elementKind: UICollectionView.elementKindSectionHeader) {
+            (supplementaryView, string, indexPath) in
+            let snapshot = ["하고 싶은 스터디"]
+            supplementaryView.sectionLabel.text = snapshot[indexPath.section]
+        }
+        
+        dataSource.supplementaryViewProvider = { (view, kind, index) in
+            return self.studyCollectionView.dequeueConfiguredReusableSupplementary(
+                using: supplementaryRegistration, for: index)
+        }
+        
         var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
         snapShot.appendSections([0])
-        snapShot.appendItems(["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"], toSection: 0)
+        snapShot.appendItems(studyData, toSection: 0)
         dataSource?.apply(snapShot)
-        
-        // TODO: - 하고 싶은 스터디 부분 셀 등록하고, 데이터 세팅해줘야 함 + leftAligned + 동적높이까지 체크
     }
 }

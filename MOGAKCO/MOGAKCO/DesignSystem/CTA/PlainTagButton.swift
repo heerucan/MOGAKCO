@@ -92,14 +92,11 @@ final class PlainTagButton: UIButton {
 
         if type == .green {
             var configuration = PlainButton.Configuration.plain()
-//            configuration.title = title
             configuration.image = Icon.closeSmall
             configuration.imagePlacement = .trailing
             configuration.imagePadding = 4
             configuration.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 16, bottom: 5, trailing: 16)
             self.configuration = configuration
-        }
-        
-        
+        } 
     }
 }

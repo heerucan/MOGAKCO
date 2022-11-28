@@ -14,6 +14,84 @@ import UIKit
 
 final class PlainButton: UIButton {
     
+    // MARK: - Enum
+    
+    @frozen
+    enum PlainButtonType {
+        case fill // 배경색있는
+        case outline // 테두리있는
+        case grayLine
+        case cancel // 취소버튼
+        
+        fileprivate var titleColor: UIColor {
+            switch self {
+            case .fill:
+                return .white
+            case .outline:
+                return Color.green
+            case .grayLine:
+                return Color.black
+            case .cancel:
+                return Color.black
+            }
+        }
+        
+        fileprivate var backgroundColor: UIColor {
+            switch self {
+            case .fill:
+                return Color.green
+            case .outline:
+                return .white
+            case .grayLine:
+                return .white
+            case .cancel:
+                return Color.gray2
+            }
+        }
+        
+        fileprivate var borderColor: UIColor {
+            switch self {
+            case .fill:
+                return .clear
+            case .outline:
+                return Color.green
+            case .grayLine:
+                return Color.gray4
+            case .cancel:
+                return .clear
+            }
+        }
+        
+        fileprivate var borderWidth: CGFloat {
+            switch self {
+            case .fill, .cancel:
+                return 0
+            case .outline, .grayLine:
+                return 1
+            }
+        }
+        
+        fileprivate var selectedColor: UIColor {
+            switch self {
+            case .fill:
+                return Color.green
+            case .outline:
+                return Color.green
+            case .grayLine:
+                return Color.green
+            case .cancel:
+                return Color.gray2
+            }
+        }
+        
+        fileprivate var selectedTitleColor: UIColor {
+            switch self {
+            case .fill, .outline, .grayLine: return .white
+            default: return Color.black
+            }
+        }
+    }
+    
     // MARK: - Property
     
     private var height: HeightType = .h48
@@ -73,7 +151,7 @@ final class PlainButton: UIButton {
     
     private func configureSelectedColor(type: PlainButtonType) {
         backgroundColor = isSelect ? type.selectedColor : type.backgroundColor
-        setTitleColor(type.selectedTitleColor, for: .selected)
+        setTitleColor(type.selectedTitleColor, for: .normal)
         makeCornerStyle(width: 0, color: type.borderColor.cgColor, radius: 8)
     }
 }

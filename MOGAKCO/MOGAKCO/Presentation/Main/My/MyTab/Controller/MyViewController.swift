@@ -22,6 +22,8 @@ final class MyViewController: BaseViewController {
     
     private let myViewModel = MyViewModel()
     
+    // MARK: - UI Property
+    
     private lazy var navigationBar = PlainNavigationBar(type: .my).then {
         $0.viewController = self
     }

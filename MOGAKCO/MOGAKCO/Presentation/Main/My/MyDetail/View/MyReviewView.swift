@@ -14,6 +14,12 @@ final class MyReviewView: BaseView {
     
     // MARK: - Property
     
+    var reviewData: [String] = [] {
+        didSet {
+            print(reviewData, "에에에에")
+        }
+    }
+        
     private lazy var reviewStackView = UIStackView(arrangedSubviews: [reviewTitleLabel, reviewLabel]).then {
         $0.axis = .vertical
         $0.spacing = 16
@@ -30,6 +36,7 @@ final class MyReviewView: BaseView {
         $0.font = Font.body3.font
         $0.text = "첫 리뷰를 기다리는 중이에요!"
         $0.textColor = Color.gray6
+        $0.numberOfLines = 0
     }
     
     private let reviewBottomView = UIView()
@@ -52,14 +59,26 @@ final class MyReviewView: BaseView {
         reviewStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        reviewLabel.snp.makeConstraints { make in
-            make.height.equalTo(18)
-        }
-        
+
         moreButton.snp.makeConstraints { make in
             make.top.equalTo(reviewTitleLabel.snp.top)
             make.trailing.equalToSuperview()
         }
+    }
+    
+    func setupData(_ data: User) {
+        if !data.comment.isEmpty {
+            reviewLabel.text = data.comment[0]
+            reviewLabel.textColor = Color.black
+        }
+        moreButton.isHidden = data.comment.count >= 2 ? false : true
+    }
+    
+    func setupData(_ data: FromQueueDB) {
+        if !data.reviews.isEmpty {
+            reviewLabel.text = data.reviews[0]
+            reviewLabel.textColor = Color.black
+        }
+        moreButton.isHidden = data.reviews.count >= 2 ? false : true
     }
 }

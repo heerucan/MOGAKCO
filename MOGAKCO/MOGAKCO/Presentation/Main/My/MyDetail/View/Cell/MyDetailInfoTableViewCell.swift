@@ -10,27 +10,25 @@ import UIKit
 import MultiSlider
 import SnapKit
 import Then
+import RxSwift
+
+protocol WithdrawDelegate: AnyObject {
+    func touchupWithdraw()
+}
 
 final class MyDetailInfoTableViewCell: BaseTableViewCell {
-    
-    // MARK: - Property
-    
-    var ageRange: String = "18 - 65" {
-        didSet {
-            print("움직여")
-            rangeLabel.text = oldValue
-        }
-    }
-    
+
+    // MARK: - UI Property
+
     private let genderLabel = UILabel().then {
         $0.text = "내 성별"
     }
     
-    let maleButton = PlainButton(.fill, height: .h48).then {
+    let maleButton = PlainButton(.grayLine, height: .h48).then {
         $0.title = "남자"
     }
     
-    let femaleButton = PlainButton(.fill, height: .h48).then {
+    let femaleButton = PlainButton(.grayLine, height: .h48).then {
         $0.title = "여자"
     }
     
@@ -38,7 +36,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         $0.text = "자주 하는 스터디"
     }
     
-    let textField = UITextField().then {
+    private let textField = UITextField().then {
         $0.font = Font.title4.font
         $0.textColor = Color.black
         $0.addPadding(width: 12)
@@ -65,9 +63,9 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     
     let ageSlider = MultiSlider().then {
         $0.orientation = .horizontal
-        $0.value = [1, 65]
         $0.minimumValue = 18
         $0.maximumValue = 65
+        $0.value = [18, 65]
         $0.outerTrackColor = Color.gray2
         $0.tintColor = Color.green
         $0.trackWidth = 4
@@ -77,7 +75,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
         $0.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
     }
     
-    let rangeLabel = UILabel().then {
+    private let rangeLabel = UILabel().then {
         $0.font = Font.title3.font
         $0.textColor = Color.green
         $0.text = "18 - 65"
@@ -93,19 +91,23 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        bindViewModel()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
     }
-    
+
     // MARK: - Configure UI & Layout
     
     override func configureUI() {
         super.configureUI()
-        configureMenuLabel([genderLabel, studyLabel, numberLabel, ageLabel, withdrawLabel])
-        
+        configureMenuLabel([genderLabel,
+                            studyLabel,
+                            numberLabel,
+                            ageLabel,
+                            withdrawLabel])
     }
     
     override func configureLayout() {
@@ -113,7 +115,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
                                  studyLabel, textField, lineView,
                                  numberLabel, numberSwitch,
                                  ageLabel, rangeLabel, ageSlider,
-                                 withdrawLabel])
+                                 withdrawButton, withdrawLabel])
         
         genderLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(24)
@@ -177,13 +179,19 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
             make.height.equalTo(28)
         }
         
+        withdrawButton.snp.makeConstraints { make in
+            make.top.equalTo(ageSlider.snp.bottom)
+            make.directionalHorizontalEdges.equalToSuperview()
+            make.bottom.equalTo(withdrawLabel.snp.bottom).offset(16)
+        }
+        
         withdrawLabel.snp.makeConstraints { make in
             make.top.equalTo(ageSlider.snp.bottom).offset(29)
             make.leading.equalToSuperview()
             make.bottom.equalToSuperview().inset(67)
         }
     }
-    
+
     // MARK: - Custom Method
     
     private func configureMenuLabel(_ label: [UILabel]) {
@@ -198,5 +206,18 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     @objc func sliderChanged(_ sender: MultiSlider) {
         print(sender.minimumValue, sender.maximumValue, sender.value)
         rangeLabel.text = "\(Int(sender.value[0]))" + " - " + "\(Int(sender.value[1]))"
+    }
+    
+    // MARK: - Set Up Data
+    
+    func setupData(_ data: User) {
+        if data.gender == 0 {
+            femaleButton.isSelect = true
+        } else {
+            maleButton.isSelect = true
+        }
+        textField.text = data.study
+        numberSwitch.isOn = data.searchable == 1 ? true : false
+        rangeLabel.text = "\(data.ageMin)" + " - " + "\(data.ageMax)"
     }
 }

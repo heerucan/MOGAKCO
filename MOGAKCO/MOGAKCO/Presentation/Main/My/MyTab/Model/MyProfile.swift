@@ -16,7 +16,7 @@ struct MyProfile {
         self.image = image
         self.menu = menu
         self.arrowIsHidden = arrowIsHidden
-    }    
+    }
 }
 
 struct MyProfileData {

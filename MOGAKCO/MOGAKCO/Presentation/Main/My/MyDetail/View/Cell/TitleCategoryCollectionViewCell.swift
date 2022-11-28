@@ -31,7 +31,8 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - setupData
     
-    func setupData(_ data: String) {
+    func setupData(_ data: String, reputation: Int) {
         button.title = data
+        button.type = reputation == 0 ? .grayLine : .fill
     }
 }
