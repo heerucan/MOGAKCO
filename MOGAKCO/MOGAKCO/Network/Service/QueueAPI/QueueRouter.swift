@@ -15,6 +15,9 @@ enum QueueRouter {
     case stopQueue
     case search(_ searchQueue: SearchRequest)
     case myQueueState
+    case studyRequest(_ otheruid: String)
+    case studyAccept(_ otheruid: String)
+    case dodge(_ otheruid: String)
 }
 
 extension QueueRouter: URLRequestConvertible {
@@ -28,12 +31,15 @@ extension QueueRouter: URLRequestConvertible {
         case .findQueue, .stopQueue: return "/v1/queue"
         case .search: return "/v1/queue/search"
         case .myQueueState: return "/v1/queue/myQueueState"
+        case .studyRequest: return "/v1/queue/studyrequest"
+        case .studyAccept: return "/v1/queue/studyaccept"
+        case .dodge: return "/v1/queue/dodge"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .findQueue, .search:
+        case .findQueue, .search, .studyRequest, .studyAccept, .dodge:
             return .post
         case .stopQueue:
             return .delete
@@ -51,6 +57,8 @@ extension QueueRouter: URLRequestConvertible {
         case .search(let searchQueue):
             return ["lat": "\(searchQueue.lat)",
                     "long": "\(searchQueue.long)"]
+        case .studyRequest(let otheruid), .studyAccept(let otheruid), .dodge(let otheruid):
+            return ["otheruid": otheruid]
         default: return nil
         }
     }
@@ -59,13 +67,13 @@ extension QueueRouter: URLRequestConvertible {
         switch self {
         case .findQueue:
             return URLEncoding(arrayEncoding: .noBrackets)
-        default: return JSONEncoding.default
+        default: return URLEncoding.default
         }
     }
     
     var headers: HTTPHeaders {
         return ["idtoken": UserDefaultsHelper.standard.idToken ?? "",
-                "Content-Type": APIKey.applicationJSON]
+                "Content-Type": APIKey.contentType]
     }
     
     func asURLRequest() throws -> URLRequest {

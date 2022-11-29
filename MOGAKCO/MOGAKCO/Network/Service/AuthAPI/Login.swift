@@ -1,5 +1,5 @@
 //
-//  Login.swift
+//  User.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/07.
@@ -8,10 +8,10 @@
 import Foundation
 
 /**
- Login - 로그인 인증 응답 데이터 모델
+ User - 로그인 인증 응답 데이터 모델
  */
 
-struct Login: Codable {
+struct User: Codable {
     let uid, phoneNumber, email, fcMtoken: String
     let nick, birth: String
     let gender: Int

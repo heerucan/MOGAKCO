@@ -15,6 +15,7 @@ enum AuthRouter {
     case signup(_ signup: SignupRequest)
     case withdraw
     case updateFCMToken
+    case updateMypage(_ user: UserRequest)
 }
 
 extension AuthRouter: URLRequestConvertible {
@@ -28,6 +29,7 @@ extension AuthRouter: URLRequestConvertible {
         case .login, .signup: return "/v1/user"
         case .withdraw: return "/v1/user/withdraw"
         case .updateFCMToken: return "/v1/user/update_fcm_token"
+        case .updateMypage: return "/v1/user/mypage"
         }
     }
     
@@ -36,7 +38,7 @@ extension AuthRouter: URLRequestConvertible {
         case .login: return .get
         case .signup: return .post
         case .withdraw: return .post
-        case .updateFCMToken: return .put
+        case .updateFCMToken, .updateMypage: return .put
         }
     }
     
@@ -49,6 +51,12 @@ extension AuthRouter: URLRequestConvertible {
                     "birth": signup.birth,
                     "email": signup.email,
                     "gender": "\(signup.gender)"]
+        case .updateMypage(let user):
+            return ["searchable": user.searchable,
+                    "ageMin": user.ageMin,
+                    "ageMax": user.ageMax ,
+                    "gender": user.gender,
+                    "study": user.study]
         default: return nil
         }
     }
