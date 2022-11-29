@@ -14,6 +14,8 @@ final class MyDetailViewModel: ViewModelType {
     
     var userResponse = BehaviorSubject<[User]>(value: [])
     let withdrawResponse = BehaviorSubject<Int>(value: 0)
+    let mypageResponse = BehaviorSubject<Int>(value: 0)
+    let userRequest = BehaviorSubject<UserRequest>(value: UserRequest.init(0, 0, 0, 0, ""))
     
     let disposeBag = DisposeBag()
     
@@ -55,29 +57,17 @@ final class MyDetailViewModel: ViewModelType {
                 ErrorManager.handle(with: error, vc: MyDetailViewController())
             }
         }
-        
     }
-        
-//        APIManager.shared.requestData(Int.self, AuthRouter.withdraw) { [weak self] response in
-//            guard let self = self else { return }
-//            switch response {
-//            case .success(let value):
-//                print("🟣성공 ->>> \n", value)
-//                self.handle(with: .success)
-//                UserDefaultsHelper.standard.removeObject()
-//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                let viewController = OnboardingViewController()
-//                sceneDelegate?.window?.rootViewController = viewController
-//                sceneDelegate?.window?.makeKeyAndVisible()
-//
-//            case .failure(let error):
-//                self.handle(with: error)
-//                let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//                let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                let viewController = OnboardingViewController()
-//                sceneDelegate?.window?.rootViewController = viewController
-//                sceneDelegate?.window?.makeKeyAndVisible()
-//            }
-//        }
+       
+    func requestUpdateMypage(params: UserRequest) {
+        APIManager.shared.request(Int.self, AuthRouter.updateMypage(params)) { [weak self] data, status, error in
+            guard let self = self else { return }
+            if let status = status {
+                self.mypageResponse.onNext(status)
+            }
+            if let error = error {
+                ErrorManager.handle(with: error, vc: MyDetailViewController())
+            }
+        }
+    }
 }
