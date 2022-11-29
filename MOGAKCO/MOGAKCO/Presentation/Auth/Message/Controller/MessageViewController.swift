@@ -56,8 +56,9 @@ final class MessageViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = MessageViewModel.Input(messageText: messageView.textField.rx.text,
-                                           tap: messageView.reuseView.okButton.rx.tap)
+        let input = MessageViewModel.Input(
+            messageText: messageView.textField.rx.text,
+            tap: messageView.reuseView.okButton.rx.tap)
         let output = messageViewModel.transform(input)
         
         output.messageText
@@ -89,21 +90,30 @@ final class MessageViewController: BaseViewController {
         output.response
             .withUnretained(self)
             .subscribe { vc, response in
-                if let login = response.0 {
-                    print("🟣Login ->>> \n", login)
-                    let tabVC = TabBarController()
-                    vc.transition(tabVC, .push)
+                if response.1 == 200 {
+                    vc.pushTabVC()
                 }
-                if let error = response.2 {
-                    vc.handle(with: error)
-                }
+                
+//                if let login = response.0 {
+//                    print("🟣Login ->>> \n", login)
+//                }
+//                if let error = response.2 {
+//                    ErrorManager.handle(with: error)
+//                }
             }
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Custom Method
+    
+    func pushTabVC() {
+        let tabVC = TabBarController()
+        self.transition(tabVC, .push)
     }
 }
 
 // MARK: - Firebase Auth
-// TODO: - 여기 있는 코드가 사실 뷰모델로 가도 되잖아?! 리팩토링 요망
+
 extension MessageViewController {
     private func verifyID(_ code: String) {
         let verificationID = UserDefaultsHelper.standard.verificationID!

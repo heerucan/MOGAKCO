@@ -55,7 +55,9 @@ final class BirthViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = BirthViewModel.Input(date: birthView.datePicker.rx.date, tap: birthView.reuseView.okButton.rx.tap)
+        let input = BirthViewModel.Input(
+            date: birthView.datePicker.rx.date,
+            tap: birthView.reuseView.okButton.rx.tap)
         let output = birthViewModel.transform(input)
         
         output.dateValid
@@ -67,9 +69,10 @@ final class BirthViewController: BaseViewController {
         output.date
             .skip(1)
             .drive { [weak self] value in
-                self?.birthView.yearTextField.text = value[0]
-                self?.birthView.monthTextField.text = value[1]
-                self?.birthView.dayTextField.text = value[2]
+                guard let self = self else { return }
+                self.birthView.yearTextField.text = value[0]
+                self.birthView.monthTextField.text = value[1]
+                self.birthView.dayTextField.text = value[2]
             }
             .disposed(by: disposeBag)
         

@@ -53,7 +53,7 @@ final class MessageViewModel: ViewModelType {
             guard let self = self else { return }
             self.loginResponse.onNext(LoginCompletion(data, status, error))
             if let error = error {
-                self.loginResponse.onError(error)
+                ErrorManager.handle(with: error, vc: MessageViewController())
             }
         }
     }

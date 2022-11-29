@@ -55,7 +55,9 @@ final class NicknameViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = NicknameViewModel.Input(nicknameText: nicknameView.textField.rx.text, tap: nicknameView.reuseView.okButton.rx.tap)
+        let input = NicknameViewModel.Input(
+            nicknameText: nicknameView.textField.rx.text,
+            tap: nicknameView.reuseView.okButton.rx.tap)
         let output = nicknameViewModel.transform(input)
         
         output.nicknameText

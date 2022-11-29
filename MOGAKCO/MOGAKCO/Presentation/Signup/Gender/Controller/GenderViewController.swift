@@ -78,7 +78,8 @@ final class GenderViewController: BaseViewController {
         output.genderIndex
             .withUnretained(self)
             .bind { (vc, indexPath) in
-                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath) as? GenderCollectionViewCell
+                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath)
+                        as? GenderCollectionViewCell
                 else { return }
                 vc.genderView.reuseView.okButton.isEnable = cell.isSelected ? true : false
                 cell.isSelected.toggle()
@@ -101,16 +102,32 @@ final class GenderViewController: BaseViewController {
         output.response
             .withUnretained(self)
             .subscribe { vc, response in
-                if let status = response.0 {
-                    print("🟣Signup ->>> ", status)
-                    let tabVC = TabBarController()
-                    vc.transition(tabVC, .push)
-                }
-                if let error = response.1 {
-                    vc.handle(with: error)
-                }
+                vc.pushVC(status: response.0)
             }
             .disposed(by: disposeBag)
+    }
+    
+    // MARK: - Custom Method
+    
+    private func pushVC(status: Int?) {
+        guard let status = status else { return }
+        switch status {
+        case 200:
+            let tabVC = TabBarController()
+            self.transition(tabVC, .push)
+            
+        case 201:
+            self.showToast(ToastMatrix.currentUser.description)
+            
+        case 202:
+            let viewControllers = (self.navigationController?.viewControllers) as! [UIViewController]
+            self.navigationController!.popToViewController(
+                viewControllers[viewControllers.count - 4],
+                animated: true)
+            viewControllers[viewControllers.count - 4].showToast(ToastMatrix.invalidNickname.description)
+        
+        default:  break
+        }
     }
 }
 

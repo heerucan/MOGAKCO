@@ -55,8 +55,9 @@ final class EmailViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = EmailViewModel.Input(emailText: emailView.textField.rx.text,
-                                         tap: emailView.reuseView.okButton.rx.tap)
+        let input = EmailViewModel.Input(
+            emailText: emailView.textField.rx.text,
+            tap: emailView.reuseView.okButton.rx.tap)
         let output = emailViewModel.transform(input)
        
         output.emailText

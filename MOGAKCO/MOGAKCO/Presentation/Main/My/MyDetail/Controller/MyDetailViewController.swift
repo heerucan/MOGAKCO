@@ -30,6 +30,7 @@ final class MyDetailViewController: BaseViewController {
     }
     
     private let tableView = UITableView(frame: .zero, style: .plain).then {
+        $0.keyboardDismissMode = .onDrag
         $0.backgroundColor = .white
         $0.separatorStyle = .none
         $0.sectionHeaderTopPadding = 0
@@ -121,12 +122,12 @@ final class MyDetailViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // 정보 저장
-        navigationBar.rightButton.rx.tap
-            .withUnretained(self)
-            .bind {vc,_ in
-                vc.myDetailViewModel.requestUpdateMypage(params: <#T##UserRequest#>)
-            }
-            .disposed(by: disposeBag)
+//        navigationBar.rightButton.rx.tap
+//            .withUnretained(self)
+//            .bind {vc,_ in
+//                vc.myDetailViewModel.requestUpdateMypage(params: <#T##UserRequest#>)
+//            }
+//            .disposed(by: disposeBag)
         
     }
         
@@ -135,7 +136,7 @@ final class MyDetailViewController: BaseViewController {
     @objc func touchupToggleButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! MyDetailCardTableViewCell
-        cell.changeView(sender.isSelected)
+        cell.changeView(sender.isSelected, vc: MyDetailViewController.identifier)
         tableView.reloadSections(IndexSet(), with: .fade)
     }
 }

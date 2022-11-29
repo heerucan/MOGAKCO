@@ -16,6 +16,7 @@ final class MyStudyView: BaseView {
     
     var studyData: [String] = [] {
         didSet {
+            print(oldValue, "스터디데이터")
             configureDataSource()
         }
     }
@@ -52,7 +53,7 @@ final class MyStudyView: BaseView {
             make.top.equalTo(studyLabel.snp.bottom).offset(16)
             make.directionalHorizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.lessThanOrEqualTo(32)
+            make.height.lessThanOrEqualTo(100)
         }
     }
     
@@ -143,7 +144,7 @@ extension MyStudyView {
         
         var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
         snapShot.appendSections([0])
-        snapShot.appendItems(studyData, toSection: 0)
+        snapShot.appendItems(Array(Set(studyData)), toSection: 0)
         dataSource?.apply(snapShot)
     }
 }

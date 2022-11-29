@@ -55,7 +55,7 @@ final class GenderViewModel: ViewModelType {
             guard let self = self else { return }
             self.signupResponse.onNext(SignupCompletion(status, error))
             if let error = error {
-                self.signupResponse.onError(error)
+                ErrorManager.handle(with: error, vc: GenderViewController())
             }
         }
     }

@@ -47,6 +47,10 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        studyView.backgroundColor = .orange
+        [titleView, studyView, reviewView].forEach {
+            $0.isHidden = true
+        }
     }
     
     override func layoutSubviews() {
@@ -91,11 +95,17 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
         
     // MARK: - Custom Method
     
-    func changeView(_ isSelected: Bool) {
-        [titleView, studyView, reviewView].forEach {
-            $0.isHidden = isSelected
-        }
-        nameView.moreImageView.image = isSelected ? Icon.moreDown : Icon.moreUp
+    func changeView(_ isSelected: Bool, vc: String) {
+        if vc == MyDetailViewController.identifier {
+            [titleView, reviewView].forEach {
+                $0.isHidden = !isSelected
+            }
+        } else {
+            [titleView, studyView, reviewView].forEach {
+                $0.isHidden = !isSelected
+            }
+        }        
+        nameView.moreImageView.image = !isSelected ? Icon.moreDown : Icon.moreUp
     }
     
     // MARK: - Set up Data
