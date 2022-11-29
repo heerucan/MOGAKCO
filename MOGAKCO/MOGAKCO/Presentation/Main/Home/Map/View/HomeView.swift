@@ -18,27 +18,53 @@ final class HomeView: BaseView {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
         $0.backgroundColor = .white
         $0.makeShadow(color: Color.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
-//        $0.makeCornerStyle(width: 0, radius: 8)
+        $0.makeCornerStyle(width: 0, radius: 8)
         $0.register(HomeTagCollectionViewCell.self, forCellWithReuseIdentifier: HomeTagCollectionViewCell.identifier)
     }
     
     private let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 48, height: 48)
-//        layout.
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
         layout.sectionInset = UIEdgeInsets.zero
         layout.scrollDirection = .vertical
         return layout
     }()
+    
+    private lazy var stackView = UIStackView(arrangedSubviews: [allButton, maleButton, femaleButton]).then {
+        $0.axis = .vertical
+        $0.spacing = 0
+        $0.distribution = .fillEqually
+        $0.alignment = .fill
+        $0.makeShadow(color: Color.black.cgColor, radius: 3, offset: CGSize(width: 0, height: 1), opacity: 0.3)
+    }
+    
+    let allButton = PlainGenderButton().then {
+        $0.title = "전체"
+        $0.layer.cornerRadius = 8
+        $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        $0.layer.masksToBounds = true
+        $0.isSelected = true
+    }
+    
+    let maleButton = PlainGenderButton().then {
+        $0.title = "남자"
+        $0.makeCornerStyle(width: 0, radius: 0)
+    }
+    
+    let femaleButton = PlainGenderButton().then {
+        $0.title = "여자"
+        $0.layer.cornerRadius = 8
+        $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        $0.layer.masksToBounds = true
+    }
         
     lazy var mapView = NMFMapView(frame: self.frame).then {
-        $0.minZoomLevel = 9
-        $0.maxZoomLevel = 16
+        $0.minZoomLevel = 12
+        $0.maxZoomLevel = 17
         $0.positionMode = .compass
         $0.locationOverlay.hidden = false
-//        $0.locationOverlay.circleColor = Color.green.withAlphaComponent(5)
     }
     
     let locationButton = UIButton().then {
@@ -70,7 +96,7 @@ final class HomeView: BaseView {
     
    override func configureLayout() {
        self.addSubviews([mapView,
-                         collectionView,
+                         stackView,
                          locationButton,
                          matchingButton,
                          markerImageView])
@@ -80,7 +106,7 @@ final class HomeView: BaseView {
            make.bottom.equalTo(self.layoutMarginsGuide)
        }
        
-       collectionView.snp.makeConstraints { make in
+       stackView.snp.makeConstraints { make in
            make.top.equalToSuperview().inset(52)
            make.leading.equalToSuperview().inset(16)
            make.width.equalTo(48)
@@ -88,7 +114,7 @@ final class HomeView: BaseView {
        }
        
        locationButton.snp.makeConstraints { make in
-           make.top.equalTo(collectionView.snp.bottom).offset(16)
+           make.top.equalTo(stackView.snp.bottom).offset(16)
            make.leading.equalToSuperview().inset(16)
            make.width.height.equalTo(48)
        }

@@ -19,11 +19,14 @@ final class HomeViewModel: ViewModelType {
     typealias QueueStateCompletion = (QueueState?, Int?, APIError?)
     let searchResponse = PublishSubject<SearchCompletion>()
     let queueStateResponse = PublishSubject<QueueStateCompletion>()
+    let markerRelay = PublishRelay<[NMFMarker]>()
     
     let tagList = Observable.just(["전체", "남자", "여자"])
     
-    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(value: CLLocationCoordinate2D(
-        latitude: Matrix.ssacLat, longitude: Matrix.ssacLong))
+    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(
+        value: CLLocationCoordinate2D(
+        latitude: Matrix.ssacLat,
+        longitude: Matrix.ssacLong))
     
     struct Input {
         let locationTap: ControlEvent<Void>
@@ -56,28 +59,31 @@ final class HomeViewModel: ViewModelType {
     // MARK: - Network
     
     func requestSearch(params: SearchRequest) {
-        APIManager.shared.request(Search.self, QueueRouter.search(params)) { [weak self] data, status, error in
+        APIManager.shared
+            .request(Search.self, QueueRouter.search(params)) { [weak self] data, status, error in
             guard let self = self else { return }
             self.searchResponse.onNext(SearchCompletion(data, status, error))
             if let error = error {
-                self.searchResponse.onError(error)
+                ErrorManager.handle(with: error, vc: HomeViewController())
             }
         }
     }
     
     func requestQueueState() {
-        APIManager.shared.request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
+        APIManager.shared
+            .request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
             guard let self = self else { return }
             self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
             if let error = error {
-                self.queueStateResponse.onError(error)
+                ErrorManager.handle(with: error, vc: HomeViewController())
             }
         }
     }
     
     // MARK: - Location Authorization
     
-    func checkUserAuthorization(_ status: CLAuthorizationStatus, completion: @escaping ((CLAuthorizationStatus?) -> ())) {
+    func checkUserAuthorization(_ status: CLAuthorizationStatus,
+                                completion: @escaping ((CLAuthorizationStatus?) -> ())) {
         switch status {
         case .notDetermined:
             print("아직 결정 X")
@@ -94,7 +100,8 @@ final class HomeViewModel: ViewModelType {
         }
     }
     
-    func updateCurrentLocation(_ coordinate: CLLocationCoordinate2D, completion: @escaping ((NMFCameraUpdate) -> ())) {
+    func updateCurrentLocation(_ coordinate: CLLocationCoordinate2D,
+                               completion: @escaping ((NMFCameraUpdate) -> ())) {
         LocationManager.shared.stopUpdatingLocation()
         let coordinate = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
         let cameraUpdate = NMFCameraUpdate(scrollTo: coordinate, zoomTo: 14)
