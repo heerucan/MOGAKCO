@@ -17,6 +17,11 @@ enum ToastMatrix: String {
     case invalidNickname
     case birthTypeError
     case emailTypeError
+    case overStudy
+    case alreadyStudy
+    case studyCount
+    case currentUser
+    case stopFind
     
     var description: String {
         switch self {
@@ -36,6 +41,16 @@ enum ToastMatrix: String {
             return "새싹스터디는 만 17세 이상만 사용할 수 있습니다."
         case .emailTypeError:
             return "이메일 형식이 올바르지 않습니다."
+        case .overStudy:
+            return "스터디를 더 이상 추가할 수 없습니다"
+        case .alreadyStudy:
+                return "이미 등록된 스터디입니다"
+        case .studyCount:
+            return "최소 한 자 이상, 최대 8글자까지 작성 가능합니다"
+        case .currentUser:
+            return "이미 가입된 유저입니다."
+        case .stopFind:
+            return "누군가와 스터디를 함께하기로 약속하셨어요!"
         }
     }
 }

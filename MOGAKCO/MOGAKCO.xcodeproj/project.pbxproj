@@ -78,7 +78,7 @@
 		5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D032918E73F006CB05C /* Assets.xcassets */; };
 		5BC57D072918E73F006CB05C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D052918E73F006CB05C /* LaunchScreen.storyboard */; };
 		5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D1C2918E94D006CB05C /* APIKey.swift */; };
-		5BC57D1F2918E957006CB05C /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D1E2918E957006CB05C /* APIError.swift */; };
+		5BC57D1F2918E957006CB05C /* ErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D1E2918E957006CB05C /* ErrorManager.swift */; };
 		5BC57D212918E96D006CB05C /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D202918E96D006CB05C /* APIManager.swift */; };
 		5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */; };
 		5BC57D312918EA86006CB05C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D302918EA86006CB05C /* BaseView.swift */; };
@@ -218,7 +218,7 @@
 		5BC57D062918E73F006CB05C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BC57D082918E73F006CB05C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BC57D1C2918E94D006CB05C /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
-		5BC57D1E2918E957006CB05C /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
+		5BC57D1E2918E957006CB05C /* ErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorManager.swift; sourceTree = "<group>"; };
 		5BC57D202918E96D006CB05C /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		5BC57D2E2918EA7E006CB05C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		5BC57D302918EA86006CB05C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -755,7 +755,7 @@
 			isa = PBXGroup;
 			children = (
 				5BC57D1C2918E94D006CB05C /* APIKey.swift */,
-				5BC57D1E2918E957006CB05C /* APIError.swift */,
+				5BC57D1E2918E957006CB05C /* ErrorManager.swift */,
 				5BC57D202918E96D006CB05C /* APIManager.swift */,
 				5BD11A75291ECE400011C5B5 /* GenericResponse.swift */,
 			);
@@ -1301,7 +1301,7 @@
 				5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */,
 				5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */,
 				5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */,
-				5BC57D1F2918E957006CB05C /* APIError.swift in Sources */,
+				5BC57D1F2918E957006CB05C /* ErrorManager.swift in Sources */,
 				5BF40CEE293324D200F1536C /* PlainGenderButton.swift in Sources */,
 				5BC57D412918EB85006CB05C /* UIView+.swift in Sources */,
 				5B7B0408292920B9008B265B /* RequestTableViewCell.swift in Sources */,

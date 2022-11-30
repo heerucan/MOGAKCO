@@ -42,7 +42,6 @@ final class ErrorManager {
 }
 
 enum APIError: Int, Error, CaseIterable {
-    case success = 200
     case expiredTokenError = 401
     case notCurrentUserError = 406
     case serverError = 500
@@ -50,8 +49,6 @@ enum APIError: Int, Error, CaseIterable {
     
     var message: String {
         switch self {
-        case .success:
-            return "성공"
         case .expiredTokenError:
             return "과도한 인증 시도가 있었습니다. 나중에 다시 시도해 주세요."
         case .notCurrentUserError:

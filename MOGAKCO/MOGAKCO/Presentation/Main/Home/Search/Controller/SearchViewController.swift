@@ -49,6 +49,8 @@ final class SearchViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        searchViewModel.requestSearch(lat: UserDefaultsHelper.standard.lat!, long: UserDefaultsHelper.standard.lng!)
+        print(UserDefaultsHelper.standard.lat, UserDefaultsHelper.standard.lng, "좌표다ㅏㅏ@@@@@@@@@@@@@@@@@@@@@@@@@")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,7 +83,7 @@ final class SearchViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = SearchViewModel.Input(findButtonTap: searchView.findButton.rx.tap)
+        let input = SearchViewModel.Input()
         let output = searchViewModel.transform(input)
         
         // TODO: - input/output 적용 + 로직 분리
@@ -92,20 +94,6 @@ final class SearchViewController: BaseViewController {
             .drive { [weak self] _ in
                 guard let self = self else { return }
                 self.resignResponder()
-            }
-            .disposed(by: disposeBag)
-        
-        // POST - 스터디 리스트 가져오는 서버통신
-        // TODO: - 여기 좌표를 홈 뷰에서 마지막 좌표로 수정해야 함
-        homeViewModel.locationSubject
-            .withUnretained(self)
-            .bind { vc, coordinate in
-                guard let coordinate = coordinate else { return }
-                vc.searchViewModel.requestSearch(
-                    lat: coordinate.latitude,
-                    long: coordinate.longitude)
-                print(coordinate.latitude, coordinate.longitude, "좌표", Matrix.ssacLat, Matrix.ssacLong)
-                
             }
             .disposed(by: disposeBag)
             
@@ -179,7 +167,7 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // POST - Queue 새싹찾기 서버통신
-        output.findButtonTap
+        searchView.findButton.rx.tap
             .withUnretained(self)
             .bind { vc,_ in
                 vc.searchViewModel.requestFindQueue()
@@ -188,11 +176,10 @@ final class SearchViewController: BaseViewController {
         
         searchViewModel.queueResponse
             .withUnretained(self)
-            .bind { vc, error in
-                if error == APIError.success {
+            .bind { vc, status in
+                print(status, "findQueue")
+                if status == 200 {
                     vc.transition(NearViewController(), .push)
-                } else {
-                    ErrorManager.handle(with: error, vc: self)
                 }
             }
             .disposed(by: disposeBag)

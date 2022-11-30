@@ -15,7 +15,7 @@ final class SearchViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     let searchResponse = BehaviorSubject<Search>(value: Search(fromQueueDB: [], fromQueueDBRequested: [], fromRecommend: []))
-    let queueResponse = PublishRelay<APIError>()
+    let queueResponse = PublishRelay<Int>()
     
     let nearStudyListRelay = BehaviorRelay<[String]>(value: [])
     let friendStudyListRelay = BehaviorRelay<[String]>(value: [])
@@ -23,20 +23,20 @@ final class SearchViewModel: ViewModelType {
     var myStudyList: [String] = []
 
     struct Input {
-        let findButtonTap: ControlEvent<Void>
+//        let findButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let searchResponse: BehaviorSubject<Search>
-        let findButtonTap: Observable<APIError>
+//        let findButtonTap: Observable<APIError>
     }
     
     func transform(_ input: Input) -> Output {
         
-        let tap = input.findButtonTap
-            .withLatestFrom(queueResponse)
+//        let tap = input.findButtonTap
+//            .withLatestFrom(queueResponse)
         
-        return Output(searchResponse: searchResponse, findButtonTap: tap)
+        return Output(searchResponse: searchResponse)
     }
     
     // MARK: - Network
@@ -53,6 +53,7 @@ final class SearchViewModel: ViewModelType {
             }
             if let error = error {
                 self.searchResponse.onError(error)
+                ErrorManager.handle(with: error, vc: SearchViewController())
             }
         }
     }
@@ -61,13 +62,16 @@ final class SearchViewModel: ViewModelType {
     func requestFindQueue() {
         
         let params = FindRequest(long: UserDefaultsHelper.standard.lng!,
-                                 lat: UserDefaultsHelper.standard.lng!,
+                                 lat: UserDefaultsHelper.standard.lat!,
                                  studylist: checkStudyListIsEmpty())
- 
+        
         APIManager.shared.request(Int.self, QueueRouter.findQueue(params)) { [weak self] data, status, error in
             guard let self = self else { return }
+            if let status = status {
+                self.queueResponse.accept(status)
+            }
             if let error = error {
-                self.queueResponse.accept(error)
+                ErrorManager.handle(with: error, vc: SearchViewController())
             }
         }
     }

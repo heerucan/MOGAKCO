@@ -16,6 +16,7 @@ extension UIViewController {
         case push
         case dismiss
         case pop
+        case popNavigations
     }
     
     func transition<T: UIViewController>(_ viewController: T,
@@ -45,6 +46,9 @@ extension UIViewController {
             self.dismiss(animated: true)
         case .pop:
             navigationController?.popViewController(animated: true)
+        case .popNavigations:
+            let viewControllers = (self.navigationController?.viewControllers) as! [UIViewController]
+            self.navigationController!.popToViewController(viewControllers[viewControllers.count - count], animated: true)
         }
     }
 }
