@@ -22,6 +22,8 @@ final class UserDefaultsHelper {
         static let email = "email"
         static let gender = "gender"
         static let currentUser = "currentUser"
+        static let lat = "lat"
+        static let lng = "lng"
     }
     
     var idToken: String? {
@@ -69,6 +71,16 @@ final class UserDefaultsHelper {
         set { userDefaults.set(newValue, forKey: Key.currentUser) }
     }
     
+    var lat: Double? {
+        get { return userDefaults.double(forKey: Key.lat) ?? Matrix.ssacLat }
+        set { userDefaults.set(newValue, forKey: Key.lat) }
+    }
+    
+    var lng: Double? {
+        get { return userDefaults.double(forKey: Key.lng) ?? Matrix.ssacLong }
+        set { userDefaults.set(newValue, forKey: Key.lng) }
+    }
+
     func removeObject() {
         userDefaults.removeObject(forKey: Key.idToken)
         userDefaults.removeObject(forKey: Key.FCMtoken)
@@ -78,6 +90,8 @@ final class UserDefaultsHelper {
         userDefaults.removeObject(forKey: Key.birthday)
         userDefaults.removeObject(forKey: Key.email)
         userDefaults.removeObject(forKey: Key.gender)
+        userDefaults.removeObject(forKey: Key.lat)
+        userDefaults.removeObject(forKey: Key.lng)
     }
     
     // 로그아웃을 위해
