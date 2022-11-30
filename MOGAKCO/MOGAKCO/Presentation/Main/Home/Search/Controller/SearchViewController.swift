@@ -23,6 +23,7 @@ final class SearchViewController: BaseViewController {
     static let sectionHeaderElementKind = "section-header-element-kind"
     private let searchView = SearchView()
     private let searchViewModel = SearchViewModel()
+    private let homeViewModel = HomeViewModel()
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<Int, String>!
     
@@ -80,11 +81,12 @@ final class SearchViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = SearchViewModel.Input()
+        let input = SearchViewModel.Input(findButtonTap: searchView.findButton.rx.tap)
         let output = searchViewModel.transform(input)
         
-        // 버튼 애니메이션 처리
+        // TODO: - input/output 적용 + 로직 분리
         
+        // 버튼 애니메이션 처리
         searchView.collectionView.rx.contentOffset
             .asDriver()
             .drive { [weak self] _ in
@@ -94,9 +96,19 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // POST - 스터디 리스트 가져오는 서버통신
-        
-        searchViewModel.requestSearch(lat: Matrix.ssacLat, long: Matrix.ssacLong)
-        
+        // TODO: - 여기 좌표를 홈 뷰에서 마지막 좌표로 수정해야 함
+        homeViewModel.locationSubject
+            .withUnretained(self)
+            .bind { vc, coordinate in
+                guard let coordinate = coordinate else { return }
+                vc.searchViewModel.requestSearch(
+                    lat: coordinate.latitude,
+                    long: coordinate.longitude)
+                print(coordinate.latitude, coordinate.longitude, "좌표", Matrix.ssacLat, Matrix.ssacLong)
+                
+            }
+            .disposed(by: disposeBag)
+            
         searchViewModel.searchResponse
             .withUnretained(self)
             .subscribe { (vc, value) in
@@ -110,7 +122,6 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // 서치바에 내가 작성한 스터디목록 추가 + 띄어쓰기로 분리해서 추가
-        
         searchViewModel.myStudyListRelay
             .withUnretained(self)
             .bind { vc, value in
@@ -124,7 +135,6 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // 서치바에 1~8글자 이외인 경우 toast 띄우기
-        
         searchBar.rx.searchButtonClicked
             .withLatestFrom(searchBar.rx.text.orEmpty)
             .distinctUntilChanged()
@@ -139,7 +149,6 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // 컬렉션뷰 셀 선택 시에 내가 하고픈 스터디로 추가 및 삭제
-        
         searchView.collectionView.rx.itemSelected
             .withUnretained(self)
             .bind{ vc, indexPath in
@@ -157,8 +166,8 @@ final class SearchViewController: BaseViewController {
 
                 default: // 스터디 삭제
                     vc.snapshot.deleteItems([selectedItem])
-                    if vc.searchViewModel.nearStudyListRelay.value.contains(selectedItem) ||
-                        vc.searchViewModel.friendStudyListRelay.value.contains(selectedItem) {
+                    if vc.searchViewModel.nearStudyContains(selectedItem) ||
+                        vc.searchViewModel.friendStudyContains(selectedItem) {
                         vc.snapshot.appendItems([selectedItem], toSection: 0)
                     }
                     vc.searchViewModel.myStudyList.remove(at: indexPath.item)
@@ -170,27 +179,20 @@ final class SearchViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         // POST - Queue 새싹찾기 서버통신
-        
-        searchView.findButton.rx.tap
+        output.findButtonTap
             .withUnretained(self)
             .bind { vc,_ in
-                vc.searchViewModel.requestFindQueue(
-                    long: Matrix.ssacLong,
-                    lat: Matrix.ssacLong,
-                    studylist: vc.searchViewModel.checkStudyListIsEmpty())
+                vc.searchViewModel.requestFindQueue()
             }
             .disposed(by: disposeBag)
         
         searchViewModel.queueResponse
             .withUnretained(self)
-            .bind { vc, status in
-                if status == 200 {
-                    print("화면전환 성공", status)
-                    let nearVC = NearViewController()
-                    vc.transition(nearVC, .push)
+            .bind { vc, error in
+                if error == APIError.success {
+                    vc.transition(NearViewController(), .push)
                 } else {
-                    print("화면전환 실패", status)
-                    //                    vc.handle(with: status)
+                    ErrorManager.handle(with: error, vc: self)
                 }
             }
             .disposed(by: disposeBag)
@@ -237,9 +239,10 @@ extension SearchViewController: UICollectionViewDelegate {
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
             cell.setupData(data: itemIdentifier)
-            if self.searchViewModel.myStudyListRelay.value.contains(itemIdentifier) {
+
+            if self.searchViewModel.myStudyContains(itemIdentifier) {
                 cell.tagButton.type = .green
-            } else if self.searchViewModel.nearStudyListRelay.value.contains(itemIdentifier) {
+            } else if self.searchViewModel.nearStudyContains(itemIdentifier) {
                 cell.tagButton.type = .red
             } else {
                 cell.tagButton.type = .gray

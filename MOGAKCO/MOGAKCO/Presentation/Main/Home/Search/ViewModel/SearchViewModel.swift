@@ -15,7 +15,7 @@ final class SearchViewModel: ViewModelType {
     private let disposeBag = DisposeBag()
     
     let searchResponse = BehaviorSubject<Search>(value: Search(fromQueueDB: [], fromQueueDBRequested: [], fromRecommend: []))
-    let queueResponse = PublishRelay<Int>()
+    let queueResponse = PublishRelay<APIError>()
     
     let nearStudyListRelay = BehaviorRelay<[String]>(value: [])
     let friendStudyListRelay = BehaviorRelay<[String]>(value: [])
@@ -23,16 +23,20 @@ final class SearchViewModel: ViewModelType {
     var myStudyList: [String] = []
 
     struct Input {
-        
+        let findButtonTap: ControlEvent<Void>
     }
     
     struct Output {
         let searchResponse: BehaviorSubject<Search>
+        let findButtonTap: Observable<APIError>
     }
     
     func transform(_ input: Input) -> Output {
         
-        return Output(searchResponse: searchResponse)
+        let tap = input.findButtonTap
+            .withLatestFrom(queueResponse)
+        
+        return Output(searchResponse: searchResponse, findButtonTap: tap)
     }
     
     // MARK: - Network
@@ -54,19 +58,21 @@ final class SearchViewModel: ViewModelType {
     }
     
     // 새싹찾기 버튼 클릭
-    func requestFindQueue(long: Double, lat: Double, studylist: [String]) {
+    func requestFindQueue() {
         
-        let params = FindRequest(long: long, lat: lat, studylist: studylist)
-        print(params, "===============================>>")
+        let params = FindRequest(long: UserDefaultsHelper.standard.lng!,
+                                 lat: UserDefaultsHelper.standard.lng!,
+                                 studylist: checkStudyListIsEmpty())
+ 
         APIManager.shared.request(Int.self, QueueRouter.findQueue(params)) { [weak self] data, status, error in
             guard let self = self else { return }
-            if let status = status {
-                self.queueResponse.accept(status)
+            if let error = error {
+                self.queueResponse.accept(error)
             }
         }
     }
     
-    // MARK: - Business Logic
+    // MARK: - Logic
     
     // 지금 주변에는 - 중복된 스터디 제거
     @discardableResult
@@ -129,5 +135,30 @@ final class SearchViewModel: ViewModelType {
             }
         }
         myStudyListRelay.accept(myStudyList)
+    }
+    
+    // 해당 배열에 포함되어 있니?
+    func myStudyContains(_ value: String) -> Bool {
+        if myStudyListRelay.value.contains(value) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func friendStudyContains(_ value: String) -> Bool {
+        if friendStudyListRelay.value.contains(value) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func nearStudyContains(_ value: String) -> Bool {
+        if nearStudyListRelay.value.contains(value) {
+            return true
+        } else {
+            return false
+        }
     }
 }
