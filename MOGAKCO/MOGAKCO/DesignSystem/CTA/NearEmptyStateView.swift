@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -17,20 +19,25 @@ import Then
 
 final class NearEmptyStateView: BaseView {
     
+    let disposeBag = DisposeBag()
+    
     // MARK: - Property
     
-    let viewType: EmptyViewType = .user
+    let nearViewModel = NearViewModel()
+    let searchViewModel = SearchViewModel()
     
-    let imageView = UIImageView().then {
+    let viewType: EmptyViewType = .user
+        
+    private let imageView = UIImageView().then {
         $0.image = Icon.sprout
     }
     
-    let titleLabel = UILabel().then {
+    private let titleLabel = UILabel().then {
         $0.font = Font.display1.font
         $0.textColor = Color.black
     }
     
-    let subTitleLabel = UILabel().then {
+    private let subTitleLabel = UILabel().then {
         $0.text = "스터디를 변경하거나 조금만 더 기다려 주세요!"
         $0.font = Font.title4.font
         $0.textColor = Color.gray7
@@ -47,7 +54,7 @@ final class NearEmptyStateView: BaseView {
         $0.title = "스터디 변경하기"
     }
     
-    let refreshButton = PlainButton(.outline, height: .h48).then {
+    lazy var refreshButton = PlainButton(.outline, height: .h48).then {
         $0.setImage(Icon.refresh, for: .normal)
     }
     
@@ -55,6 +62,7 @@ final class NearEmptyStateView: BaseView {
     
     init(type: EmptyViewType) {
         super.init(frame: .zero)
+        bindViewModel()
         titleLabel.text = type.title
     }
 
@@ -89,5 +97,26 @@ final class NearEmptyStateView: BaseView {
         refreshButton.snp.makeConstraints { make in
             make.width.equalTo(48)
         }
+    }
+    
+    // MARK: - Bind
+    
+    override func bindViewModel() {
+        
+        changeButton.rx.tap
+            .withUnretained(self)
+            .bind { vc,_ in
+                vc.nearViewModel.requestStopQueue()
+                print("스터디 변경하기")
+            }
+            .disposed(by: disposeBag)
+      
+        refreshButton.rx.tap
+            .withUnretained(self)
+            .bind { vc,_ in
+                print("새로고침")
+                vc.searchViewModel.requestFindQueue()
+            }
+            .disposed(by: disposeBag)
     }
 }

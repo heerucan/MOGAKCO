@@ -149,9 +149,21 @@ final class PlainButton: UIButton {
         backgroundColor = isEnable ? type.backgroundColor : Color.gray6
     }
     
-    private func configureSelectedColor(type: PlainButtonType) {
+    func configureSelectedColor(type: PlainButtonType) {
         backgroundColor = isSelect ? type.selectedColor : type.backgroundColor
         setTitleColor(type.selectedTitleColor, for: .normal)
         makeCornerStyle(width: 0, color: type.borderColor.cgColor, radius: 8)
+    }
+    
+    func configureSelected(_ type: PlainButtonType) {
+        backgroundColor = type.selectedColor
+        setTitleColor(type.selectedTitleColor, for: .normal)
+        makeCornerStyle(width: type.borderWidth, color: type.borderColor.cgColor, radius: 8)
+    }
+    
+    func configureUnselected(_ type: PlainButtonType) {
+        backgroundColor = type.backgroundColor
+        setTitleColor(type.titleColor, for: .normal)
+        makeCornerStyle(width: type.borderWidth, color: type.borderColor.cgColor, radius: 8)
     }
 }

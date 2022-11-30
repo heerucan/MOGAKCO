@@ -12,37 +12,37 @@ import UIKit
  - 스터디 검색 태그 버튼 시스템
  */
 
-// MARK: - Enum
-
-enum TagButtonType {
-    case red
-    case gray
-    case green
-    
-    var borderColor: UIColor {
-        switch self {
-        case .red:
-            return Color.error
-        case .gray:
-            return Color.gray4
-        case .green:
-            return Color.green
-        }
-    }
-    
-    var textColor: UIColor {
-        switch self {
-        case .red:
-            return Color.error
-        case .gray:
-            return Color.black
-        case .green:
-            return Color.green
-        }
-    }
-}
-
 final class PlainTagButton: UIButton {
+    
+    // MARK: - Enum
+
+    enum TagButtonType {
+        case red
+        case gray
+        case green
+        
+        fileprivate var borderColor: UIColor {
+            switch self {
+            case .red:
+                return Color.error
+            case .gray:
+                return Color.gray4
+            case .green:
+                return Color.green
+            }
+        }
+        
+        fileprivate var textColor: UIColor {
+            switch self {
+            case .red:
+                return Color.error
+            case .gray:
+                return Color.black
+            case .green:
+                return Color.green
+            }
+        }
+    }
     
     // MARK: - Property
     

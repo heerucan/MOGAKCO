@@ -24,7 +24,6 @@ final class PlainGenderButton: UIButton {
 
     override var isSelected: Bool {
         didSet {
-            print(isSelected)
             configureSelectedColor()
         }
     }
