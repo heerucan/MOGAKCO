@@ -24,6 +24,7 @@
 		5B1395072922D5300046013E /* MyReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395062922D5300046013E /* MyReviewView.swift */; };
 		5B1395092922D9500046013E /* MyStudyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1395082922D9500046013E /* MyStudyView.swift */; };
 		5B13950B2923B5DF0046013E /* MyNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B13950A2923B5DF0046013E /* MyNameView.swift */; };
+		5B31363C29375D7E003DC5C6 /* PlainRequestButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B31363B29375D7E003DC5C6 /* PlainRequestButton.swift */; };
 		5B55BC8F2926981C000C3CA0 /* CoreLocationDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC8E2926981C000C3CA0 /* CoreLocationDelegateProxy.swift */; };
 		5B55BC91292773CA000C3CA0 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC90292773CA000C3CA0 /* LocationManager.swift */; };
 		5B55BC9429277E06000C3CA0 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC9329277E06000C3CA0 /* Search.swift */; };
@@ -118,7 +119,7 @@
 		5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A6C291E71750011C5B5 /* AuthRouter.swift */; };
 		5BD11A74291E75DA0011C5B5 /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */; };
 		5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A75291ECE400011C5B5 /* GenericResponse.swift */; };
-		5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */; };
+		5BD11A78291F50E70011C5B5 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A77291F50E70011C5B5 /* Toast.swift */; };
 		5BD11A7C2920127B0011C5B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A7B2920127A0011C5B5 /* HomeViewController.swift */; };
 		5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE24F291BAB1300FD31E9 /* String+.swift */; };
 		5BEFE252291BAEC200FD31E9 /* PlainTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */; };
@@ -165,6 +166,7 @@
 		5B1395062922D5300046013E /* MyReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReviewView.swift; sourceTree = "<group>"; };
 		5B1395082922D9500046013E /* MyStudyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStudyView.swift; sourceTree = "<group>"; };
 		5B13950A2923B5DF0046013E /* MyNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyNameView.swift; sourceTree = "<group>"; };
+		5B31363B29375D7E003DC5C6 /* PlainRequestButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRequestButton.swift; sourceTree = "<group>"; };
 		5B55BC8E2926981C000C3CA0 /* CoreLocationDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationDelegateProxy.swift; sourceTree = "<group>"; };
 		5B55BC90292773CA000C3CA0 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		5B55BC9329277E06000C3CA0 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -252,7 +254,7 @@
 		5BD11A6C291E71750011C5B5 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
 		5BD11A75291ECE400011C5B5 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
-		5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastMatrix.swift; sourceTree = "<group>"; };
+		5BD11A77291F50E70011C5B5 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		5BD11A7B2920127A0011C5B5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5BEFE24F291BAB1300FD31E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextField.swift; sourceTree = "<group>"; };
@@ -365,6 +367,17 @@
 				5B068305292A4C9C00C162D6 /* MyProfile.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		5B31363D29375D83003DC5C6 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				5BC57D7029190AA9006CB05C /* PlainButton.swift */,
+				5BF40CED293324D200F1536C /* PlainGenderButton.swift */,
+				5BC35600292E5A610019B50F /* PlainTagButton.swift */,
+				5B31363B29375D7E003DC5C6 /* PlainRequestButton.swift */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 		5B55BC78292653EF000C3CA0 /* ViewModel */ = {
@@ -704,11 +717,9 @@
 		5BC57D142918E8AC006CB05C /* CTA */ = {
 			isa = PBXGroup;
 			children = (
+				5B31363D29375D83003DC5C6 /* Button */,
 				5BB16AEF2919726200EA3099 /* AuthReuseView.swift */,
 				5B7B355E292AFEDD00A3FCB0 /* PlainAlertViewController.swift */,
-				5BC57D7029190AA9006CB05C /* PlainButton.swift */,
-				5BF40CED293324D200F1536C /* PlainGenderButton.swift */,
-				5BC35600292E5A610019B50F /* PlainTagButton.swift */,
 				5BEFE251291BAEC200FD31E9 /* PlainTextField.swift */,
 				5B1394E829225C470046013E /* PlainNavigationBar.swift */,
 				5B7B355C292A8E5A00A3FCB0 /* PlainSearchBar.swift */,
@@ -879,7 +890,7 @@
 			isa = PBXGroup;
 			children = (
 				5BC57D4D2918ED93006CB05C /* Matrix.swift */,
-				5BD11A77291F50E70011C5B5 /* ToastMatrix.swift */,
+				5BD11A77291F50E70011C5B5 /* Toast.swift */,
 				5BC5222B291D917C000A570B /* UserManager.swift */,
 				5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */,
 				5B9559AA2921320300B34B60 /* NetworkMonitor.swift */,
@@ -1321,6 +1332,7 @@
 				5BEFE259291BEC1100FD31E9 /* MessageViewController.swift in Sources */,
 				5BEFE27C291C029700FD31E9 /* EmailView.swift in Sources */,
 				5BC57D542918EDFD006CB05C /* Icon.swift in Sources */,
+				5B31363C29375D7E003DC5C6 /* PlainRequestButton.swift in Sources */,
 				5BC57D352918EA9E006CB05C /* BaseCollectionViewCell.swift in Sources */,
 				5B8E1BE829290F4400D634B3 /* NearViewModel.swift in Sources */,
 				5BC57D7E291919B0006CB05C /* OnboardCollectionViewCell.swift in Sources */,
@@ -1402,7 +1414,7 @@
 				5B801A01292F5F1500ED97CD /* NearDetailViewController.swift in Sources */,
 				5BEFE25B291BEC1A00FD31E9 /* MessageViewModel.swift in Sources */,
 				5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */,
-				5BD11A78291F50E70011C5B5 /* ToastMatrix.swift in Sources */,
+				5BD11A78291F50E70011C5B5 /* Toast.swift in Sources */,
 				5BEFE274291BF9B200FD31E9 /* BirthViewController.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
 				5B7B04042929204C008B265B /* UserTableViewCell.swift in Sources */,

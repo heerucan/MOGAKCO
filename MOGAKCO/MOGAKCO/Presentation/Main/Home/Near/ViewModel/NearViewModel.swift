@@ -49,17 +49,13 @@ final class NearViewModel: ViewModelType {
     /// 수락하기
     func requestStudyAccept(_ otheruid: String) {
         APIManager.shared.request(Int.self, QueueRouter.studyAccept(otheruid)) { [weak self] _, status, error in
-            print(status, error, "============requestStudyAccept")
             guard let self = self else { return }
-            // 200 -> 수락 시에 채팅화면으로!
-            // 201 -> “상대방이 이미 다른 새싹과 스터디를 함께 하는 중입니다”
-            // 202 -> “상대방이 스터디 찾기를 그만두었습니다”
-            // 203 -> 앗! 누군가가 나의 스터디를 수락하였어요 -> (get, /v1/queue/myQueueState)
             if let status = status {
                 self.acceptResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: NearRequestViewController(nearViewModel: NearViewModel(), searchViewModel: SearchViewModel()))
+                ErrorManager.handle(with: error, vc: NearRequestViewController(nearViewModel: NearViewModel(),
+                                                                               searchViewModel: SearchViewModel(), homeViewModel: HomeViewModel()))
             }
         }
     }

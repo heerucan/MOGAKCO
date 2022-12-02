@@ -63,7 +63,7 @@ final class PlainAlertViewController: BaseViewController {
         $0.addAction(cancelAction, for: .touchUpInside)
     }
     
-    private lazy var okButton = PlainButton(.fill, height: .h48).then {
+    lazy var okButton = PlainButton(.fill, height: .h48).then {
         $0.title = "확인"
         $0.addAction(okAction, for: .touchUpInside)
     }
@@ -73,9 +73,8 @@ final class PlainAlertViewController: BaseViewController {
     }
     
     private lazy var okAction = UIAction { _ in
-        self.dismiss(animated: false) {
-            self.okButtonDelegate?.touchupOkButton()
-        }
+        self.okButtonDelegate?.touchupOkButton()
+        self.dismiss(animated: false)
     }
     
     // MARK: - LifeCycle

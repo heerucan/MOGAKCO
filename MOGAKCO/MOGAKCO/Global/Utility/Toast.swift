@@ -1,5 +1,5 @@
 //
-//  ToastMatrix.swift
+//  Toast.swift
 //  MOGAKCO
 //
 //  Created by heerucan on 2022/11/12.
@@ -24,6 +24,7 @@ enum Toast: String {
     case stopFind
     case studyRequestSuccess
     case stopFindStudy
+    case acceptStudy
     
     var message: String {
         switch self {
@@ -57,6 +58,8 @@ enum Toast: String {
             return "스터디 요청을 보냈습니다"
         case .stopFindStudy:
             return "상대방이 스터디 찾기를 그만두었습니다"
+        case .acceptStudy:
+            return "앗! 누군가가 나의 스터디를 수락하였어요"
         }
     }
 }

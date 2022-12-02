@@ -23,13 +23,15 @@ final class NearRequestViewController: BaseViewController {
     let requestView = RequestView()
     var nearViewModel: NearViewModel!
     var searchViewModel: SearchViewModel!
+    var homeViewModel: HomeViewModel!
             
     // MARK: - Init
     
-    init(nearViewModel: NearViewModel, searchViewModel: SearchViewModel) {
+    init(nearViewModel: NearViewModel, searchViewModel: SearchViewModel, homeViewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.nearViewModel = nearViewModel
         self.searchViewModel = searchViewModel
+        self.homeViewModel = homeViewModel
     }
     
     // MARK: - LifeCycle
@@ -39,7 +41,6 @@ final class NearRequestViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        print(#function, "NearRequestVC")
         super.viewDidLoad()
         bindViewModel()
     }
@@ -51,6 +52,7 @@ final class NearRequestViewController: BaseViewController {
         let input = NearViewModel.Input()
         let output = nearViewModel.transform(input)
         
+        // TODO: - 홈에서 설정한 좌표로 바꿔줄 것
         searchViewModel.requestSearch(lat: Matrix.ssacLat, long: Matrix.ssacLong)
         
         searchViewModel.searchResponse
@@ -74,6 +76,22 @@ final class NearRequestViewController: BaseViewController {
                     cell.requestDelegate = self
                 }
                 .disposed(by: disposeBag)
+        
+        nearViewModel.acceptResponse
+            .withUnretained(self)
+            .bind { vc, status in
+                if status == 200 {
+                    vc.transition(ChatViewController(), .push)
+                } else if status == 201 {
+                    vc.showToast(Toast.alreadyStudy.message)
+                } else if status == 202 {
+                    vc.showToast(Toast.stopFindStudy.message)
+                } else if status == 203 {
+                    vc.showToast(Toast.acceptStudy.message)
+                    vc.homeViewModel.requestQueueState()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - @objc
@@ -90,7 +108,6 @@ final class NearRequestViewController: BaseViewController {
 
 extension NearRequestViewController: RequestOrAcceptDelegate {
     func requestOrAcceptButton(_ uid: String, index: Int) {
-        print("이거 이거이거잉?request 버튼 누른 겨?")
         let alertVC = PlainAlertViewController()
         alertVC.alertType = .studyAccept
         alertVC.okButton.addTarget(self, action: #selector(self.touchupOkButton), for: .touchUpInside)

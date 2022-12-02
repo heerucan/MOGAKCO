@@ -41,7 +41,9 @@ final class NearViewController: BaseViewController {
     }
     
     private let userVC = NearUserViewController(nearViewModel: NearViewModel(), searchViewModel: SearchViewModel())
-    private let requestVC = NearRequestViewController(nearViewModel: NearViewModel(), searchViewModel: SearchViewModel())
+    private let requestVC = NearRequestViewController(nearViewModel: NearViewModel(),
+                                                      searchViewModel: SearchViewModel(),
+                                                      homeViewModel: HomeViewModel())
     
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,

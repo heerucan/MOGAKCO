@@ -39,7 +39,6 @@ final class NearUserViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        print(#function, "NearUserVC")
         super.viewDidLoad()
         bindViewModel()
     }
@@ -83,7 +82,7 @@ final class NearUserViewController: BaseViewController {
                     vc.showToast(Toast.studyRequestSuccess.message)
                 } else if status == 202 {
                     vc.showToast(Toast.stopFindStudy.message)
-                } else { // 201 studyAccept 서버통신 호출
+                } else if status == 201 { // 201 studyAccept 서버통신 호출
                     vc.nearViewModel.requestStudyAccept(vc.nearViewModel.uid)
                 }
             }
