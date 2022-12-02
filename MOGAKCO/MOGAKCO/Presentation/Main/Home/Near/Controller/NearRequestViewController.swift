@@ -81,7 +81,7 @@ final class NearRequestViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, status in
                 if status == 200 {
-                    vc.transition(ChatViewController(), .push)
+                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
                 } else if status == 201 {
                     vc.showToast(Toast.alreadyStudy.message)
                 } else if status == 202 {

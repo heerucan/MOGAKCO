@@ -25,6 +25,8 @@ enum Toast: String {
     case studyRequestSuccess
     case stopFindStudy
     case acceptStudy
+    case matchingStudy
+    case matchedStudy
     
     var message: String {
         switch self {
@@ -60,6 +62,10 @@ enum Toast: String {
             return "상대방이 스터디 찾기를 그만두었습니다"
         case .acceptStudy:
             return "앗! 누군가가 나의 스터디를 수락하였어요"
+        case .matchingStudy:
+            return "상대방도 스터디를 요청하여 매칭되었습니다. 잠시 후 채팅방으로 이동합니다"
+        case .matchedStudy:
+            return "000님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다"
         }
     }
 }

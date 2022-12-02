@@ -15,6 +15,8 @@ import NMapsMap
 
 final class HomeViewModel: ViewModelType {
     
+    var myQueueStateAPITimer = Timer()
+    
     typealias SearchCompletion = (Search?, Int?, APIError?)
     typealias QueueStateCompletion = (QueueState?, Int?, APIError?)
     let searchResponse = PublishSubject<SearchCompletion>()
@@ -23,7 +25,7 @@ final class HomeViewModel: ViewModelType {
     
     let tagList = Observable.just(["전체", "남자", "여자"])
     
-    lazy var locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(
+    let locationSubject = BehaviorSubject<CLLocationCoordinate2D?>(
         value: CLLocationCoordinate2D(
         latitude: Matrix.ssacLat,
         longitude: Matrix.ssacLong))
@@ -34,7 +36,7 @@ final class HomeViewModel: ViewModelType {
     }
     
     struct Output {
-        let locationTap: Observable<CLLocationCoordinate2D?>
+        let locationTap: ControlEvent<Void>
         let itemSelected: ControlEvent<IndexPath>
         let tagList: Observable<[String]>
         let searchResponse: PublishSubject<SearchCompletion>
@@ -43,13 +45,10 @@ final class HomeViewModel: ViewModelType {
     
     func transform(_ input: Input) -> Output {
         let tagList = Observable.just(["전체", "남자", "여자"])
-        
-        let myLocationButtonTap = input.locationTap
-            .withLatestFrom(locationSubject)
-        
+                
         let itemSelected = input.itemSelected
         
-        return Output(locationTap: myLocationButtonTap,
+        return Output(locationTap: input.locationTap,
                       itemSelected: itemSelected,
                       tagList: tagList,
                       searchResponse: searchResponse,
@@ -64,7 +63,7 @@ final class HomeViewModel: ViewModelType {
             guard let self = self else { return }
             self.searchResponse.onNext(SearchCompletion(data, status, error))
             if let error = error {
-                ErrorManager.handle(with: error, vc: HomeViewController())
+                ErrorManager.handle(with: error, vc: HomeViewController(viewModel: HomeViewModel()))
             }
         }
     }
@@ -72,13 +71,40 @@ final class HomeViewModel: ViewModelType {
     func requestQueueState() {
         APIManager.shared
             .request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
-            guard let self = self else { return }
-            self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
-            if let error = error {
-                ErrorManager.handle(with: error, vc: HomeViewController())
+                print(#function, data, status, error, "================================= 큐 스테이트 서버통신 ")
+                guard let self = self else { return }
+                self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
+                if let error = error {
+                    ErrorManager.handle(with: error, vc: HomeViewController(viewModel: HomeViewModel()))
+                }
             }
-        }
     }
+    
+    func searchAroundFriend(lat: Double, lng: Double) {
+        requestSearch(params: SearchRequest(lat: lat, long: lng))
+    }
+    
+    // MARK: - myQueueState 5초마다 반복 호출
+    
+    /// myQueueStateAPI 반복호출
+    func requestRepeatedMyQueueStateAPI() {
+        myQueueStateAPITimer = Timer.scheduledTimer(timeInterval: 5,
+                             target: self,
+                             selector: #selector(requestMyQueueStateAPI(sender:)),
+                             userInfo: nil,
+                             repeats: true)
+        print(myQueueStateAPITimer, "타이머 반복 호출")
+    }
+    
+    /// myQueueStateAPI 호출중단 - 매칭 완료 시에 종료!!!!
+    func stopRepeatedMyQueueStateAPI() {
+        myQueueStateAPITimer.invalidate()
+    }
+    
+    @objc func requestMyQueueStateAPI(sender: Timer) {
+        requestQueueState()
+    }
+    
     
     // MARK: - Location Authorization
     
@@ -100,12 +126,14 @@ final class HomeViewModel: ViewModelType {
         }
     }
     
-    func updateCurrentLocation(_ coordinate: CLLocationCoordinate2D,
-                               completion: @escaping ((NMFCameraUpdate) -> ())) {
+    func updateCurrentLocation() -> NMFCameraUpdate {
         LocationManager.shared.stopUpdatingLocation()
-        let coordinate = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+        let coordinate = NMGLatLng(
+            lat: LocationManager.coordinate().latitude,
+            lng: LocationManager.coordinate().longitude)
+        locationSubject.onNext(LocationManager.coordinate())
         let cameraUpdate = NMFCameraUpdate(scrollTo: coordinate, zoomTo: 14)
         cameraUpdate.animation = .linear
-        completion(cameraUpdate)
+        return cameraUpdate
     }
 }

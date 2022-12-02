@@ -20,7 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let scene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: scene)
-        let vc = HomeViewController()
+//        let vc = ChatViewController(viewModel: ChatViewModel())
+        let vc = SplashViewController()
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }

@@ -83,7 +83,7 @@ final class MessageViewController: BaseViewController {
             .subscribe(onNext: { (vc, isValid) in
                 isValid ?
                 vc.messageViewModel.requestLogin() :
-                vc.showToast(ToastMatrix.phoneTypeError.description)
+                vc.showToast(Toast.phoneTypeError.message)
             })
             .disposed(by: disposeBag)
         

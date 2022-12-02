@@ -114,17 +114,14 @@ final class GenderViewController: BaseViewController {
         switch status {
         case 200:
             let tabVC = TabBarController()
-            self.transition(tabVC, .push)
+            transition(tabVC, .push)
             
         case 201:
-            self.showToast(ToastMatrix.currentUser.description)
+            showToast(Toast.currentUser.message)
             
         case 202:
-            let viewControllers = (self.navigationController?.viewControllers) as! [UIViewController]
-            self.navigationController!.popToViewController(
-                viewControllers[viewControllers.count - 4],
-                animated: true)
-            viewControllers[viewControllers.count - 4].showToast(ToastMatrix.invalidNickname.description)
+            transition(self, .popNavigations, 4)
+            showToast(Toast.invalidNickname.message)
         
         default:  break
         }

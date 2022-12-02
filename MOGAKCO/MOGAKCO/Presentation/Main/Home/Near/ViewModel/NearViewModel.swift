@@ -69,4 +69,5 @@ final class NearViewModel: ViewModelType {
             }
         }
     }
+
 }

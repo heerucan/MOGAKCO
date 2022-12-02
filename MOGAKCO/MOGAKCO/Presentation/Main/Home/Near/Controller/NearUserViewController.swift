@@ -80,10 +80,22 @@ final class NearUserViewController: BaseViewController {
             .bind { vc, status in
                 if status == 200 {
                     vc.showToast(Toast.studyRequestSuccess.message)
+                } else if status == 201 {
+                    vc.nearViewModel.requestStudyAccept(vc.nearViewModel.uid)
                 } else if status == 202 {
                     vc.showToast(Toast.stopFindStudy.message)
-                } else if status == 201 { // 201 studyAccept 서버통신 호출
-                    vc.nearViewModel.requestStudyAccept(vc.nearViewModel.uid)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        nearViewModel.acceptResponse
+            .withUnretained(self)
+            .bind { vc, status in
+                if status == 200 {
+                    vc.showToast(Toast.matchingStudy.message)
+                    DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                        vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                    }
                 }
             }
             .disposed(by: disposeBag)
@@ -103,7 +115,6 @@ final class NearUserViewController: BaseViewController {
 
 extension NearUserViewController: RequestOrAcceptDelegate {
     func requestOrAcceptButton(_ uid: String, index: Int) {
-        print(#function)
         let alertVC = PlainAlertViewController()
         alertVC.alertType = .studyRequest
         alertVC.okButton.addTarget(self, action: #selector(self.touchupOkButton), for: .touchUpInside)

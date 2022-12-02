@@ -49,8 +49,7 @@ final class MyDetailViewController: BaseViewController {
     }
     
     private lazy var withdrawAction = UIAction { _ in
-        print("탈퇴버튼")
-//        self.myDetailViewModel.requestWithdraw()
+        self.myDetailViewModel.requestWithdraw()
     }
     
     // MARK: - LifeCycle

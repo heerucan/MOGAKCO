@@ -31,6 +31,8 @@
 		5B55BC972927AC80000C3CA0 /* QueueRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC962927AC80000C3CA0 /* QueueRouter.swift */; };
 		5B55BC992927AE24000C3CA0 /* QueueRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC982927AE24000C3CA0 /* QueueRequest.swift */; };
 		5B55BC9C2927DBDC000C3CA0 /* QueueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */; };
+		5B774977293A1C36003297A8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774976293A1C36003297A8 /* ChatView.swift */; };
+		5B774979293A1C47003297A8 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774978293A1C47003297A8 /* ChatViewModel.swift */; };
 		5B7B03FD29291A4B008B265B /* NearEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */; };
 		5B7B03FF29291EA9008B265B /* PlainSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B03FE29291EA9008B265B /* PlainSegmentControl.swift */; };
 		5B7B040129291FE6008B265B /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B040029291FE6008B265B /* UserView.swift */; };
@@ -173,6 +175,8 @@
 		5B55BC962927AC80000C3CA0 /* QueueRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRouter.swift; sourceTree = "<group>"; };
 		5B55BC982927AE24000C3CA0 /* QueueRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRequest.swift; sourceTree = "<group>"; };
 		5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueState.swift; sourceTree = "<group>"; };
+		5B774976293A1C36003297A8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		5B774978293A1C47003297A8 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEmptyStateView.swift; sourceTree = "<group>"; };
 		5B7B03FE29291EA9008B265B /* PlainSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSegmentControl.swift; sourceTree = "<group>"; };
 		5B7B040029291FE6008B265B /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -424,6 +428,30 @@
 				5B55BC9229277DE1000C3CA0 /* QueueAPI */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		5B77497A293A1FEE003297A8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5BF40CF2293379A700F1536C /* ChatViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5B77497B293A1FF3003297A8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B774978293A1C47003297A8 /* ChatViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B77497C293A1FF6003297A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B774976293A1C36003297A8 /* ChatView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		5B7B040229292035008B265B /* Cell */ = {
@@ -1140,7 +1168,9 @@
 		5BF40CF12933799200F1536C /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				5BF40CF2293379A700F1536C /* ChatViewController.swift */,
+				5B77497C293A1FF6003297A8 /* View */,
+				5B77497B293A1FF3003297A8 /* ViewModel */,
+				5B77497A293A1FEE003297A8 /* Controller */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1340,6 +1370,7 @@
 				5B9559AB2921320300B34B60 /* NetworkMonitor.swift in Sources */,
 				5B7B040129291FE6008B265B /* UserView.swift in Sources */,
 				5BEFE26B291BF7CC00FD31E9 /* GenderViewModel.swift in Sources */,
+				5B774979293A1C47003297A8 /* ChatViewModel.swift in Sources */,
 				5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */,
 				5B1394E229225AAD0046013E /* MyDetailViewController.swift in Sources */,
 				5B55BC9429277E06000C3CA0 /* Search.swift in Sources */,
@@ -1396,6 +1427,7 @@
 				5B8E1BDD29290D8D00D634B3 /* SearchView.swift in Sources */,
 				5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */,
 				5B068306292A4C9C00C162D6 /* MyProfile.swift in Sources */,
+				5B774977293A1C36003297A8 /* ChatView.swift in Sources */,
 				5BC57D4E2918ED93006CB05C /* Matrix.swift in Sources */,
 				5BC57D582918EE7A006CB05C /* Login.swift in Sources */,
 				5B1395092922D9500046013E /* MyStudyView.swift in Sources */,

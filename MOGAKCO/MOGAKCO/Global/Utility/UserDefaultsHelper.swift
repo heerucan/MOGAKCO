@@ -72,12 +72,12 @@ final class UserDefaultsHelper {
     }
     
     var lat: Double? {
-        get { return userDefaults.double(forKey: Key.lat) ?? Matrix.ssacLat }
+        get { return userDefaults.double(forKey: Key.lat) }
         set { userDefaults.set(newValue, forKey: Key.lat) }
     }
     
     var lng: Double? {
-        get { return userDefaults.double(forKey: Key.lng) ?? Matrix.ssacLong }
+        get { return userDefaults.double(forKey: Key.lng) }
         set { userDefaults.set(newValue, forKey: Key.lng) }
     }
 

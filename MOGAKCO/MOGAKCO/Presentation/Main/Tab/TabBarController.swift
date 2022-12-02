@@ -29,10 +29,10 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.barTintColor = .white
         tabBar.isTranslucent = false
         
-        let firstTabController = HomeViewController()
+        let firstTabController = HomeViewController(viewModel: HomeViewModel())
         let secondTabController = ShopViewController()
         let thirdTabController = FriendViewController()
-        let fourthTabController = MyViewController()
+        let fourthTabController = MyViewController(myViewModel: MyViewModel())
         
         firstTabController.tabBarItem = UITabBarItem(
             title: "홈",
@@ -56,7 +56,7 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         
         self.viewControllers = [firstTabController,
                                 secondTabController,
-                                thirdTabController,
+//                                thirdTabController,
                                 fourthTabController]
     }
 }

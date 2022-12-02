@@ -20,7 +20,7 @@ final class NearViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let searchViewModel = SearchViewModel()
+    private let homeViewModel = HomeViewModel()
     private let nearViewModel = NearViewModel()
     
     // MARK: - PageViewController
@@ -69,6 +69,12 @@ final class NearViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        homeViewModel.requestRepeatedMyQueueStateAPI()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        homeViewModel.stopRepeatedMyQueueStateAPI()
     }
     
     // MARK: - UI & Layout
@@ -125,11 +131,26 @@ final class NearViewController: BaseViewController {
         nearViewModel.queueResponse
             .withUnretained(self)
             .bind { vc, status in
-                if status == 201 {
-                    vc.showToast(Toast.stopFind.message)
-                    vc.transition(ChatViewController(), .push)
-                } else if status == 200 {
+                if status == 200 {
                     vc.navigationController?.popToRootViewController(animated: true)
+                } else if status == 201 {
+                    vc.showToast(Toast.stopFind.message)
+                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        /// 내 매칭 상태를 5초마다 확인하고 -> 응답값에 따라 200 + matched = 1 이면 매칭된 걸로 판단해서 -> 채팅화면으로 전환
+        homeViewModel.queueStateResponse
+            .withUnretained(self)
+            .bind { vc, value in
+                print(value, "🧡🧡🧡🧡🧡🧡🧡🧡🧡매칭상태 체킹체킹🧡🧡🧡🧡🧡🧡🧡🧡🧡")
+                guard let data = value.0 else { return }
+                guard let status = value.1 else { return }
+                if status == 200 && data.matched == 1 {
+                    print("매칭완료 -> 채팅방 전환")
+                    vc.showToast(Toast.matchedStudy.message)
+                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
                 }
             }
             .disposed(by: disposeBag)

@@ -10,9 +10,20 @@ import UIKit
 import SnapKit
 import Then
 
+protocol ReviewMoreButtonDelegate: AnyObject {
+    func touchpuReviewMoreButton()
+}
+
 final class MyReviewView: BaseView {
     
     // MARK: - Property
+    
+    weak var reviewMoreButtonDelegate: ReviewMoreButtonDelegate?
+    
+    // TODO: - review 더보기 버튼 관련 화면전환 연결하기
+    lazy var reviewMoreAction = UIAction { _ in
+        self.reviewMoreButtonDelegate?.touchpuReviewMoreButton()
+    }
     
     var reviewData: [String] = [] {
         didSet {
@@ -41,7 +52,7 @@ final class MyReviewView: BaseView {
     
     private let reviewBottomView = UIView()
     
-    let moreButton = UIButton().then {
+    private let moreButton = UIButton().then {
         $0.setImage(Icon.moreArrow, for: .normal)
     }
     
@@ -75,7 +86,6 @@ final class MyReviewView: BaseView {
     }
     
     func setupData(_ data: FromQueueDB) {
-//        print(data.reviews, "리뷰")
         if !data.reviews.isEmpty {
             reviewLabel.text = data.reviews[0]
             reviewLabel.textColor = Color.black

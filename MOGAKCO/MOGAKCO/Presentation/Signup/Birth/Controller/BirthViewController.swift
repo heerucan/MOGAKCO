@@ -83,7 +83,7 @@ final class BirthViewController: BaseViewController {
                     vc.pushEmailView()
                     UserDefaultsHelper.standard.birthday = vc.birthView.datePicker.date.toString(format: .full)
                 }  else {
-                    vc.showToast(ToastMatrix.birthTypeError.description)
+                    vc.showToast(Toast.birthTypeError.message)
                 }
             }
             .disposed(by: disposeBag)

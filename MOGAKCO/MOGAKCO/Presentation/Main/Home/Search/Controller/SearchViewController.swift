@@ -34,7 +34,6 @@ final class SearchViewController: BaseViewController {
     }
     
     private let searchBar = PlainSearchBar()
-    
             
     // MARK: - Init
     
@@ -186,7 +185,6 @@ final class SearchViewController: BaseViewController {
         searchViewModel.queueResponse
             .withUnretained(self)
             .bind { vc, status in
-                print(status, "findQueue")
                 if status == 200 {
                     vc.transition(NearViewController(), .push)
                 }

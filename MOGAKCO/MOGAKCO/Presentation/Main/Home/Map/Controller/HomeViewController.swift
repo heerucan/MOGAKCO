@@ -83,6 +83,7 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0 }
             .withUnretained(self)
             .subscribe { vc, coordinate in
+                print(coordinate, "💟 homeViewModel.locationSubject💟 ")
                 vc.homeView.mapView.latitude = coordinate.latitude
                 vc.homeView.mapView.longitude = coordinate.longitude
             }
@@ -92,6 +93,7 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0.last?.coordinate }
             .withUnretained(self)
             .subscribe { vc, coordinate in
+                print(coordinate, "didUpdateLocations💟 ")
                 vc.homeViewModel.searchAroundFriend(lat: coordinate.latitude, lng: coordinate.longitude)
                 vc.homeViewModel.locationSubject.onNext(coordinate)
                 vc.homeView.mapView.moveCamera(vc.homeViewModel.updateCurrentLocation())
@@ -101,6 +103,7 @@ final class HomeViewController: BaseViewController {
         LocationManager.shared.rx.didFailWithError
             .withUnretained(self)
             .subscribe(onNext: { vc, error in
+                print(error, "💟 didFailWithError💟 ")
                 vc.homeViewModel.checkUserAuthorization(LocationManager.shared.authorizationStatus) { status in
                     vc.showLocationServiceAlert()
                 }
@@ -110,12 +113,12 @@ final class HomeViewController: BaseViewController {
         LocationManager.shared.rx.didChangeAuthorizationStatus
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
+                print(status, "💟 didChangeAuthorizationStatus💟 ")
                 if CLLocationManager.locationServicesEnabled() {
                     vc.homeViewModel.searchAroundFriend(
                         lat: LocationManager.coordinate().latitude,
                         lng: LocationManager.coordinate().longitude)
-                    print("지도 위치 받아서 주변 새싹 찾기")
-                    
+//                    print("지도 위치 받아서 주변 새싹 찾기")
                 } else {
                     vc.showLocationServiceAlert()
                 }
@@ -314,7 +317,7 @@ extension HomeViewController {
             case .matching:
                 return NearViewController()
             case .matched:
-                return ChatViewController()
+                return ChatViewController(viewModel: ChatViewModel())
             case .normal:
                 return SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel())
             }

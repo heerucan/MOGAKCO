@@ -68,6 +68,7 @@ final class SplashViewController: BaseViewController {
                 let viewController = UINavigationController(rootViewController: TabBarController())
                 viewController.modalPresentationStyle = .fullScreen
                 viewController.modalTransitionStyle = .crossDissolve
+                viewController.navigationBar.isHidden = true
                 self.present(viewController, animated: false, completion: nil)
             }
         }

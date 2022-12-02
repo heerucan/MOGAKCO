@@ -29,9 +29,7 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     lazy var requestOrAcceptAction = UIAction { _ in
         guard let index = self.index else { return }
-        guard let uid = self.uid else {
-            return
-        }
+        guard let uid = self.uid else { return }
         self.requestDelegate?.requestOrAcceptButton(uid, index: index)
     }
 
@@ -158,7 +156,6 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     func setupData(_ data: FromQueueDB, vc: String) {
         uid = data.uid
-        
         profileImageView.image = UIImage(named: "sesac_background_\(data.background+1)")
         ssacImageView.image = UIImage(named: "sesac_face_\(data.sesac+1)")
         nameView.nameLabel.text = data.nick

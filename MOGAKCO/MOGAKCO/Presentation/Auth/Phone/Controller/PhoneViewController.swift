@@ -64,7 +64,7 @@ final class PhoneViewController: BaseViewController {
             .subscribe(onNext: { (vc, value) in
                 value ?
                 vc.requestMessage(vc.phoneView.textField.text ?? "") :
-                vc.showToast(ToastMatrix.phoneTypeError.description)
+                vc.showToast(Toast.phoneTypeError.message)
             })
             .disposed(by: disposeBag)
         
@@ -98,9 +98,9 @@ extension PhoneViewController {
             if let error = error {
                 print("🔴Verfiy 실패", error.localizedDescription)
                 if error.localizedDescription == "QUOTA_EXCEEDED : Exceeded quota." {
-                    self.showToast(ToastMatrix.overRequestError.description)
+                    self.showToast(Toast.overRequestError.message)
                 } else {
-                    self.showToast(ToastMatrix.etcAuthError.description)
+                    self.showToast(Toast.etcAuthError.message)
                 }
                 return
             }

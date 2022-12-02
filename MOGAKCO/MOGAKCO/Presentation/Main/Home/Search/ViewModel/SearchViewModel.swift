@@ -75,7 +75,7 @@ final class SearchViewModel: ViewModelType {
             }
         }
     }
-    
+
     // MARK: - Logic
     
     // 지금 주변에는 - 중복된 스터디 제거
@@ -83,6 +83,7 @@ final class SearchViewModel: ViewModelType {
     func deleteDuplicateStudy(_ value: Search) -> [String] {
         var friendList: [String] = []
         
+        // TODO: - 여기 리팩해야 돼 forEach forEach 최악
         value.fromQueueDB.forEach { queue in
             queue.studylist.forEach { result in
                 friendList.append(result)
