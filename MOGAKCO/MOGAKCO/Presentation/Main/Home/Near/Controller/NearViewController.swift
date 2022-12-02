@@ -20,27 +20,34 @@ final class NearViewController: BaseViewController {
     
     // MARK: - Property
     
+    private let searchViewModel = SearchViewModel()
     private let nearViewModel = NearViewModel()
     
+    // MARK: - PageViewController
+    
     private var dataViewControllers: [UIViewController] {
-        [firstViewController, secondViewController]
+        [userVC, requestVC]
     }
     
     private lazy var currentPage: Int = 0 {
         didSet {
-            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ? .forward : .reverse
-            self.pageViewController.setViewControllers([dataViewControllers[self.currentPage]],
-                                                       direction: direction,
-                                                       animated: true)
+            let direction: UIPageViewController.NavigationDirection = oldValue <= self.currentPage ?
+                .forward : .reverse
+            self.pageViewController.setViewControllers(
+                [dataViewControllers[self.currentPage]],
+                direction: direction,
+                animated: true)
         }
     }
     
-    private let firstViewController = NearUserViewController()
-    private let secondViewController = NearRequestViewController()
+    private let userVC = NearUserViewController(nearViewModel: NearViewModel(), searchViewModel: SearchViewModel())
+    private let requestVC = NearRequestViewController(nearViewModel: NearViewModel(), searchViewModel: SearchViewModel())
     
     private lazy var pageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .horizontal)
+    
+    // MARK: - UI Property
     
     private lazy var navigationBar = PlainNavigationBar(type: .findSSAC).then {
         $0.viewController = self
@@ -104,6 +111,24 @@ final class NearViewController: BaseViewController {
     
     override func bindViewModel() {
         
+        navigationBar.rightButton.rx.tap
+            .withUnretained(self)
+            .bind { vc,_ in
+                vc.nearViewModel.requestStopQueue()
+            }
+            .disposed(by: disposeBag)
+        
+        nearViewModel.queueResponse
+            .withUnretained(self)
+            .bind { vc, status in
+                if status == 201 {
+                    vc.showToast(Toast.stopFind.message)
+                    vc.transition(ChatViewController(), .push)
+                } else if status == 200 {
+                    vc.navigationController?.popToRootViewController(animated: true)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     // MARK: - Custom Method

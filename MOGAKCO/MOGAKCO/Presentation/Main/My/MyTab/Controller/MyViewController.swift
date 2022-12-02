@@ -20,7 +20,8 @@ final class MyViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let myViewModel = MyViewModel()
+    var myViewModel: MyViewModel!
+
     
     // MARK: - UI Property
     
@@ -31,6 +32,14 @@ final class MyViewController: BaseViewController {
     private let tableView = UITableView(frame: .zero, style: .plain).then {
         $0.separatorStyle = .none
         $0.register(MyProfileTableViewCell.self, forCellReuseIdentifier: MyProfileTableViewCell.identifier)
+    }
+    
+    
+    // MARK: - Init
+    
+    init(myViewModel: MyViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.myViewModel = myViewModel
     }
     
     // MARK: - Initializer
@@ -77,7 +86,7 @@ final class MyViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, indexPath in
                 if indexPath.row == 0 {
-                    vc.transition(MyDetailViewController(), .push)
+                    vc.transition(MyDetailViewController(myDetailViewModel: MyDetailViewModel()), .push)
                 }
             }
             .disposed(by: disposeBag)

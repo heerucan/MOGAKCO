@@ -22,8 +22,8 @@ final class SearchViewController: BaseViewController {
     
     static let sectionHeaderElementKind = "section-header-element-kind"
     private let searchView = SearchView()
-    private let searchViewModel = SearchViewModel()
-    private let homeViewModel = HomeViewModel()
+    var searchViewModel: SearchViewModel!
+    var homeViewModel: HomeViewModel!
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>!
     private var snapshot: NSDiffableDataSourceSnapshot<Int, String>!
     
@@ -34,6 +34,15 @@ final class SearchViewController: BaseViewController {
     }
     
     private let searchBar = PlainSearchBar()
+    
+            
+    // MARK: - Init
+    
+    init(homeViewModel: HomeViewModel, searchViewModel: SearchViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.homeViewModel = homeViewModel
+        self.searchViewModel = searchViewModel
+    }
     
     // MARK: - LifeCycle
     
@@ -117,7 +126,7 @@ final class SearchViewController: BaseViewController {
                     vc.snapshot.appendItems(value, toSection: 1)
                     vc.dataSource.apply(vc.snapshot)
                 } else {
-                    vc.showToast(ToastMatrix.overStudy.description)
+                    vc.showToast(Toast.overStudy.message)
                 }
             }
             .disposed(by: disposeBag)
@@ -149,7 +158,7 @@ final class SearchViewController: BaseViewController {
                         vc.searchViewModel.myStudyListRelay.accept(vc.searchViewModel.myStudyList)
                     } else {
                         vc.searchViewModel.myStudyList.removeLast()
-                        vc.showToast(ToastMatrix.overStudy.description)
+                        vc.showToast(Toast.overStudy.message)
                     }
 
                 default: // 스터디 삭제

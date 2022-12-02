@@ -42,7 +42,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.userResponse.onNext([data, data])
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController())
+                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
             }
         }
     }
@@ -54,7 +54,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.withdrawResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController())
+                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
             }
         }
     }
@@ -66,7 +66,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.mypageResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController())
+                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
             }
         }
     }

@@ -62,12 +62,6 @@ final class MyTitleView: BaseView {
         titleCollectionView.delegate = self
         titleCollectionView.register(TitleCategoryCollectionViewCell.self, forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
     }
-    
-    // MARK: - Set up Data
-    
-    func setupData() {
-    }
-    
 }
 
 // MARK: - CollectionView Layout

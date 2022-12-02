@@ -20,8 +20,14 @@ final class MyDetailViewController: BaseViewController {
     
     // MARK: - Property
         
-    private let myDetailViewModel = MyDetailViewModel()
-    private let messageViewModel = MessageViewModel()
+    var myDetailViewModel: MyDetailViewModel!
+    
+    // MARK: - Init
+    
+    init(myDetailViewModel: MyDetailViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.myDetailViewModel = myDetailViewModel
+    }
     
     // MARK: - UI Property
     

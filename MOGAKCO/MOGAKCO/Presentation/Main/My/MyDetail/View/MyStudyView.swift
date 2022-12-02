@@ -16,7 +16,7 @@ final class MyStudyView: BaseView {
     
     var studyData: [String] = [] {
         didSet {
-            print(oldValue, "스터디데이터")
+//            print(oldValue, "스터디데이터")
             configureDataSource()
         }
     }
@@ -49,11 +49,12 @@ final class MyStudyView: BaseView {
             make.height.equalTo(18)
         }
         
+        // TODO: - 동적 높이 해결
         studyCollectionView.snp.makeConstraints { make in
             make.top.equalTo(studyLabel.snp.bottom).offset(16)
             make.directionalHorizontalEdges.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.lessThanOrEqualTo(100)
+            make.height.equalTo(100)
         }
     }
     
@@ -63,9 +64,6 @@ final class MyStudyView: BaseView {
         studyCollectionView.delegate = self
         studyCollectionView.register(SearchCollectionViewCell.self,
                                      forCellWithReuseIdentifier: SearchCollectionViewCell.identifier)
-        studyCollectionView.register(SearchHeaderSupplementaryView.self,
-                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
-                                    withReuseIdentifier: SearchHeaderSupplementaryView.identifier)
     }
 }
 
@@ -87,20 +85,8 @@ extension MyStudyView: UICollectionViewDelegate {
                 subitems: [item])
             group.interItemSpacing = NSCollectionLayoutSpacing.fixed(8)
             
-            let headerSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1),
-                heightDimension: .absolute(18))
-            let header = NSCollectionLayoutBoundarySupplementaryItem(
-                layoutSize: headerSize,
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
-            
             let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = [header]
             section.interGroupSpacing = 8
-            section.contentInsets = NSDirectionalEdgeInsets(
-                top: 16, leading: 16, bottom: 24, trailing: 16)
             return section
         }
     }
@@ -129,18 +115,6 @@ extension MyStudyView {
             cell.setupData(data: itemIdentifier)
             return cell
         })
-        
-        let supplementaryRegistration = UICollectionView.SupplementaryRegistration
-        <SearchHeaderSupplementaryView>(elementKind: UICollectionView.elementKindSectionHeader) {
-            (supplementaryView, string, indexPath) in
-            let snapshot = ["하고 싶은 스터디"]
-            supplementaryView.sectionLabel.text = snapshot[indexPath.section]
-        }
-        
-        dataSource.supplementaryViewProvider = { (view, kind, index) in
-            return self.studyCollectionView.dequeueConfiguredReusableSupplementary(
-                using: supplementaryRegistration, for: index)
-        }
         
         var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
         snapShot.appendSections([0])

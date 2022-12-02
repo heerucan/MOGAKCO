@@ -21,7 +21,16 @@ final class NearRequestViewController: BaseViewController {
     // MARK: - Property
     
     private let requestView = RequestView()
-    private let nearViewModel = NearViewModel()    
+    var nearViewModel: NearViewModel!
+    var searchViewModel: SearchViewModel!
+            
+    // MARK: - Init
+    
+    init(nearViewModel: NearViewModel, searchViewModel: SearchViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.nearViewModel = nearViewModel
+        self.searchViewModel = searchViewModel
+    }
     
     // MARK: - LifeCycle
     
@@ -33,13 +42,7 @@ final class NearRequestViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
-    
-    // MARK: - UI & Layout
-   
-    override func configureLayout() {
-        
-    }
-    
+
     // MARK: - Bind
     
     override func bindViewModel() {
@@ -47,20 +50,27 @@ final class NearRequestViewController: BaseViewController {
         let input = NearViewModel.Input()
         let output = nearViewModel.transform(input)
         
-        nearViewModel.userList
+        searchViewModel.requestSearch(lat: Matrix.ssacLat, long: Matrix.ssacLong)
+        
+        searchViewModel.searchResponse
+            .map { $0.fromQueueDBRequested }
             .withUnretained(self)
             .bind { vc, data in
                 vc.requestView.emptyStateView.isHidden = data.count == 0 ? false : true
             }
             .disposed(by: disposeBag)
-
-        nearViewModel.userList
+        
+        searchViewModel.searchResponse
+            .map { $0.fromQueueDBRequested }
             .bind(to: requestView.tableView.rx.items(
                 cellIdentifier: MyDetailCardTableViewCell.identifier,
                 cellType: MyDetailCardTableViewCell.self)) { [weak self] row, element, cell in
+                    print(element, "받은 요청=================================")
+                    cell.index = row
+                    cell.setupData(element, vc: NearRequestViewController.identifier)
                     cell.toggleButton.tag = row
                     cell.toggleButton.addTarget(self, action: #selector(self?.touchupToggleButton(_:)), for: .touchUpInside)
-                    cell.toggleButton.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
+                    cell.requestDelegate = self
                 }
                 .disposed(by: disposeBag)
     }
@@ -73,7 +83,31 @@ final class NearRequestViewController: BaseViewController {
     @objc func touchupToggleButton(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
         let cell = requestView.tableView.cellForRow(at: IndexPath(row: sender.tag, section: 0)) as! MyDetailCardTableViewCell
-        sender.isSelected ? cell.changeView(isSelected: true) : cell.changeView(isSelected: false)
+        cell.changeView(sender.isSelected, vc: NearRequestViewController.identifier)
         requestView.tableView.reloadSections(IndexSet(), with: .fade)
+    }
+}
+
+// MARK: - RequestOrAcceptDelegate
+
+extension NearRequestViewController: RequestOrAcceptDelegate {
+    @objc func touchupOkButton() {
+        print("좋아")
+        self.nearViewModel.otheruidSubject
+            .withUnretained(self)
+            .bind { vc, uid in
+                print(uid, "============================== requestStudyAccept")
+                vc.nearViewModel.requestStudyAccept(uid)
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    func requestOrAcceptButton(_ uid: String, index: Int) {
+        print(index, uid, "===================================uid")
+        self.nearViewModel.requestStudyAccept(uid)
+        let alertVC = PlainAlertViewController()
+        alertVC.alertType = .studyRequest
+        alertVC.okButton.addTarget(self, action: #selector(self.touchupOkButton), for: .touchUpInside)
+        self.transition(alertVC, .alert)
     }
 }

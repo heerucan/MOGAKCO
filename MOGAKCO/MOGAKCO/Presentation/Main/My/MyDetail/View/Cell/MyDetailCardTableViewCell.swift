@@ -11,17 +11,37 @@ import SnapKit
 import Then
 import RxSwift
 
+protocol RequestOrAcceptDelegate: AnyObject {
+    func requestOrAcceptButton(_ uid: String, index: Int)
+}
+
 final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
+    
+    var index: Int?
+    var uid: String?
+    
+    weak var requestDelegate: RequestOrAcceptDelegate?
+        
+    let requestOrAcceptButton = PlainRequestButton()
+    let toggleButton = UIButton()
+    
+    lazy var requestOrAcceptAction = UIAction { _ in
+        guard let index = self.index else { return }
+        guard let uid = self.uid else {
+            return
+        }
+        self.requestDelegate?.requestOrAcceptButton(uid, index: index)
+    }
 
-    let profileImageView = UIImageView().then {
+    private let profileImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
         $0.makeCornerStyle(width: 0, radius: 8)
     }
     
-    let ssacImageView = UIImageView().then {
+    private let ssacImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
     }
     
@@ -35,22 +55,16 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
             $0.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
             $0.isLayoutMarginsRelativeArrangement = true
         }
-    
-    let toggleButton = UIButton()
-    
-    let nameView = MyNameView()
-    let titleView = MyTitleView()
-    let studyView = MyStudyView()
-    let reviewView = MyReviewView()
-    
+        
+    private let nameView = MyNameView()
+    private let titleView = MyTitleView()
+    private let studyView = MyStudyView()
+    private let reviewView = MyReviewView()
+      
     // MARK: - Initializer
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        studyView.backgroundColor = .orange
-        [titleView, studyView, reviewView].forEach {
-            $0.isHidden = true
-        }
     }
     
     override func layoutSubviews() {
@@ -58,14 +72,36 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        reviewView.reviewLabel.text = "첫 리뷰를 기다리는 중이에요!"
+        reviewView.reviewLabel.font = Font.body3.font
+        reviewView.reviewLabel.textColor = Color.gray6
+        requestOrAcceptButton.removeAction(requestOrAcceptAction, for: .touchUpInside)
+    }
+    
     // MARK: -  UI & Layout
+    
+    override func configureUI() {
+        super.configureUI()
+        [titleView, studyView, reviewView].forEach {
+            $0.isHidden = true
+        }
+    }
     
     override func configureLayout() {
         contentView.addSubviews([profileImageView,
+                                 requestOrAcceptButton,
                                  stackView,
                                  toggleButton])
-        
+
         profileImageView.addSubview(ssacImageView)
+        
+        requestOrAcceptButton.snp.makeConstraints { make in
+            make.top.equalTo(profileImageView.snp.top).inset(12)
+            make.trailing.equalTo(profileImageView.snp.trailing).inset(12)
+            make.width.equalTo(80)
+        }
         
         profileImageView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(16)
@@ -112,6 +148,7 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
     
     func setupData(_ data: User) {
         studyView.isHidden = true
+        requestOrAcceptButton.isHidden = true
         profileImageView.image = UIImage(named: "sesac_background_\(data.background+1)")
         ssacImageView.image = UIImage(named: "sesac_face_\(data.sesac+1)")
         nameView.nameLabel.text = data.nick
@@ -119,12 +156,16 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
         reviewView.setupData(data)
     }
     
-    func setupData(_ data: FromQueueDB) {
+    func setupData(_ data: FromQueueDB, vc: String) {
+        uid = data.uid
+        
         profileImageView.image = UIImage(named: "sesac_background_\(data.background+1)")
         ssacImageView.image = UIImage(named: "sesac_face_\(data.sesac+1)")
         nameView.nameLabel.text = data.nick
         titleView.titleData = data.reputation
         studyView.studyData = data.studylist
         reviewView.setupData(data)
+        requestOrAcceptButton.addAction(requestOrAcceptAction, for: .touchUpInside)
+        requestOrAcceptButton.type = (vc == NearRequestViewController.identifier) ? .accept : .request
     }
 }

@@ -75,6 +75,7 @@ final class MyReviewView: BaseView {
     }
     
     func setupData(_ data: FromQueueDB) {
+//        print(data.reviews, "리뷰")
         if !data.reviews.isEmpty {
             reviewLabel.text = data.reviews[0]
             reviewLabel.textColor = Color.black

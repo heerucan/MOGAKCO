@@ -25,11 +25,19 @@ final class HomeViewController: BaseViewController {
     // MARK: - Property
     
     private let homeView = HomeView()
-    private let homeViewModel = HomeViewModel()
+    var homeViewModel: HomeViewModel!
+        
+    // MARK: - Init
     
-    private lazy var target = homeView.mapView.cameraPosition.target
-    var markers: [NMFMarker] = []
+    init(viewModel: HomeViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.homeViewModel = viewModel
+    }
 
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -44,9 +52,12 @@ final class HomeViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print(#function, "뷰윌어피어!!!!!!!!!!!!")
         super.viewWillAppear(animated)
         homeViewModel.requestQueueState()
-        searchSSAC()
+        homeViewModel.searchAroundFriend(
+            lat: LocationManager.coordinate().latitude,
+            lng: LocationManager.coordinate().longitude)
     }
     
     // MARK: - UI & Layout
@@ -81,11 +92,9 @@ final class HomeViewController: BaseViewController {
             .compactMap { $0.last?.coordinate }
             .withUnretained(self)
             .subscribe { vc, coordinate in
-                vc.searchSSAC()
+                vc.homeViewModel.searchAroundFriend(lat: coordinate.latitude, lng: coordinate.longitude)
                 vc.homeViewModel.locationSubject.onNext(coordinate)
-                vc.homeViewModel.updateCurrentLocation(coordinate) { cameraUpdate in
-                    vc.homeView.mapView.moveCamera(cameraUpdate)
-                }
+                vc.homeView.mapView.moveCamera(vc.homeViewModel.updateCurrentLocation())
             }
             .disposed(by: disposeBag)
         
@@ -102,10 +111,11 @@ final class HomeViewController: BaseViewController {
             .withUnretained(self)
             .subscribe(onNext: { vc, status in
                 if CLLocationManager.locationServicesEnabled() {
-                    vc.homeViewModel.checkUserAuthorization(status) { status in
-                        status == .denied || status == .restricted ?
-                        vc.showLocationServiceAlert() : vc.searchSSAC()
-                    }
+                    vc.homeViewModel.searchAroundFriend(
+                        lat: LocationManager.coordinate().latitude,
+                        lng: LocationManager.coordinate().longitude)
+                    print("지도 위치 받아서 주변 새싹 찾기")
+                    
                 } else {
                     vc.showLocationServiceAlert()
                 }
@@ -119,6 +129,7 @@ final class HomeViewController: BaseViewController {
                 if let search = response.0 {
                     vc.setupMarker(search.fromQueueDB)
                     vc.setupMarker(search.fromQueueDBRequested)
+                    print(search.fromQueueDB.count, search.fromQueueDBRequested.count)
                 }
             }
             .disposed(by: disposeBag)
@@ -160,79 +171,78 @@ final class HomeViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        
-//        homeView.allButton.rx.tap
-//            .withLatestFrom(output.searchResponse)
-//            .withUnretained(self)
-//            .subscribe { vc, value in
-////                vc.setMarker(value.0!.fromQueueDB)
-////                vc.setMarker(value.0!.fromQueueDBRequested)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        homeView.femaleButton.rx.tap
-//            .withLatestFrom(output.searchResponse)
-//            .withUnretained(self)
-//            .subscribe { vc, value in
-////                marker.mapView = nil
-////                vc.setMarker(gender: 0, value.0!.fromQueueDB)
-////                vc.setMarker(gender: 0, value.0!.fromQueueDBRequested)
-//            }
-//            .disposed(by: disposeBag)
-//
-//        homeView.maleButton.rx.tap
-//            .withLatestFrom(output.searchResponse)
-//            .withUnretained(self)
-//            .subscribe { vc, value in
-////                vc.setMarker(gender: 1, value.0!.fromQueueDB)
-////                vc.setMarker(gender: 1, value.0!.fromQueueDBRequested)
-//            }
-//            .disposed(by: disposeBag)
-        
-        
         /// 내 위치 버튼
         output.locationTap
-            .compactMap { $0 }
             .withUnretained(self)
-            .bind { vc, coordinate in
+            .bind { vc,_ in
                 LocationManager.shared.startUpdatingLocation()
-                vc.homeViewModel.updateCurrentLocation(
-                    CLLocationCoordinate2D(
-                        latitude: vc.target.lat,
-                        longitude: vc.target.lng)) { cameraUpdate in
-                    vc.homeView.mapView.moveCamera(cameraUpdate)
-                }
+                vc.homeView.mapView.moveCamera(vc.homeViewModel.updateCurrentLocation())
             }
             .disposed(by: disposeBag)
         
-        /// 매칭 버튼
+        // TODO: - 문제는 지금 화면전환 버튼 누르면 -> 화면이 전환되어야 하고
+        // TODO: - 내 상태에 따라 버튼이 바껴야 됨
+        /// 매칭 버튼 눌렀을 때 화면전환
         homeView.matchingButton.rx.tap
-            .withLatestFrom(homeViewModel.queueStateResponse)
-            .map { $0 }
+//            .withLatestFrom(homeViewModel.queueStateResponse)
             .withUnretained(self)
-            .bind { vc, value in
-                print(value, "여기")
-                guard let data = value.0?.matched else { return }
-                guard let status = value.1 else { return }
-                if data == 0 && status == 201 {
-                    vc.setupMatchingButton(MatchingButton.matched)
-                } else if data == 1 && status == 201 {
-                    vc.setupMatchingButton(MatchingButton.matching)
-                } else {
-                    vc.setupMatchingButton(MatchingButton.normal)
-                }
+            .bind { vc, _ in
+//                print(value, "여기")
+                vc.pushVC(.normal)
+//                guard let data = value.0?.matched else { return }
+//                guard let status = value.1 else { return }
+//                if data == 0 && status == 200 {
+//                    vc.pushVC(.matching)
+//                } else if data == 1 && status == 200 {
+//                    vc.pushVC(.matched)
+//                } else if status == 201 {
+//                    vc.pushVC(.normal)
+//                }
             }
             .disposed(by: disposeBag)
+        
+        // 매칭 버튼 값에 따라 버튼 이미지 변경
+//        homeViewModel.queueStateResponse
+//            .map { $0 }
+//            .withUnretained(self)
+//            .bind { vc, status in
+//                guard let data = status.0?.matched else { return print("이게 문제니?") }
+//                guard let status = status.1 else { return }
+//                if data == 0 && status == 200 {
+//                    vc.setupMatchingButton(.matching)
+//                } else if data == 1 && status == 200 {
+//                    vc.setupMatchingButton(.matched)
+//                } else if status == 201 {
+//                    vc.setupMatchingButton(.normal)
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
     
+//    homeView.matchingButton.rx.tap
+//        .withUnretained(self)
+//        .bind { vc,_ in
+//            print(value, "내 현재 상태==========================")
+////                vc.homeViewModel.requestQueueState()
+////                vc.setupMatchingButton(MatchingButton.normal)
+//            /* 일반 상태: 상태 코드가 201 인 경우
+//             매칭 대기중 상태: 상태 코드가 200이고, matched 가 0인 경우
+//             매칭 상태: 상태 코드가 200이고, matched 가 1인 경우
+//             print(value, "매칭버튼 클릭시")
+//             */
+//            // TODO: - 여기 조금 이상한 문제가 있음.
+//            guard let data = value.0?.matched else { return print("이게 문제니?") }
+//            guard let status = value.1 else { return }
+//            if data == 0 && status == 200 {
+//                vc.pushVC(.matching)
+//            } else if data == 1 && status == 200 {
+//                vc.pushVC(.matched)
+//            } else if status == 201 {
+//                vc.pushVC(.normal)
+//            }
+//        }
+//        .disposed(by: disposeBag)
     // MARK: - Custom Method
-    
-    private func searchSSAC() {
-        homeViewModel.requestSearch(
-            params: SearchRequest(
-            lat: target.lat,
-            long: target.lng))
-    }
     
     private func setupMarker(_ queueDB: [FromQueueDB]) {
         for queue in queueDB {
@@ -250,13 +260,20 @@ final class HomeViewController: BaseViewController {
         homeView.matchingButton.setImage(state.image, for: .normal)
         transition(state.pushVC, .push)
     }
+    
+    private func pushVC(_ state: MatchingButton) {
+        transition(state.pushVC, .push)
+    }
 }
 
 // MARK: - Naver Map Protocol
 
 extension HomeViewController: NMFMapViewTouchDelegate, NMFMapViewCameraDelegate {
     func mapViewCameraIdle(_ mapView: NMFMapView) {
-//        searchSSAC()
+        print(mapView.latitude, mapView.longitude, "카메라 이동 함수, 좌표")
+        homeViewModel.searchAroundFriend(lat: mapView.latitude, lng: mapView.longitude)
+        UserDefaultsHelper.standard.lat = mapView.latitude
+        UserDefaultsHelper.standard.lng = mapView.longitude
     }
 }
 
@@ -281,18 +298,7 @@ extension HomeViewController {
         case matched
         case normal
         
-        var value: Int? {
-            switch self {
-            case .matching:
-                return 1
-            case .matched:
-                return 0
-            case .normal:
-                return 0
-            }
-        }
-        
-        var image: UIImage? {
+        fileprivate var image: UIImage? {
             switch self {
             case .matching:
                 return Icon.antenna
@@ -303,14 +309,14 @@ extension HomeViewController {
             }
         }
         
-        var pushVC: UIViewController {
+        fileprivate var pushVC: UIViewController {
             switch self {
             case .matching:
                 return NearViewController()
             case .matched:
                 return ChatViewController()
             case .normal:
-                return SearchViewController()
+                return SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel())
             }
         }
     }

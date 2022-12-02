@@ -11,12 +11,16 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
-    let button = PlainButton(.grayLine, height: .h32)
+    let button = PlainButton(.fill, height: .h32)
     
     // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+    }
+    
+    override func prepareForReuse() {
+        button.backgroundColor = .clear
     }
     
     // MARK: - UI & Layout
@@ -32,7 +36,7 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     // MARK: - setupData
     
     func setupData(_ data: String, reputation: Int) {
+        reputation == 0 ? button.configureUnselected(.grayLine) : button.configureSelected(.fill)
         button.title = data
-        button.type = reputation == 0 ? .grayLine : .fill
     }
 }

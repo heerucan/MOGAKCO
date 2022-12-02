@@ -8,7 +8,7 @@
 import Foundation
 
 @frozen
-enum ToastMatrix: String {
+enum Toast: String {
     case phoneTypeError
     case overRequestError
     case etcAuthError
@@ -22,8 +22,10 @@ enum ToastMatrix: String {
     case studyCount
     case currentUser
     case stopFind
+    case studyRequestSuccess
+    case stopFindStudy
     
-    var description: String {
+    var message: String {
         switch self {
         case .phoneTypeError:
             return "잘못된 전화번호 형식입니다."
@@ -51,6 +53,10 @@ enum ToastMatrix: String {
             return "이미 가입된 유저입니다."
         case .stopFind:
             return "누군가와 스터디를 함께하기로 약속하셨어요!"
+        case .studyRequestSuccess:
+            return "스터디 요청을 보냈습니다"
+        case .stopFindStudy:
+            return "상대방이 스터디 찾기를 그만두었습니다"
         }
     }
 }

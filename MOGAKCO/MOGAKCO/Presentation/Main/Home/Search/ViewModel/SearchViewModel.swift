@@ -53,7 +53,7 @@ final class SearchViewModel: ViewModelType {
             }
             if let error = error {
                 self.searchResponse.onError(error)
-                ErrorManager.handle(with: error, vc: SearchViewController())
+                ErrorManager.handle(with: error, vc: SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel()))
             }
         }
     }
@@ -71,7 +71,7 @@ final class SearchViewModel: ViewModelType {
                 self.queueResponse.accept(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: SearchViewController())
+                ErrorManager.handle(with: error, vc: SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel()))
             }
         }
     }
@@ -131,9 +131,9 @@ final class SearchViewModel: ViewModelType {
                 
         searchText.forEach {
             if $0.count < 1 || $0.count > 8 {
-                completion(ToastMatrix.studyCount.description)
+                completion(Toast.studyCount.message)
             } else if myStudyList.contains($0) || list.contains($0) {
-                completion(ToastMatrix.alreadyStudy.description)
+                completion(Toast.alreadyStudy.message)
             } else {
                 myStudyList.append($0)
             }
