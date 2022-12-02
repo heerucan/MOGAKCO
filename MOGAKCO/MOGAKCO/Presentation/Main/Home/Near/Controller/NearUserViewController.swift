@@ -19,7 +19,7 @@ final class NearUserViewController: BaseViewController {
     private let disposeBag = DisposeBag()
     
     // MARK: - Property
-    
+        
     let userView = UserView()
     var nearViewModel: NearViewModel!
     var searchViewModel: SearchViewModel!
@@ -32,10 +32,6 @@ final class NearUserViewController: BaseViewController {
         self.searchViewModel = searchViewModel
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -43,6 +39,7 @@ final class NearUserViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        print(#function, "NearUserVC")
         super.viewDidLoad()
         bindViewModel()
     }
@@ -76,8 +73,6 @@ final class NearUserViewController: BaseViewController {
                     cell.toggleButton.tag = row
                     cell.toggleButton.addTarget(self, action: #selector(self.touchupToggleButton(_:)), for: .touchUpInside)
                     cell.requestDelegate = self
-            
-                    
                 }
                 .disposed(by: disposeBag)
         
@@ -85,12 +80,11 @@ final class NearUserViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, status in
                 if status == 200 {
-                    
                     vc.showToast(Toast.studyRequestSuccess.message)
                 } else if status == 202 {
                     vc.showToast(Toast.stopFindStudy.message)
                 } else { // 201 studyAccept 서버통신 호출
-//                    vc.nearViewModel.requestStudyAccept(<#T##String#>)
+                    vc.nearViewModel.requestStudyAccept(vc.nearViewModel.uid)
                 }
             }
             .disposed(by: disposeBag)
@@ -109,23 +103,16 @@ final class NearUserViewController: BaseViewController {
 // MARK: - RequestOrAcceptDelegate
 
 extension NearUserViewController: RequestOrAcceptDelegate {
-    @objc func touchupOkButton() {
-        print("좋아")
-        self.nearViewModel.otheruidSubject
-            .withUnretained(self)
-            .bind { vc, uid in
-                print(uid, "============================== requestStudyRequest")
-                vc.nearViewModel.requestStudyRequest(uid)
-            }
-            .disposed(by: disposeBag)
-    }
-    
     func requestOrAcceptButton(_ uid: String, index: Int) {
-        print(index, uid, "===================================uid")
-        self.nearViewModel.otheruidSubject.onNext(uid)
+        print(#function)
         let alertVC = PlainAlertViewController()
         alertVC.alertType = .studyRequest
         alertVC.okButton.addTarget(self, action: #selector(self.touchupOkButton), for: .touchUpInside)
         self.transition(alertVC, .alert)
+        nearViewModel.uid = uid
+    }
+    
+    @objc func touchupOkButton() {
+        nearViewModel.requestStudyRequest(nearViewModel.uid)
     }
 }

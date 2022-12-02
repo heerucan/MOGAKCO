@@ -9,19 +9,13 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
 
 final class UserView: BaseView {
-    
-//    var tasks: Results<Record>! {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
     
     // MARK: - Property
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
         $0.separatorStyle = .none
         $0.allowsSelection = false
         $0.backgroundColor = .white
@@ -29,7 +23,7 @@ final class UserView: BaseView {
     }
     
     let emptyStateView = NearEmptyStateView(type: .user)
-    
+        
     // MARK: - Initializer
     
     override init(frame: CGRect) {

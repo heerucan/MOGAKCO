@@ -74,6 +74,8 @@ final class NearViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         changeValue(control: segmentedControl)
+        userVC.userView.emptyStateView.changeButtonDelegate = self
+        requestVC.requestView.emptyStateView.changeButtonDelegate = self
     }
    
     override func configureLayout() {
@@ -147,5 +149,13 @@ final class NearViewController: BaseViewController {
     @objc private func changeValue(control: UISegmentedControl) {
         currentPage = control.selectedSegmentIndex
         changeLinePosition()
+    }
+}
+
+// MARK: - ChangeButtonDelegate
+
+extension NearViewController: ChangeButtonDelegate {
+    func touchupChangeButton() {
+        transition(self, .pop)
     }
 }

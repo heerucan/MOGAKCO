@@ -7,17 +7,22 @@
 
 import UIKit
 
-final class UserTableViewCell: UITableViewCell {
+import SnapKit
+import Then
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+final class UserTableViewCell: BaseTableViewCell {
+
+    // MARK: - Property
+
+    // MARK: - Initializer
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
+    
+    // MARK: - UI & Layout
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
+    
+    // MARK: - Custom Method
 }

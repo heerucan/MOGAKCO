@@ -17,14 +17,22 @@ import Then
  - 새싹 찾기 뷰에 사용되는 엠티스테이트 뷰
  */
 
+protocol ChangeButtonDelegate: AnyObject {
+    func touchupChangeButton()
+}
+
 final class NearEmptyStateView: BaseView {
     
-    let disposeBag = DisposeBag()
+    // MARK: - DisposeBag
+    
+    private let disposeBag = DisposeBag()
     
     // MARK: - Property
     
-    let nearViewModel = NearViewModel()
-    let searchViewModel = SearchViewModel()
+    weak var changeButtonDelegate: ChangeButtonDelegate?
+    
+    private let nearViewModel = NearViewModel()
+    private let searchViewModel = SearchViewModel()
     
     let viewType: EmptyViewType = .user
         
@@ -54,7 +62,7 @@ final class NearEmptyStateView: BaseView {
         $0.title = "스터디 변경하기"
     }
     
-    lazy var refreshButton = PlainButton(.outline, height: .h48).then {
+    private lazy var refreshButton = PlainButton(.outline, height: .h48).then {
         $0.setImage(Icon.refresh, for: .normal)
     }
     
@@ -102,20 +110,20 @@ final class NearEmptyStateView: BaseView {
     // MARK: - Bind
     
     override func bindViewModel() {
-        
         changeButton.rx.tap
             .withUnretained(self)
             .bind { vc,_ in
                 vc.nearViewModel.requestStopQueue()
-                print("스터디 변경하기")
+                vc.changeButtonDelegate?.touchupChangeButton()
             }
             .disposed(by: disposeBag)
       
         refreshButton.rx.tap
             .withUnretained(self)
             .bind { vc,_ in
-                print("새로고침")
-                vc.searchViewModel.requestFindQueue()
+                vc.searchViewModel.requestSearch(
+                    lat: UserDefaultsHelper.standard.lat!,
+                    long: UserDefaultsHelper.standard.lng!)
             }
             .disposed(by: disposeBag)
     }

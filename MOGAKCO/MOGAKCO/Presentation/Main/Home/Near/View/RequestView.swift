@@ -12,16 +12,9 @@ import Then
 
 final class RequestView: BaseView {
     
-//    var tasks: Results<Record>! {
-//        didSet {
-//            tableView.reloadData()
-//        }
-//    }
-    
     // MARK: - Property
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.register(RequestTableViewCell.self, forCellReuseIdentifier: RequestTableViewCell.identifier)
         $0.separatorStyle = .none
         $0.allowsSelection = false
         $0.backgroundColor = .white

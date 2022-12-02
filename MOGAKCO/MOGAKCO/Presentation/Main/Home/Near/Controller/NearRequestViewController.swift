@@ -20,7 +20,7 @@ final class NearRequestViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let requestView = RequestView()
+    let requestView = RequestView()
     var nearViewModel: NearViewModel!
     var searchViewModel: SearchViewModel!
             
@@ -39,6 +39,7 @@ final class NearRequestViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        print(#function, "NearRequestVC")
         super.viewDidLoad()
         bindViewModel()
     }
@@ -56,6 +57,7 @@ final class NearRequestViewController: BaseViewController {
             .map { $0.fromQueueDBRequested }
             .withUnretained(self)
             .bind { vc, data in
+                print(data, "내가 받은 요청~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
                 vc.requestView.emptyStateView.isHidden = data.count == 0 ? false : true
             }
             .disposed(by: disposeBag)
@@ -65,7 +67,6 @@ final class NearRequestViewController: BaseViewController {
             .bind(to: requestView.tableView.rx.items(
                 cellIdentifier: MyDetailCardTableViewCell.identifier,
                 cellType: MyDetailCardTableViewCell.self)) { [weak self] row, element, cell in
-                    print(element, "받은 요청=================================")
                     cell.index = row
                     cell.setupData(element, vc: NearRequestViewController.identifier)
                     cell.toggleButton.tag = row
@@ -74,9 +75,6 @@ final class NearRequestViewController: BaseViewController {
                 }
                 .disposed(by: disposeBag)
     }
-    
-    // MARK: - Custom Method
-    
     
     // MARK: - @objc
     
@@ -91,23 +89,16 @@ final class NearRequestViewController: BaseViewController {
 // MARK: - RequestOrAcceptDelegate
 
 extension NearRequestViewController: RequestOrAcceptDelegate {
-    @objc func touchupOkButton() {
-        print("좋아")
-        self.nearViewModel.otheruidSubject
-            .withUnretained(self)
-            .bind { vc, uid in
-                print(uid, "============================== requestStudyAccept")
-                vc.nearViewModel.requestStudyAccept(uid)
-            }
-            .disposed(by: disposeBag)
-    }
-    
     func requestOrAcceptButton(_ uid: String, index: Int) {
-        print(index, uid, "===================================uid")
-        self.nearViewModel.requestStudyAccept(uid)
+        print("이거 이거이거잉?request 버튼 누른 겨?")
         let alertVC = PlainAlertViewController()
-        alertVC.alertType = .studyRequest
+        alertVC.alertType = .studyAccept
         alertVC.okButton.addTarget(self, action: #selector(self.touchupOkButton), for: .touchUpInside)
         self.transition(alertVC, .alert)
+        nearViewModel.uid = uid
+    }
+    
+    @objc func touchupOkButton() {
+        nearViewModel.requestStudyAccept(nearViewModel.uid)
     }
 }
