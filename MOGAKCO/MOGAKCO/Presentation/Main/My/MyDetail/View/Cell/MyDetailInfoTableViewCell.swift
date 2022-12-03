@@ -211,7 +211,7 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     // MARK: - Set Up Data
     
     func setupData(_ data: User) {
-        if data.gender == 0 {
+        if data.gender == GenderType.female.rawValue {
             femaleButton.isSelect = true
         } else {
             maleButton.isSelect = true

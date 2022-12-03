@@ -90,12 +90,11 @@ final class GenderViewController: BaseViewController {
             .withUnretained(self)
             .bind { (vc, gender) in
                 if gender.item == 0 {
-                    UserDefaultsHelper.standard.gender = 1
-                    vc.genderViewModel.requestSignup()
+                    UserDefaultsHelper.standard.gender = GenderType.male.rawValue
                 } else {
-                    UserDefaultsHelper.standard.gender = 0
-                    vc.genderViewModel.requestSignup()
+                    UserDefaultsHelper.standard.gender = GenderType.female.rawValue
                 }
+                vc.genderViewModel.requestSignup()
             }
             .disposed(by: disposeBag)
         
