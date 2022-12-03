@@ -18,6 +18,7 @@ enum QueueRouter {
     case studyRequest(_ otheruid: String)
     case studyAccept(_ otheruid: String)
     case dodge(_ otheruid: String)
+    case rate(_ uid: String, rate: RateRequest)
 }
 
 extension QueueRouter: URLRequestConvertible {
@@ -34,12 +35,13 @@ extension QueueRouter: URLRequestConvertible {
         case .studyRequest: return "/v1/queue/studyrequest"
         case .studyAccept: return "/v1/queue/studyaccept"
         case .dodge: return "/v1/queue/dodge"
+        case .rate(let uid,_): return "/v1/queue/rate/\(uid)"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .findQueue, .search, .studyRequest, .studyAccept, .dodge:
+        case .findQueue, .search, .studyRequest, .studyAccept, .dodge, .rate:
             return .post
         case .stopQueue:
             return .delete
@@ -59,6 +61,10 @@ extension QueueRouter: URLRequestConvertible {
                     "long": "\(searchQueue.long)"]
         case .studyRequest(let otheruid), .studyAccept(let otheruid), .dodge(let otheruid):
             return ["otheruid": otheruid]
+        case .rate(_, let rate):
+            return ["otheruid": rate.otheruid,
+                    "reputation": rate.reputation,
+                    "comment": rate.comment]
         default: return nil
         }
     }
