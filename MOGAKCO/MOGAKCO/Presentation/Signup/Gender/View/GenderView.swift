@@ -14,8 +14,8 @@ final class GenderView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.genderTitle, subtitle: Matrix.genderSubtitle, topInset: 168).then {
-        $0.buttonTitle = Matrix.nextButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.genderTitle, subtitle: Matrix.Auth.genderSubtitle, topInset: 168).then {
+        $0.buttonTitle = Matrix.Button.next
         $0.okButton.isEnable = false
     }
     

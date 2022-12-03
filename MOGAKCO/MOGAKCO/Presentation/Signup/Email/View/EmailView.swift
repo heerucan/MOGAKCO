@@ -14,12 +14,12 @@ final class EmailView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.emailTitle, subtitle: Matrix.emailSubtitle, topInset: 168).then {
-        $0.buttonTitle = Matrix.nextButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.emailTitle, subtitle: Matrix.Auth.emailSubtitle, topInset: 168).then {
+        $0.buttonTitle = Matrix.Button.next
     }
     
     var textField = PlainTextField(.line).then {
-        $0.placeholder = Matrix.emailPlaceholder
+        $0.placeholder = Matrix.Placeholder.email
         $0.keyboardType = .emailAddress
         $0.becomeFirstResponder()
     }

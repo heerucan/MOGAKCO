@@ -14,8 +14,8 @@ final class MessageView: BaseView {
     
     // MARK: - Property
         
-    let reuseView = AuthReuseView(Matrix.messageTitle, topInset: 169).then {
-        $0.buttonTitle = Matrix.messageButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.messageTitle, topInset: 169).then {
+        $0.buttonTitle = Matrix.Button.message
     }
     
     private lazy var stackView = UIStackView(arrangedSubviews: [textField, resendButton]).then {
@@ -25,7 +25,7 @@ final class MessageView: BaseView {
     }
     
     lazy var textField = PlainTextField(.line).then {
-        $0.placeholder = Matrix.messagePlaceholder
+        $0.placeholder = Matrix.Placeholder.message
         $0.clearButtonMode = .never
         $0.keyboardType = .numberPad
         $0.addSubview(timerLabel)

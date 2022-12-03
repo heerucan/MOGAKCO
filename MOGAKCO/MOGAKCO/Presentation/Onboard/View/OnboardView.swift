@@ -36,7 +36,7 @@ final class OnboardView: BaseView {
     }
     
     let startButton = PlainButton(.fill, height: .h48).then {
-        $0.title = Matrix.startButtonTitle
+        $0.title = Matrix.Button.start
     }
     
     // MARK: - Initializer

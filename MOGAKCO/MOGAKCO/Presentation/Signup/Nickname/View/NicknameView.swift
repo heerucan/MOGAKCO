@@ -14,14 +14,14 @@ final class NicknameView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.nicknameTitle, topInset: 185).then {
-        $0.buttonTitle = Matrix.nextButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.nicknameTitle, topInset: 185).then {
+        $0.buttonTitle = Matrix.Button.next
         $0.okButton.isEnable = false
         $0.configureLayout(topInset: 185)
     }
     
     var textField = PlainTextField(.line).then {
-        $0.placeholder = Matrix.nicknamePlaceholder
+        $0.placeholder = Matrix.Placeholder.nickname
         $0.becomeFirstResponder()
     }
     

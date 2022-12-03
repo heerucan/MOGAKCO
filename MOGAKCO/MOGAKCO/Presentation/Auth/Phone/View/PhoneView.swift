@@ -15,12 +15,12 @@ final class PhoneView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.phoneTitle, topInset: 169).then {
-        $0.buttonTitle = Matrix.phoneButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.phoneTitle, topInset: 169).then {
+        $0.buttonTitle = Matrix.Button.phone
     }
     
     var textField = PlainTextField(.line).then {
-        $0.placeholder = Matrix.phonePlaceholder
+        $0.placeholder = Matrix.Placeholder.phone
         $0.keyboardType = .numberPad
     }
     

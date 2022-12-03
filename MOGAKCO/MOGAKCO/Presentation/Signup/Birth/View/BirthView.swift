@@ -14,8 +14,8 @@ final class BirthView: BaseView {
     
     // MARK: - Property
     
-    let reuseView = AuthReuseView(Matrix.birthTitle, topInset: 185).then {
-        $0.buttonTitle = Matrix.nextButtonTitle
+    let reuseView = AuthReuseView(Matrix.Auth.birthTitle, topInset: 185).then {
+        $0.buttonTitle = Matrix.Button.next
         $0.okButton.isEnable = false
     }
     
