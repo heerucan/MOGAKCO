@@ -187,6 +187,14 @@ final class SearchViewController: BaseViewController {
             .bind { vc, status in
                 if status == 200 {
                     vc.transition(NearViewController(), .push)
+                } else if status == 201 {
+                    vc.showToast(Toast.overReport.message)
+                } else if status == 203 {
+                    vc.showToast(Toast.studyCancelFirstPenalty.message)
+                } else if status == 204 {
+                    vc.showToast(Toast.studyCancelSecondPenalty.message)
+                } else if status == 205 {
+                    vc.showToast(Toast.studyCancelThirdPenalty.message)
                 }
             }
             .disposed(by: disposeBag)

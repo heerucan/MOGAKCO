@@ -142,10 +142,8 @@
 		5BEFE283291C04BF00FD31E9 /* GenderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE282291C04BF00FD31E9 /* GenderCollectionViewCell.swift */; };
 		5BEFE286291C069B00FD31E9 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE285291C069B00FD31E9 /* Gender.swift */; };
 		5BF40CEE293324D200F1536C /* PlainGenderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40CED293324D200F1536C /* PlainGenderButton.swift */; };
-		5BF40CF029332A0C00F1536C /* ButtonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40CEF29332A0C00F1536C /* ButtonExtension.swift */; };
+		5BF40CF029332A0C00F1536C /* UIControlDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40CEF29332A0C00F1536C /* UIControlDelegateProxy.swift */; };
 		5BF40CF3293379A700F1536C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40CF2293379A700F1536C /* ChatViewController.swift */; };
-		5BF40D182935061300F1536C /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40D172935061300F1536C /* AuthManager.swift */; };
-		5BF40D1A2935062400F1536C /* QueueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF40D192935062300F1536C /* QueueManager.swift */; };
 		DEB028486BA0EC21E7A12E1A /* Pods_MOGAKCO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D2FA24AD10E50213215F6C3 /* Pods_MOGAKCO.framework */; };
 /* End PBXBuildFile section */
 
@@ -278,10 +276,8 @@
 		5BEFE282291C04BF00FD31E9 /* GenderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderCollectionViewCell.swift; sourceTree = "<group>"; };
 		5BEFE285291C069B00FD31E9 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		5BF40CED293324D200F1536C /* PlainGenderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainGenderButton.swift; sourceTree = "<group>"; };
-		5BF40CEF29332A0C00F1536C /* ButtonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtension.swift; sourceTree = "<group>"; };
+		5BF40CEF29332A0C00F1536C /* UIControlDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlDelegateProxy.swift; sourceTree = "<group>"; };
 		5BF40CF2293379A700F1536C /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		5BF40D172935061300F1536C /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
-		5BF40D192935062300F1536C /* QueueManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueManager.swift; sourceTree = "<group>"; };
 		758C82AA866FF40BB14B4AC8 /* Pods-MOGAKCO.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MOGAKCO.release.xcconfig"; path = "Target Support Files/Pods-MOGAKCO/Pods-MOGAKCO.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -404,7 +400,7 @@
 			isa = PBXGroup;
 			children = (
 				5B55BC8E2926981C000C3CA0 /* CoreLocationDelegateProxy.swift */,
-				5BF40CEF29332A0C00F1536C /* ButtonExtension.swift */,
+				5BF40CEF29332A0C00F1536C /* UIControlDelegateProxy.swift */,
 			);
 			path = DelegateProxy;
 			sourceTree = "<group>";
@@ -416,7 +412,6 @@
 				5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */,
 				5B55BC982927AE24000C3CA0 /* QueueRequest.swift */,
 				5B55BC962927AC80000C3CA0 /* QueueRouter.swift */,
-				5BF40D192935062300F1536C /* QueueManager.swift */,
 			);
 			path = QueueAPI;
 			sourceTree = "<group>";
@@ -966,7 +961,6 @@
 				5BC57D572918EE7A006CB05C /* Login.swift */,
 				5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */,
 				5BD11A6C291E71750011C5B5 /* AuthRouter.swift */,
-				5BF40D172935061300F1536C /* AuthManager.swift */,
 			);
 			path = AuthAPI;
 			sourceTree = "<group>";
@@ -1354,7 +1348,6 @@
 				5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */,
 				5BEFE26D291BF7D400FD31E9 /* GenderViewController.swift in Sources */,
 				5B801A03292F5F9D00ED97CD /* DetailTableViewCell.swift in Sources */,
-				5BF40D1A2935062400F1536C /* QueueManager.swift in Sources */,
 				5B7B03FF29291EA9008B265B /* PlainSegmentControl.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
 				5B7B355F292AFEDD00A3FCB0 /* PlainAlertViewController.swift in Sources */,
@@ -1388,7 +1381,6 @@
 				5BC355FB292E59A50019B50F /* TextFieldType.swift in Sources */,
 				5B1394DE2921D0F70046013E /* HomeViewModel.swift in Sources */,
 				5BEFE27A291C027000FD31E9 /* BirthView.swift in Sources */,
-				5BF40D182935061300F1536C /* AuthManager.swift in Sources */,
 				5BEFE276291C018900FD31E9 /* EmailViewController.swift in Sources */,
 				5B1395072922D5300046013E /* MyReviewView.swift in Sources */,
 				5BC57D472918EBFF006CB05C /* UITextField+.swift in Sources */,
@@ -1416,7 +1408,7 @@
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
-				5BF40CF029332A0C00F1536C /* ButtonExtension.swift in Sources */,
+				5BF40CF029332A0C00F1536C /* UIControlDelegateProxy.swift in Sources */,
 				5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
 				5BD11A74291E75DA0011C5B5 /* SignupRequest.swift in Sources */,

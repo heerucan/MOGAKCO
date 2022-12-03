@@ -27,6 +27,10 @@ enum Toast: String {
     case acceptStudy
     case matchingStudy
     case matchedStudy
+    case overReport
+    case studyCancelFirstPenalty
+    case studyCancelSecondPenalty
+    case studyCancelThirdPenalty
     
     var message: String {
         switch self {
@@ -66,6 +70,14 @@ enum Toast: String {
             return "상대방도 스터디를 요청하여 매칭되었습니다. 잠시 후 채팅방으로 이동합니다"
         case .matchedStudy:
             return "000님과 매칭되셨습니다. 잠시 후 채팅방으로 이동합니다"
+        case .overReport:
+            return "신고가 누적되어 이용하실 수 없습니다"
+        case .studyCancelFirstPenalty:
+            return "스터디 취소 패널티로, 1분동안 이용하실 수 없습니다"
+        case .studyCancelSecondPenalty:
+            return "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다"
+        case .studyCancelThirdPenalty:
+            return "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다"
         }
     }
 }

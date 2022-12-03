@@ -144,13 +144,14 @@ final class NearViewController: BaseViewController {
         homeViewModel.queueStateResponse
             .withUnretained(self)
             .bind { vc, value in
-                print(value, "🧡🧡🧡🧡🧡🧡🧡🧡🧡매칭상태 체킹체킹🧡🧡🧡🧡🧡🧡🧡🧡🧡")
                 guard let data = value.0 else { return }
                 guard let status = value.1 else { return }
                 if status == 200 && data.matched == 1 {
-                    print("매칭완료 -> 채팅방 전환")
+                    print("🧡============ 매칭완료 채팅방 고고링 200 / 1 ============🧡")
                     vc.showToast(Toast.matchedStudy.message)
                     vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                } else if status == 200 && data.matched == 0 {
+                    print("🧡============ 매칭대기중 200 / 0 ============🧡")
                 }
             }
             .disposed(by: disposeBag)
