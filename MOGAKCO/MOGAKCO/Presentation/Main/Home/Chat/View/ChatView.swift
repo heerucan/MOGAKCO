@@ -16,6 +16,8 @@ final class ChatView: BaseView {
 
     // MARK: - Property
     
+    let tapBackground = UITapGestureRecognizer()
+    
     lazy var navigationBar = PlainNavigationBar(type: .chat)
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
@@ -35,9 +37,11 @@ final class ChatView: BaseView {
     let chatMoreView = ChatMoreView().then {
         $0.alpha = 0
     }
-    private let chatDissolveView = UIView().then {
+    
+    lazy var chatDissolveView = UIView().then {
         $0.backgroundColor = Color.black.withAlphaComponent(0.5)
         $0.isHidden = true
+        $0.addGestureRecognizer(tapBackground)
     }
     
     let textView = UITextView().then {
@@ -65,7 +69,12 @@ final class ChatView: BaseView {
     // MARK: - UI & Layout
     
     override func configureLayout() {
-        addSubviews([tableView, chatMoreView, navigationBar, textView, sendButton, chatDissolveView])
+        addSubviews([tableView,
+                     chatMoreView,
+                     navigationBar,
+                     textView,
+                     sendButton,
+                     chatDissolveView])
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
@@ -111,28 +120,27 @@ final class ChatView: BaseView {
         }
     }
     
-    
-    func adjustTextViewHeight() {
-        let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        if newSize.height >= 100 {
-            textView.isScrollEnabled = true
-        }
-        else {
-            textView.isScrollEnabled = false
+//    func adjustTextViewHeight() {
+//        let fixedWidth = textView.frame.size.width
+//        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+//        if newSize.height >= 100 {
+//            textView.isScrollEnabled = true
+//        }
+//        else {
+//            textView.isScrollEnabled = false
 //            textView.snp.updateConstraints { make in
 //                make.directionalHorizontalEdges.equalToSuperview().inset(16)
 //                make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
 //                make.height.equalTo(newSize.height)
 //            }
-        }
-       layoutSubviews()
-    }
+//        }
+//       layoutSubviews()
+//    }
     
     func setupChatMoreView(moreButtonIsSelected value: Bool) {
         navigationBar.rightButton.isSelected.toggle()
         if value == false {
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: 0.2) {
                 self.chatMoreView.transform = CGAffineTransform(translationX: 0, y: 72)
                 self.chatDissolveView.transform = CGAffineTransform(translationX: 0, y: 72)
                 self.chatDissolveView.isHidden = false
@@ -140,7 +148,7 @@ final class ChatView: BaseView {
                 self.chatMoreView.alpha = 1
             }
         } else {
-            UIView.animate(withDuration: 0.1) {
+            UIView.animate(withDuration: 0.2) {
                 self.chatMoreView.transform = .identity
                 self.chatDissolveView.transform = .identity
                 self.chatDissolveView.isHidden = true

@@ -115,7 +115,14 @@ final class ChatViewController: BaseViewController {
                 vc.chatView.setupChatMoreView(moreButtonIsSelected: value)
             }
             .disposed(by: disposeBag)
-                
+        
+        chatView.tapBackground.rx.event
+            .withUnretained(self)
+            .bind { vc,_ in
+                vc.chatView.setupChatMoreView(moreButtonIsSelected: true)
+            }
+            .disposed(by: disposeBag)
+                        
         /// 더보기 버튼 -> queueState 호출
          chatView.navigationBar.rightButton.rx.tap
             .withUnretained(self)
