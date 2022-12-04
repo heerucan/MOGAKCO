@@ -48,7 +48,13 @@ final class ChatViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
-        getChatData()
+//        chatViewModel.fetchChat
+//        getChatData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        SocketIOManager.shared.closeConnection()
     }
     
     // MARK: - UI & Layout
@@ -56,6 +62,13 @@ final class ChatViewController: BaseViewController {
     override func configureUI() {
         super.configureUI()
         chatView.navigationBar.viewController = self
+    }
+    
+    override func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(getMessage(notification:)),
+                                               name: NSNotification.getMessage,
+                                               object: nil)
     }
     
     // MARK: - Bind
@@ -68,13 +81,13 @@ final class ChatViewController: BaseViewController {
         /// 테이블뷰 세팅
         chatViewModel.chatResponse
             .bind(to: chatView.tableView.rx.items) { [weak self] tableView, row, element in
-                if element.from == self?.chatViewModel.otheruid {
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: YourChatTableViewCell.identifier) as? YourChatTableViewCell
+                if element.from == UserDefaultsHelper.standard.myuid! {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifier) as? MyChatTableViewCell
                     else { return UITableViewCell() }
                     cell.chatLabel.text = element.chat
                     return cell
                 } else {
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifier) as? MyChatTableViewCell
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: YourChatTableViewCell.identifier) as? YourChatTableViewCell
                     else { return UITableViewCell() }
                     cell.chatLabel.text = element.chat
                     return cell
@@ -85,16 +98,23 @@ final class ChatViewController: BaseViewController {
         /// 텍스트뷰 플레이스홀더 처리
         chatView.textView.rx.didBeginEditing
             .withUnretained(self)
-            .subscribe { vc,_ in
+            .bind { vc,_ in
                 vc.chatView.setupTextViewDidBeginEditing()
             }
             .disposed(by: disposeBag)
         
         chatView.textView.rx.didEndEditing
             .withUnretained(self)
-            .subscribe { vc,_ in
+            .bind { vc,_ in
                 vc.chatView.setupTextViewDidEndEditing()
 
+            }
+            .disposed(by: disposeBag)
+        
+        chatView.textView.rx.didChange
+            .withUnretained(self)
+            .bind { vc,_ in
+                vc.chatView.setupTextViewDidChange()
             }
             .disposed(by: disposeBag)
         
@@ -184,9 +204,13 @@ final class ChatViewController: BaseViewController {
         
         /// 채팅전송 버튼 -> 채팅전송 POST
         chatView.sendButton.rx.tap
+            .withLatestFrom(chatView.textView.rx.text)
+            .map { $0 }
             .withUnretained(self)
-            .bind { vc,_ in
-//                vc.chatViewModel.requestSendChat(<#T##chat: String##String#>)
+            .bind { vc, chat in
+                print(chat, "==========================채팅")
+                guard let chat = chat else { return }
+                vc.chatViewModel.postChat(chat, to: vc.chatViewModel.otheruid)
             }
             .disposed(by: disposeBag)
     }
@@ -199,16 +223,24 @@ final class ChatViewController: BaseViewController {
 //        chatViewModel.requestChatList(from: chatViewModel.otheruid, lastchatDate: <#T##String#>)
     }
     
-    // MARK: - Custom Method
-    
-    func setupChatMoreView() {
-        
-    }
-        
     // MARK: - @objc
     
     @objc func touchupOkButton() {
         chatViewModel.requestDodge(otheruid: chatViewModel.otheruid)
-        print(chatViewModel.otheruid, "취소")
+        print(chatViewModel.otheruid, "스터디 취소 상대방 uid")
+    }
+    
+    @objc func getMessage(notification: NSNotification) {
+        
+        let chat = notification.userInfo!["chat"] as! String
+        let name = notification.userInfo!["name"] as! String
+        let createdAt = notification.userInfo!["createdAt"] as! String
+        let userID = notification.userInfo!["userId"] as! String
+        
+        let value = Chat(id: "", to: chatViewModel.otheruid, from: userID, chat: chat, createdAt: createdAt)
+        
+//        self.chatViewModel.chat.append(value)
+//        chatView.tableView.reloadData()
+//        chatView.tableView.scrollToRow(at: IndexPath(row: chatViewModel.chat.count - 1, section: 0), at: .bottom, animated: false)
     }
 }

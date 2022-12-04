@@ -12,7 +12,7 @@ import RxSwift
 final class ChatViewModel: ViewModelType {
     
     var otheruid = ""
-
+    var chat = [Chat]()
     let chatResponse = PublishSubject<[Chat]>()
     let cancelResponse = BehaviorSubject<Int>(value: 0)
     let payloadResponse = BehaviorSubject<ChatList>(value: ChatList.init(payload: []))
@@ -30,9 +30,31 @@ final class ChatViewModel: ViewModelType {
     }
     
     // MARK: - Network
+
+//    private func fetchChats() {
+//        let header: HTTPHeaders = [
+//            "Authorization": "Bearer \(APIKey.header)",
+//            "Content-Type": "application/json"
+//        ]
+//
+//        AF.request(APIKey.url, method: .get, headers: header).responseDecodable(of: [Chat].self) { [weak self] response in
+//            switch response.result {
+//            case .success(let value):
+//                self?.chat = value
+//                self?.tableView.reloadData()
+//                self?.tableView.scrollToRow(at: IndexPath(row: self!.chat.count - 1, section: 0), at: .bottom, animated: false)
+//
+//                // 여기 쓰는 이유는 이전 채팅들도 처리해줘야 하니까
+//                SocketIOManager.shared.establishConnection()
+//
+//            case .failure(let error):
+//                print("FAIL", error)
+//            }
+//        }
+//    }
     
     /// 채팅 전송  POST
-    func requestSendChat(_ chat: String, to: String) {
+    func postChat(_ chat: String, to: String) {
         APIManager.shared.request(Chat.self, ChatRouter.sendChat(chat: chat, to: to)) { [weak self] data, status, error in
             guard let self = self else { return }
             if let data = data {

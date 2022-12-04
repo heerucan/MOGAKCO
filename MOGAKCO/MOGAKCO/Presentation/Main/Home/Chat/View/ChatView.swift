@@ -15,13 +15,13 @@ import RxCocoa
 final class ChatView: BaseView {
 
     // MARK: - Property
-    
+        
     let tapBackground = UITapGestureRecognizer()
     
     lazy var navigationBar = PlainNavigationBar(type: .chat)
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = .red
         $0.showsHorizontalScrollIndicator = false
         $0.separatorStyle = .none
         $0.keyboardDismissMode = .onDrag
@@ -44,15 +44,14 @@ final class ChatView: BaseView {
         $0.addGestureRecognizer(tapBackground)
     }
     
-    let textView = UITextView().then {
-        $0.text = "메세지를 입력하세요"
+    lazy var textView = UITextView().then {
+        $0.text = Matrix.Placeholder.chat
         $0.textColor = Color.gray7
         $0.font = Font.body3.font
         $0.backgroundColor = Color.gray1
         $0.makeCornerStyle(width: 0, radius: 8)
-        $0.contentInset = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 44)
+        $0.textContainerInset = UIEdgeInsets(top: 14, left: 12, bottom: 14, right: 44)
         $0.isScrollEnabled = false
-//        $0.textContainer.maximumNumberOfLines = 3
     }
     
     let sendButton = UIButton().then {
@@ -63,7 +62,6 @@ final class ChatView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        setupTextView()
     }
     
     // MARK: - UI & Layout
@@ -89,7 +87,7 @@ final class ChatView: BaseView {
         tableView.snp.makeConstraints { make in
             make.top.equalTo(navigationBar.snp.bottom)
             make.directionalHorizontalEdges.equalToSuperview()
-            make.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.textView.snp.top).offset(-16)
         }
         
         textView.snp.makeConstraints { make in
@@ -111,31 +109,6 @@ final class ChatView: BaseView {
     }
     
     // MARK: - Custom Method
-    
-    func setupTextView() {
-        if textView.numberOfLine() >= 4 {
-            textView.isScrollEnabled = true
-        } else {
-            textView.isScrollEnabled = false
-        }
-    }
-    
-//    func adjustTextViewHeight() {
-//        let fixedWidth = textView.frame.size.width
-//        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-//        if newSize.height >= 100 {
-//            textView.isScrollEnabled = true
-//        }
-//        else {
-//            textView.isScrollEnabled = false
-//            textView.snp.updateConstraints { make in
-//                make.directionalHorizontalEdges.equalToSuperview().inset(16)
-//                make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
-//                make.height.equalTo(newSize.height)
-//            }
-//        }
-//       layoutSubviews()
-//    }
     
     func setupChatMoreView(moreButtonIsSelected value: Bool) {
         navigationBar.rightButton.isSelected.toggle()
@@ -171,12 +144,42 @@ final class ChatView: BaseView {
             textView.text = nil
             textView.textColor = Color.black
         }
+        textView.snp.remakeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
+            make.height.greaterThanOrEqualTo(52)
+            make.height.lessThanOrEqualTo(Matrix.Chat.maxHeight)
+        }
     }
     
     func setupTextViewDidEndEditing() {
         if textView.text == "" {
             textView.text = Matrix.Placeholder.chat
             textView.textColor = Color.gray7
+        }
+        textView.snp.remakeConstraints { make in
+            make.directionalHorizontalEdges.equalToSuperview().inset(16)
+            make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
+            make.height.equalTo(52)
+        }
+    }
+    
+    func setupTextViewDidChange() {
+        if textView.numberOfLine() >= 4 {
+            textView.snp.remakeConstraints { make in
+                make.directionalHorizontalEdges.equalToSuperview().inset(16)
+                make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
+                make.height.equalTo(Matrix.Chat.maxHeight)
+            }
+            textView.isScrollEnabled = true
+        } else {
+            textView.snp.remakeConstraints { make in
+                make.directionalHorizontalEdges.equalToSuperview().inset(16)
+                make.bottom.equalTo(self.keyboardLayoutGuide.snp.top).offset(-16)
+                make.height.greaterThanOrEqualTo(52)
+                make.height.lessThanOrEqualTo(Matrix.Chat.maxHeight)
+            }
+            textView.isScrollEnabled = false
         }
     }
 }
