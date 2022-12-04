@@ -19,7 +19,7 @@ final class ChatView: BaseView {
     lazy var navigationBar = PlainNavigationBar(type: .chat)
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = .brown
+        $0.backgroundColor = .white
         $0.showsHorizontalScrollIndicator = false
         $0.separatorStyle = .none
         $0.keyboardDismissMode = .onDrag
@@ -32,7 +32,13 @@ final class ChatView: BaseView {
         $0.register(YourChatTableViewCell.self, forCellReuseIdentifier: YourChatTableViewCell.identifier)
     }
     
-    let chatMoreView = ChatMoreView()
+    let chatMoreView = ChatMoreView().then {
+        $0.alpha = 0
+    }
+    private let chatDissolveView = UIView().then {
+        $0.backgroundColor = Color.black.withAlphaComponent(0.5)
+        $0.isHidden = true
+    }
     
     let textView = UITextView().then {
         $0.text = "메세지를 입력하세요"
@@ -59,7 +65,7 @@ final class ChatView: BaseView {
     // MARK: - UI & Layout
     
     override func configureLayout() {
-        addSubviews([tableView, chatMoreView, navigationBar, textView, sendButton])
+        addSubviews([tableView, chatMoreView, navigationBar, textView, sendButton, chatDissolveView])
         
         navigationBar.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
@@ -88,18 +94,23 @@ final class ChatView: BaseView {
             make.centerY.equalTo(textView.snp.centerY)
             make.size.equalTo(20)
         }
+        
+        chatDissolveView.snp.makeConstraints { make in
+            make.top.equalTo(chatMoreView.snp.bottom)
+            make.directionalHorizontalEdges.bottom.equalToSuperview()
+        }
     }
+    
+    // MARK: - Custom Method
     
     func setupTextView() {
         if textView.numberOfLine() >= 4 {
             textView.isScrollEnabled = true
-            
         } else {
             textView.isScrollEnabled = false
         }
     }
     
-    // MARK: - Custom Method
     
     func adjustTextViewHeight() {
         let fixedWidth = textView.frame.size.width
@@ -116,5 +127,48 @@ final class ChatView: BaseView {
 //            }
         }
        layoutSubviews()
+    }
+    
+    func setupChatMoreView(moreButtonIsSelected value: Bool) {
+        navigationBar.rightButton.isSelected.toggle()
+        if value == false {
+            UIView.animate(withDuration: 0.1) {
+                self.chatMoreView.transform = CGAffineTransform(translationX: 0, y: 72)
+                self.chatDissolveView.transform = CGAffineTransform(translationX: 0, y: 72)
+                self.chatDissolveView.isHidden = false
+                self.navigationBar.lineView.alpha = 0
+                self.chatMoreView.alpha = 1
+            }
+        } else {
+            UIView.animate(withDuration: 0.1) {
+                self.chatMoreView.transform = .identity
+                self.chatDissolveView.transform = .identity
+                self.chatDissolveView.isHidden = true
+                self.navigationBar.lineView.alpha = 1
+                self.chatMoreView.alpha = 0
+            }
+        }
+    }
+    
+    func setupSendButton(textFieldText: String) {
+        if textFieldText.isEmpty || textView.textColor == Color.gray7 {
+            sendButton.setImage(Icon.sendInactive, for: .normal)
+        } else {
+            sendButton.setImage(Icon.send, for: .normal)
+        }
+    }
+    
+    func setupTextViewDidBeginEditing() {
+        if textView.textColor == Color.gray7 {
+            textView.text = nil
+            textView.textColor = Color.black
+        }
+    }
+    
+    func setupTextViewDidEndEditing() {
+        if textView.text == "" {
+            textView.text = Matrix.Placeholder.chat
+            textView.textColor = Color.gray7
+        }
     }
 }

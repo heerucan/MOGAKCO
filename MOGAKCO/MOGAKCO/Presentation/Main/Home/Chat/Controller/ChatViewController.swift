@@ -71,15 +71,11 @@ final class ChatViewController: BaseViewController {
                 if element.from == self?.chatViewModel.otheruid {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: YourChatTableViewCell.identifier) as? YourChatTableViewCell
                     else { return UITableViewCell() }
-
-//                    cell.timeLabel.text = DateFormatterHelper.shared.chatDateText(dateString: element.createdAt)
                     cell.chatLabel.text = element.chat
-
                     return cell
                 } else {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: MyChatTableViewCell.identifier) as? MyChatTableViewCell
                     else { return UITableViewCell() }
-//                    cell.timeLabel.text = DateFormatterHelper.shared.chatDateText(dateString: element.createdAt)
                     cell.chatLabel.text = element.chat
                     return cell
                 }
@@ -90,20 +86,15 @@ final class ChatViewController: BaseViewController {
         chatView.textView.rx.didBeginEditing
             .withUnretained(self)
             .subscribe { vc,_ in
-                if vc.chatView.textView.textColor == Color.gray7 {
-                    vc.chatView.textView.text = nil
-                    vc.chatView.textView.textColor = Color.black
-                }
+                vc.chatView.setupTextViewDidBeginEditing()
             }
             .disposed(by: disposeBag)
         
         chatView.textView.rx.didEndEditing
             .withUnretained(self)
             .subscribe { vc,_ in
-                if vc.chatView.textView.text == "" {
-                    vc.chatView.textView.text = Matrix.Placeholder.chat
-                    vc.chatView.textView.textColor = Color.gray7
-                }
+                vc.chatView.setupTextViewDidEndEditing()
+
             }
             .disposed(by: disposeBag)
         
@@ -112,36 +103,16 @@ final class ChatViewController: BaseViewController {
             .orEmpty
             .withUnretained(self)
             .bind { vc, text in
-                if text.isEmpty || vc.chatView.textView.textColor == Color.gray7 {
-                    vc.chatView.sendButton.setImage(Icon.sendInactive, for: .normal)
-                } else {
-                    vc.chatView.sendButton.setImage(Icon.send, for: .normal)
-                }
+                vc.chatView.setupSendButton(textFieldText: text)
             }
             .disposed(by: disposeBag)
         
         /// navigation Right Bar 처리
-        // TODO: - 버튼 선택으로 변경해야 함
         chatView.navigationBar.rightButton.rx.tap
             .withLatestFrom(chatView.navigationBar.rightButton.rx.isSelected)
             .withUnretained(self)
             .bind { vc, value in
-                print(value, "이거")
-                vc.chatView.navigationBar.rightButton.isSelected.toggle()
-                if value == false {
-                    print(value, "눌럿을 떄")
-
-                    UIView.animate(withDuration: 0.1) {
-                        vc.chatView.chatMoreView.transform = CGAffineTransform(translationX: 0, y: 72)
-                        vc.chatView.navigationBar.lineView.alpha = 0
-                    }
-                } else {
-                    print(value, "안 눌럿을 떄")
-                    UIView.animate(withDuration: 0.1) {
-                        vc.chatView.chatMoreView.transform = .identity
-                        vc.chatView.navigationBar.lineView.alpha = 1
-                    }
-                }
+                vc.chatView.setupChatMoreView(moreButtonIsSelected: value)
             }
             .disposed(by: disposeBag)
                 
@@ -200,7 +171,6 @@ final class ChatViewController: BaseViewController {
         chatView.navigationBar.leftButton.rx.tap
             .withUnretained(self)
             .bind { vc,_ in
-//                vc.navigationController?.popToRootViewController(animated: true)
                 vc.transition(self, .popNavigations, 4)
             }
             .disposed(by: disposeBag)
@@ -221,12 +191,17 @@ final class ChatViewController: BaseViewController {
         // lastchatDate - 디바이스에 저장된 마지막 채팅 시간을 전달하는 쿼리 스트링(query string)
 //        chatViewModel.requestChatList(from: chatViewModel.otheruid, lastchatDate: <#T##String#>)
     }
+    
+    // MARK: - Custom Method
+    
+    func setupChatMoreView() {
+        
+    }
         
     // MARK: - @objc
     
     @objc func touchupOkButton() {
         chatViewModel.requestDodge(otheruid: chatViewModel.otheruid)
         print(chatViewModel.otheruid, "취소")
-
     }
 }
