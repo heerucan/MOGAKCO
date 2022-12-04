@@ -44,6 +44,11 @@ final class NearRequestViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchViewModel.requestSearch(lat: UserDefaultsHelper.standard.lat!, long: UserDefaultsHelper.standard.lng!)
+    }
 
     // MARK: - Bind
     
