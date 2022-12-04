@@ -7,17 +7,57 @@
 
 import UIKit
 
-class YourChatTableViewCell: UITableViewCell {
+import SnapKit
+import Then
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+final class YourChatTableViewCell: BaseTableViewCell {
+    
+    // MARK: - Property
+    
+    private let backView = UIView().then {
+        $0.makeCornerStyle(width: 1, color: Color.gray4.cgColor, radius: 8)
+        $0.backgroundColor = .white
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    let timeLabel = UILabel().then {
+        $0.text = "15:00"
+        $0.font = Font.title6.font
+        $0.textColor = Color.gray6
     }
-
+    
+    let chatLabel = UILabel().then {
+        $0.text = "안녕하세요 알고리즘 스터디는 언제 하실 생각이세요?"
+        $0.font = Font.body3.font
+        $0.textColor = Color.black
+        $0.numberOfLines = 0
+    }
+    
+    // MARK: - Initializer
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    // MARK: - UI & Layout
+    
+    override func configureLayout() {
+        addSubviews([backView, timeLabel])
+        backView.addSubview(chatLabel)
+        
+        backView.snp.makeConstraints { make in
+            make.directionalVerticalEdges.equalToSuperview().inset(12)
+            make.leading.equalToSuperview().inset(16)
+            make.width.equalTo(264)
+        }
+        
+        chatLabel.snp.makeConstraints { make in
+            make.directionalVerticalEdges.equalToSuperview().inset(10)
+            make.directionalHorizontalEdges.equalToSuperview().inset(16)
+        }
+        
+        timeLabel.snp.makeConstraints { make in
+            make.leading.equalTo(backView.snp.trailing).offset(8)
+            make.bottom.equalTo(backView.snp.bottom)
+        }
+    }
 }
