@@ -82,7 +82,7 @@ final class PlainNavigationBar: BaseView {
     let leftButton = UIButton()
     let rightButton = UIButton()
     
-    private let lineView = UIView()
+    let lineView = UIView()
     
     var viewController: UIViewController?
     
@@ -94,6 +94,7 @@ final class PlainNavigationBar: BaseView {
     
     init(type: NavigationType) {
         super.init(frame: .zero)
+        backgroundColor = .white
         titleLabel.text = type.title
         lineView.backgroundColor = type.lineViewBackgroundColor
         leftButton.addAction(backAction, for: .touchUpInside)
