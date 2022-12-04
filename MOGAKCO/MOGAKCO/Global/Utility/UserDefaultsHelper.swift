@@ -15,6 +15,7 @@ final class UserDefaultsHelper {
     enum Key {
         static let idToken = "idToken"
         static let FCMtoken = "FCMtoken"
+        static let myuid = "myuid"
         static let verificationID = "verificationID"
         static let phone = "phone"
         static let nickname = "nickname"
@@ -34,6 +35,11 @@ final class UserDefaultsHelper {
     var FCMtoken: String? {
         get { return userDefaults.string(forKey: Key.FCMtoken) ?? "" }
         set { userDefaults.set(APIKey.FCMtoken, forKey: Key.FCMtoken) }
+    }
+    
+    var myuid: String? {
+        get { return userDefaults.string(forKey: Key.myuid) ?? "" }
+        set { userDefaults.set(newValue, forKey: Key.myuid) }
     }
     
     var verificationID: String? {

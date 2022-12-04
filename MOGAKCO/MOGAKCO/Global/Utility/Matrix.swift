@@ -39,6 +39,7 @@ enum Matrix {
     enum Chat {
         static let matching = "님과 매칭되었습니다"
         static let description = "채팅을 통해 약속을 정해보세요 :)"
+        static let maxHeight = 85.0
     }
     
     // MARK: - UserDefaults Key

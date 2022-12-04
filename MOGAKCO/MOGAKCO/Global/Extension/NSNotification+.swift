@@ -8,5 +8,5 @@
 import Foundation
 
 extension NSNotification {
-//    static let fcmToken = NSNotification.Name("FCMToken")
+    static let getMessage = NSNotification.Name("getMessage")
 }
