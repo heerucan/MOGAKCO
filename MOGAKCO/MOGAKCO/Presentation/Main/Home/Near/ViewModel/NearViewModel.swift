@@ -12,10 +12,10 @@ import RxCocoa
 
 final class NearViewModel: ViewModelType {
     
+    var uid = ""
     let queueResponse = BehaviorSubject<Int>(value: 0)
     let requestResponse = BehaviorSubject<Int>(value: 0)
     let acceptResponse = BehaviorSubject<Int>(value: 0)
-    var uid: String = ""
     
     struct Input {
         
@@ -34,7 +34,6 @@ final class NearViewModel: ViewModelType {
     /// 요청하기
     func requestStudyRequest(_ otheruid: String) {
         APIManager.shared.request(Int.self, QueueRouter.studyRequest(otheruid)) { [weak self] _, status, error in
-            print(status, error, "============requestStudyRequest")
             guard let self = self else { return }
             if let status = status {
                 self.requestResponse.onNext(status)
@@ -69,5 +68,4 @@ final class NearViewModel: ViewModelType {
             }
         }
     }
-
 }

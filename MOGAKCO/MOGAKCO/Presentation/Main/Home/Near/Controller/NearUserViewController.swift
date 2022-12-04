@@ -42,6 +42,11 @@ final class NearUserViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        searchViewModel.requestSearch(lat: UserDefaultsHelper.standard.lat!, long: UserDefaultsHelper.standard.lng!)
+    }
 
     // MARK: - Bind
     
@@ -94,7 +99,7 @@ final class NearUserViewController: BaseViewController {
                 if status == 200 {
                     vc.showToast(Toast.matchingStudy.message)
                     DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                        vc.transition(ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel()), .push)
                     }
                 }
             }

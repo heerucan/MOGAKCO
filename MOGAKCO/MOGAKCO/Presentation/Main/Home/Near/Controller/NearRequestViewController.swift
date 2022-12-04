@@ -81,7 +81,11 @@ final class NearRequestViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, status in
                 if status == 200 {
-                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                    /// 채팅에 상대의 uid 전달
+                    let chatVC = ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel())
+                    vc.transition(chatVC, .push) { chatVC in
+                        chatVC.chatViewModel.otheruid = vc.nearViewModel.uid
+                    }
                 } else if status == 201 {
                     vc.showToast(Toast.alreadyStudy.message)
                 } else if status == 202 {
