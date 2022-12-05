@@ -8,15 +8,15 @@
 import Foundation
 
 extension String {
-    func toDate(from dateString: String) -> Date {
+    func toDate(from dateString: String, format: String = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'") -> Date {
         let stringDate = dateString
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.dateFormat = format
         dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
         dateFormatter.locale = Locale(identifier: "ko_KR")
         return dateFormatter.date(from: stringDate)!
     }
-    
+
     @frozen
     enum Regex {
         case email

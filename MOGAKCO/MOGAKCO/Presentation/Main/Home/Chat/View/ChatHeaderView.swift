@@ -13,7 +13,7 @@ import Then
 final class ChatHeaderView: BaseView {
     
     // MARK: - Property
-    
+        
     var name: String = "" {
         didSet {
             matchingLabel.text = name + Matrix.Chat.matching
@@ -31,10 +31,9 @@ final class ChatHeaderView: BaseView {
         $0.image = Icon.bell
     }
     
-    private let matchingLabel = UILabel().then {
+    private var matchingLabel = UILabel().then {
         $0.font = Font.title3.font
         $0.textColor = Color.gray7
-        $0.text = "후리방구" + Matrix.Chat.matching
     }
     
     private let descriptionLabel = UILabel().then {
@@ -48,6 +47,7 @@ final class ChatHeaderView: BaseView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        bindViewModel()
     }
     
     // MARK: - UI & Layout

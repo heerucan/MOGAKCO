@@ -24,9 +24,9 @@ final class MyDetailViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(myDetailViewModel: MyDetailViewModel) {
+    init(_ viewModel: MyDetailViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.myDetailViewModel = myDetailViewModel
+        self.myDetailViewModel = viewModel
     }
     
     // MARK: - UI Property

@@ -25,12 +25,12 @@ final class APIManager {
                 guard let self = self else { return }
                 guard let statusCode = response.response?.statusCode else { return }
                 completion(nil, statusCode, nil)
-                print("⚠️ 상태코드만!!! ->>>", type, statusCode)
+                print("⚠️ 상태코드만!!! ===", type, "/", statusCode)
                 
                 switch response.result {
                 case .success(let data):
                     completion(data, statusCode, nil)
-                    print("✅ 성공!!! ->>>", data, statusCode)
+                    print("✅ 성공!!! ===", data, "/", statusCode)
                     
                 case .failure(_):
                     guard let error = APIError(rawValue: statusCode) else { return }
@@ -40,7 +40,7 @@ final class APIManager {
                         }
                     }
                     completion(nil, statusCode, error)
-                    print("❌ 실패!!! ->>>", type, error, error.localizedDescription, statusCode)
+                    print("❌ 실패!!! ===", type, "/", error, "/", error.localizedDescription)
                 }
             }
     }

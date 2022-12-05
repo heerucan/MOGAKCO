@@ -37,10 +37,10 @@ final class SearchViewController: BaseViewController {
             
     // MARK: - Init
     
-    init(homeViewModel: HomeViewModel, searchViewModel: SearchViewModel) {
+    init(_ viewModel: SearchViewModel, homeViewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
+        self.searchViewModel = viewModel
         self.homeViewModel = homeViewModel
-        self.searchViewModel = searchViewModel
     }
     
     // MARK: - LifeCycle

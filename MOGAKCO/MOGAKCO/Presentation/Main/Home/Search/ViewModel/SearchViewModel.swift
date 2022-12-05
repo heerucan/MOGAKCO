@@ -53,7 +53,7 @@ final class SearchViewModel: ViewModelType {
             }
             if let error = error {
                 self.searchResponse.onError(error)
-                ErrorManager.handle(with: error, vc: SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel()))
+                ErrorManager.handle(with: error, vc: SearchViewController(SearchViewModel(), homeViewModel: HomeViewModel()))
             }
         }
     }
@@ -71,7 +71,7 @@ final class SearchViewModel: ViewModelType {
                 self.queueResponse.accept(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel()))
+                ErrorManager.handle(with: error, vc: SearchViewController(SearchViewModel(), homeViewModel: HomeViewModel()))
             }
         }
     }

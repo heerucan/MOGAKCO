@@ -16,7 +16,7 @@ protocol RequestOrAcceptDelegate: AnyObject {
 }
 
 final class MyDetailCardTableViewCell: BaseTableViewCell {
-    
+        
     // MARK: - Property
     
     var index: Int?
@@ -137,6 +137,7 @@ final class MyDetailCardTableViewCell: BaseTableViewCell {
         } else {
             [titleView, studyView, reviewView].forEach {
                 $0.isHidden = !isSelected
+                
             }
         }        
         nameView.moreImageView.image = !isSelected ? Icon.moreDown : Icon.moreUp

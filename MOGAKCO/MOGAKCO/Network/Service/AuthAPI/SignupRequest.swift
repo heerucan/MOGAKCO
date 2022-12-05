@@ -26,12 +26,4 @@ struct UserRequest: Codable {
     let ageMax: Int
     let gender: Int
     let study: String
-    
-    init(_ searchable: Int, _ ageMin: Int, _ ageMax: Int, _ gender: Int, _ study: String) {
-        self.searchable = searchable
-        self.ageMin = ageMin
-        self.ageMax = ageMax
-        self.gender = gender
-        self.study = study
-    }
 }

@@ -26,9 +26,9 @@ final class NearUserViewController: BaseViewController {
             
     // MARK: - Init
     
-    init(nearViewModel: NearViewModel, searchViewModel: SearchViewModel) {
+    init(_ viewModel: NearViewModel, searchViewModel: SearchViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.nearViewModel = nearViewModel
+        self.nearViewModel = viewModel
         self.searchViewModel = searchViewModel
     }
 
@@ -99,7 +99,7 @@ final class NearUserViewController: BaseViewController {
                 if status == 200 {
                     vc.showToast(Toast.matchingStudy.message)
                     DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                        vc.transition(ChatViewController(ChatViewModel()), .push)
                     }
                 }
             }

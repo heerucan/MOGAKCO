@@ -37,9 +37,9 @@ final class MyViewController: BaseViewController {
     
     // MARK: - Init
     
-    init(myViewModel: MyViewModel) {
+    init(_ viewModel: MyViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.myViewModel = myViewModel
+        self.myViewModel = viewModel
     }
     
     // MARK: - Initializer
@@ -86,7 +86,7 @@ final class MyViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, indexPath in
                 if indexPath.row == 0 {
-                    vc.transition(MyDetailViewController(myDetailViewModel: MyDetailViewModel()), .push)
+                    vc.transition(MyDetailViewController(MyDetailViewModel()), .push)
                 }
             }
             .disposed(by: disposeBag)

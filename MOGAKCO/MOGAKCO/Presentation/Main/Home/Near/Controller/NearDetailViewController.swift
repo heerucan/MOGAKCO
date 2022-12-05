@@ -61,10 +61,4 @@ final class NearDetailViewController: BaseViewController {
         
         
     }
-    
-    // MARK: - Custom Method
-    
-    
-    // MARK: - @objc
-    
 }

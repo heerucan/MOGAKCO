@@ -73,7 +73,7 @@ final class PlainNavigationBar: BaseView {
     
     // MARK: - Property
     
-    private let titleLabel = UILabel().then {
+    let titleLabel = UILabel().then {
         $0.font = Font.title3.font
         $0.textColor = Color.black
         $0.textAlignment = .center

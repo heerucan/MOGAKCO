@@ -29,6 +29,8 @@ final class HomeViewModel: ViewModelType {
         latitude: Matrix.ssacLat,
         longitude: Matrix.ssacLong))
     
+    var matchedArray = [String]()
+    
     struct Input {
         let locationTap: ControlEvent<Void>
         let itemSelected: ControlEvent<IndexPath>
@@ -62,7 +64,7 @@ final class HomeViewModel: ViewModelType {
             guard let self = self else { return }
             self.searchResponse.onNext(SearchCompletion(data, status, error))
             if let error = error {
-                ErrorManager.handle(with: error, vc: HomeViewController(viewModel: HomeViewModel()))
+                ErrorManager.handle(with: error, vc: HomeViewController(HomeViewModel()))
             }
         }
     }
@@ -76,8 +78,14 @@ final class HomeViewModel: ViewModelType {
                 } else {
                     self.queueStateResponse.accept(status!)
                 }
+                
+                if let nick = data?.matchedNick,
+                   let uid = data?.matchedUid {
+                    self.matchedArray.append(contentsOf: [nick, uid])
+                }
+                
                 if let error = error {
-                    ErrorManager.handle(with: error, vc: HomeViewController(viewModel: HomeViewModel()))
+                    ErrorManager.handle(with: error, vc: HomeViewController(HomeViewModel()))
                 }
             }
     }

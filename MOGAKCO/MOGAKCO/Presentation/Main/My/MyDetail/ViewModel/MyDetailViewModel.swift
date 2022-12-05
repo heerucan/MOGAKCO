@@ -15,7 +15,7 @@ final class MyDetailViewModel: ViewModelType {
     var userResponse = BehaviorSubject<[User]>(value: [])
     let withdrawResponse = BehaviorSubject<Int>(value: 0)
     let mypageResponse = BehaviorSubject<Int>(value: 0)
-    let userRequest = BehaviorSubject<UserRequest>(value: UserRequest.init(0, 0, 0, 0, ""))
+    let userRequest = BehaviorSubject<UserRequest>(value: UserRequest.init(searchable: 0, ageMin: 0, ageMax: 0, gender: 0, study: ""))
     
     let disposeBag = DisposeBag()
     
@@ -42,7 +42,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.userResponse.onNext([data, data])
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
+                ErrorManager.handle(with: error, vc: MyDetailViewController(MyDetailViewModel()))
             }
         }
     }
@@ -54,7 +54,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.withdrawResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
+                ErrorManager.handle(with: error, vc: MyDetailViewController(MyDetailViewModel()))
             }
         }
     }
@@ -66,7 +66,7 @@ final class MyDetailViewModel: ViewModelType {
                 self.mypageResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: MyDetailViewController(myDetailViewModel: MyDetailViewModel()))
+                ErrorManager.handle(with: error, vc: MyDetailViewController(MyDetailViewModel()))
             }
         }
     }

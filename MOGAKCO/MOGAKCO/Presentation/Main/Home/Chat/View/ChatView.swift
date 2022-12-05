@@ -15,6 +15,8 @@ import RxCocoa
 final class ChatView: BaseView {
 
     // MARK: - Property
+    
+    let alertVC = PlainAlertViewController()
         
     let tapBackground = UITapGestureRecognizer()
     
@@ -35,7 +37,7 @@ final class ChatView: BaseView {
         $0.alpha = 0
     }
     
-    lazy var chatDissolveView = UIView().then {
+    private lazy var chatDissolveView = UIView().then {
         $0.backgroundColor = Color.black.withAlphaComponent(0.5)
         $0.isHidden = true
         $0.addGestureRecognizer(tapBackground)
@@ -126,6 +128,17 @@ final class ChatView: BaseView {
                 self.chatMoreView.alpha = 0
             }
         }
+    }
+    
+    func setupUIByQueueState(_ data: QueueState) {
+        if data.matched == 1 {
+            alertVC.alertType = .studyCancel
+            chatMoreView.cancelButton.setTitle("스터디 취소", for: .normal)
+        } else if data.dodged == 1 || data.reviewed == 1 {
+            alertVC.alertType = .studyStop
+            chatMoreView.cancelButton.setTitle("스터디 종료", for: .normal)
+        }
+        navigationBar.titleLabel.text = data.matchedNick
     }
     
     func setupSendButton(textFieldText: String) {

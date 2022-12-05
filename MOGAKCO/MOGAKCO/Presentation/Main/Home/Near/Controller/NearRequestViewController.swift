@@ -27,9 +27,9 @@ final class NearRequestViewController: BaseViewController {
             
     // MARK: - Init
     
-    init(nearViewModel: NearViewModel, searchViewModel: SearchViewModel, homeViewModel: HomeViewModel) {
+    init(_ viewModel: NearViewModel, searchViewModel: SearchViewModel, homeViewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
-        self.nearViewModel = nearViewModel
+        self.nearViewModel = viewModel
         self.searchViewModel = searchViewModel
         self.homeViewModel = homeViewModel
     }
@@ -86,10 +86,9 @@ final class NearRequestViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, status in
                 if status == 200 {
-                    /// 채팅에 상대의 uid 전달
-                    let chatVC = ChatViewController(viewModel: ChatViewModel())
+                    let chatVC = ChatViewController(ChatViewModel())
                     vc.transition(chatVC, .push) { chatVC in
-                        chatVC.chatViewModel.otheruid = vc.nearViewModel.uid
+                        chatVC.chatViewModel.matchedArray[1] = vc.nearViewModel.uid
                     }
                 } else if status == 201 {
                     vc.showToast(Toast.alreadyStudy.message)

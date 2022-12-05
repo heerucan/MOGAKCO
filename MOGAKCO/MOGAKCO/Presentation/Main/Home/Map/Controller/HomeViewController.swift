@@ -29,15 +29,11 @@ final class HomeViewController: BaseViewController {
         
     // MARK: - Init
     
-    init(viewModel: HomeViewModel) {
+    init(_ viewModel: HomeViewModel) {
         super.init(nibName: nil, bundle: nil)
         self.homeViewModel = viewModel
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     // MARK: - LifeCycle
     
     override func loadView() {
@@ -118,7 +114,6 @@ final class HomeViewController: BaseViewController {
                     vc.homeViewModel.searchAroundFriend(
                         lat: LocationManager.coordinate().latitude,
                         lng: LocationManager.coordinate().longitude)
-//                    print("지도 위치 받아서 주변 새싹 찾기")
                 } else {
                     vc.showLocationServiceAlert()
                 }
@@ -202,11 +197,13 @@ final class HomeViewController: BaseViewController {
             .withUnretained(self)
             .bind { vc, value in
                 if value == 0 {
-                    vc.pushVC(.matching)
+                    vc.transition(NearViewController(), .push)
                 } else if value == 1 {
-                    vc.pushVC(.matched)
+                    let chatVC = ChatViewController(ChatViewModel())
+                    chatVC.chatViewModel.matchedArray = vc.homeViewModel.matchedArray
+                    vc.transition(chatVC, .push)
                 } else if value == 201 {
-                    vc.pushVC(.normal)
+                    vc.transition(SearchViewController(SearchViewModel(), homeViewModel: HomeViewModel()), .push)
                 }
             }
             .disposed(by: disposeBag)
@@ -219,15 +216,11 @@ final class HomeViewController: BaseViewController {
             let coordinate = NMGLatLng(lat: queue.lat, lng: queue.long)
             let marker = NMFMarker()
             marker.position = coordinate
-            marker.width = 83
-            marker.height = 83
+            marker.width = Matrix.markerSize
+            marker.height = Matrix.markerSize
             marker.iconImage = NMFOverlayImage(name: "sesac_face_\(queue.sesac+1)")
             marker.mapView = homeView.mapView
         }
-    }
-
-    private func pushVC(_ state: MatchingButton) {
-        transition(state.pushVC, .push)
     }
 }
 
@@ -255,25 +248,5 @@ extension HomeViewController {
                   message: Matrix.settingMessage,
                   actions: [setting],
                   preferredStyle: .alert)
-    }
-}
-
-extension HomeViewController {
-    @frozen
-    enum MatchingButton {
-        case matching
-        case matched
-        case normal
-        
-        fileprivate var pushVC: UIViewController {
-            switch self {
-            case .matching:
-                return NearViewController()
-            case .matched:
-                return ChatViewController(viewModel: ChatViewModel())
-            case .normal:
-                return SearchViewController(homeViewModel: HomeViewModel(), searchViewModel: SearchViewModel())
-            }
-        }
     }
 }

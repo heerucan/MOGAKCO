@@ -39,7 +39,7 @@ final class NearViewModel: ViewModelType {
                 self.requestResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: NearUserViewController(nearViewModel: NearViewModel(),
+                ErrorManager.handle(with: error, vc: NearUserViewController(NearViewModel(),
                                                                             searchViewModel: SearchViewModel()))
             }
         }
@@ -53,7 +53,7 @@ final class NearViewModel: ViewModelType {
                 self.acceptResponse.onNext(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: NearRequestViewController(nearViewModel: NearViewModel(),
+                ErrorManager.handle(with: error, vc: NearRequestViewController(NearViewModel(),
                                                                                searchViewModel: SearchViewModel(), homeViewModel: HomeViewModel()))
             }
         }
