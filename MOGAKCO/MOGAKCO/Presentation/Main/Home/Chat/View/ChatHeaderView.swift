@@ -56,7 +56,7 @@ final class ChatHeaderView: BaseView {
         addSubviews([stackView, descriptionLabel])
         
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(14)
+            make.top.equalToSuperview().inset(16)
             make.centerX.equalToSuperview()
         }
         
@@ -67,6 +67,7 @@ final class ChatHeaderView: BaseView {
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom).offset(5)
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().inset(14)
         }
     }
 }

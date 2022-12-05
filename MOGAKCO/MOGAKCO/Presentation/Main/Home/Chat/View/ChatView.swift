@@ -21,15 +21,12 @@ final class ChatView: BaseView {
     lazy var navigationBar = PlainNavigationBar(type: .chat)
     
     let tableView = UITableView(frame: .zero, style: .plain).then {
-        $0.backgroundColor = .red
         $0.showsHorizontalScrollIndicator = false
         $0.separatorStyle = .none
         $0.keyboardDismissMode = .onDrag
         $0.sectionHeaderTopPadding = 0
         $0.allowsSelection = false
         $0.rowHeight = UITableView.automaticDimension
-        $0.tableHeaderView = ChatHeaderView()
-        $0.sectionHeaderHeight = 132
         $0.register(MyChatTableViewCell.self, forCellReuseIdentifier: MyChatTableViewCell.identifier)
         $0.register(YourChatTableViewCell.self, forCellReuseIdentifier: YourChatTableViewCell.identifier)
     }
@@ -64,7 +61,7 @@ final class ChatView: BaseView {
         super.init(frame: .zero)
     }
     
-    // MARK: - UI & Layout
+    // MARK: - UI & Layout1
     
     override func configureLayout() {
         addSubviews([tableView,

@@ -44,7 +44,7 @@ final class MyChatTableViewCell: BaseTableViewCell {
         backView.snp.makeConstraints { make in
             make.directionalVerticalEdges.equalToSuperview().inset(12)
             make.trailing.equalToSuperview().inset(16)
-            make.width.equalTo(264)
+            make.width.lessThanOrEqualTo(264)
         }
         
         chatLabel.snp.makeConstraints { make in
