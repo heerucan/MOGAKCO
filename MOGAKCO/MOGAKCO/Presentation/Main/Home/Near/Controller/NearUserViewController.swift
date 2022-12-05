@@ -99,7 +99,7 @@ final class NearUserViewController: BaseViewController {
                 if status == 200 {
                     vc.showToast(Toast.matchingStudy.message)
                     DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                        vc.transition(ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel()), .push)
+                        vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
                     }
                 }
             }

@@ -78,8 +78,7 @@ final class GenderViewController: BaseViewController {
         output.genderIndex
             .withUnretained(self)
             .bind { (vc, indexPath) in
-                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath)
-                        as? GenderCollectionViewCell
+                guard let cell = vc.genderView.collectionView.cellForItem(at: indexPath) as? GenderCollectionViewCell
                 else { return }
                 vc.genderView.reuseView.okButton.isEnable = cell.isSelected ? true : false
                 cell.isSelected.toggle()

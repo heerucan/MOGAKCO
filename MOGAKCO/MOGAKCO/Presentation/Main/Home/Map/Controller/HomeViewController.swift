@@ -46,13 +46,13 @@ final class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        homeViewModel.requestQueueState()
         bindViewModel()
         UserDefaultsHelper.standard.currentUser = true
         print(UserDefaultsHelper.standard.idToken)
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(#function, "뷰윌어피어!!!!!!!!!!!!")
         super.viewWillAppear(animated)
         homeViewModel.requestQueueState()
         homeViewModel.searchAroundFriend(
@@ -182,69 +182,36 @@ final class HomeViewController: BaseViewController {
                 vc.homeView.mapView.moveCamera(vc.homeViewModel.updateCurrentLocation())
             }
             .disposed(by: disposeBag)
-        
-        // TODO: - 문제는 지금 화면전환 버튼 누르면 -> 화면이 전환되어야 하고
-        // TODO: - 내 상태에 따라 버튼이 바껴야 됨
-        /// 매칭 버튼 눌렀을 때 화면전환
-        homeView.matchingButton.rx.tap
-//            .withLatestFrom(homeViewModel.queueStateResponse)
+
+        // 매칭 버튼 값에 따라 버튼 이미지 변경
+        homeViewModel.queueStateResponse
             .withUnretained(self)
-            .bind { vc, _ in
-//                print(value, "여기")
-                vc.pushVC(.normal)
-//                guard let data = value.0?.matched else { return }
-//                guard let status = value.1 else { return }
-//                if data == 0 && status == 200 {
-//                    vc.pushVC(.matching)
-//                } else if data == 1 && status == 200 {
-//                    vc.pushVC(.matched)
-//                } else if status == 201 {
-//                    vc.pushVC(.normal)
-//                }
+            .bind { vc, value in
+                if value == 0 {
+                    vc.homeView.matchingButton.setImage(Icon.antenna, for: .normal)
+                } else if value == 1 {
+                    vc.homeView.matchingButton.setImage(Icon.message, for: .normal)
+                } else if value == 201 {
+                    vc.homeView.matchingButton.setImage(Icon.search, for: .normal)
+                }
             }
             .disposed(by: disposeBag)
         
-        // 매칭 버튼 값에 따라 버튼 이미지 변경
-//        homeViewModel.queueStateResponse
-//            .map { $0 }
-//            .withUnretained(self)
-//            .bind { vc, status in
-//                guard let data = status.0?.matched else { return print("이게 문제니?") }
-//                guard let status = status.1 else { return }
-//                if data == 0 && status == 200 {
-//                    vc.setupMatchingButton(.matching)
-//                } else if data == 1 && status == 200 {
-//                    vc.setupMatchingButton(.matched)
-//                } else if status == 201 {
-//                    vc.setupMatchingButton(.normal)
-//                }
-//            }
-//            .disposed(by: disposeBag)
+        homeView.matchingButton.rx.tap
+            .withLatestFrom(homeViewModel.queueStateResponse)
+            .withUnretained(self)
+            .bind { vc, value in
+                if value == 0 {
+                    vc.pushVC(.matching)
+                } else if value == 1 {
+                    vc.pushVC(.matched)
+                } else if value == 201 {
+                    vc.pushVC(.normal)
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
-//    homeView.matchingButton.rx.tap
-//        .withUnretained(self)
-//        .bind { vc,_ in
-//            print(value, "내 현재 상태==========================")
-////                vc.homeViewModel.requestQueueState()
-////                vc.setupMatchingButton(MatchingButton.normal)
-//            /* 일반 상태: 상태 코드가 201 인 경우
-//             매칭 대기중 상태: 상태 코드가 200이고, matched 가 0인 경우
-//             매칭 상태: 상태 코드가 200이고, matched 가 1인 경우
-//             print(value, "매칭버튼 클릭시")
-//             */
-//            // TODO: - 여기 조금 이상한 문제가 있음.
-//            guard let data = value.0?.matched else { return print("이게 문제니?") }
-//            guard let status = value.1 else { return }
-//            if data == 0 && status == 200 {
-//                vc.pushVC(.matching)
-//            } else if data == 1 && status == 200 {
-//                vc.pushVC(.matched)
-//            } else if status == 201 {
-//                vc.pushVC(.normal)
-//            }
-//        }
-//        .disposed(by: disposeBag)
     // MARK: - Custom Method
     
     private func setupMarker(_ queueDB: [FromQueueDB]) {
@@ -258,12 +225,7 @@ final class HomeViewController: BaseViewController {
             marker.mapView = homeView.mapView
         }
     }
-    
-    private func setupMatchingButton(_ state: MatchingButton) {
-        homeView.matchingButton.setImage(state.image, for: .normal)
-        transition(state.pushVC, .push)
-    }
-    
+
     private func pushVC(_ state: MatchingButton) {
         transition(state.pushVC, .push)
     }
@@ -294,23 +256,14 @@ extension HomeViewController {
                   actions: [setting],
                   preferredStyle: .alert)
     }
-    
+}
+
+extension HomeViewController {
     @frozen
     enum MatchingButton {
         case matching
         case matched
         case normal
-        
-        fileprivate var image: UIImage? {
-            switch self {
-            case .matching:
-                return Icon.antenna
-            case .matched:
-                return Icon.message
-            case .normal:
-                return Icon.search
-            }
-        }
         
         fileprivate var pushVC: UIViewController {
             switch self {

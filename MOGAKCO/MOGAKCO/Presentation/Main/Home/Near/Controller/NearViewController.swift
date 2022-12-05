@@ -135,7 +135,7 @@ final class NearViewController: BaseViewController {
                     vc.navigationController?.popToRootViewController(animated: true)
                 } else if status == 201 {
                     vc.showToast(Toast.stopFind.message)
-                    vc.transition(ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel()), .push)
+                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
                 }
             }
             .disposed(by: disposeBag)
@@ -144,13 +144,11 @@ final class NearViewController: BaseViewController {
         homeViewModel.queueStateResponse
             .withUnretained(self)
             .bind { vc, value in
-                guard let data = value.0 else { return }
-                guard let status = value.1 else { return }
-                if status == 200 && data.matched == 1 {
+                if value == 1 {
                     print("🧡============ 매칭완료 채팅방 고고링 200 / 1 ============🧡")
                     vc.showToast(Toast.matchedStudy.message)
-                    vc.transition(ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel()), .push)
-                } else if status == 200 && data.matched == 0 {
+                    vc.transition(ChatViewController(viewModel: ChatViewModel()), .push)
+                } else if value == 0 {
                     print("🧡============ 매칭대기중 200 / 0 ============🧡")
                 }
             }

@@ -18,9 +18,8 @@ final class HomeViewModel: ViewModelType {
     var myQueueStateAPITimer = Timer()
     
     typealias SearchCompletion = (Search?, Int?, APIError?)
-    typealias QueueStateCompletion = (QueueState?, Int?, APIError?)
     let searchResponse = PublishSubject<SearchCompletion>()
-    let queueStateResponse = PublishSubject<QueueStateCompletion>()
+    let queueStateResponse = PublishRelay<Int>()
     let markerRelay = PublishRelay<[NMFMarker]>()
     
     let tagList = Observable.just(["전체", "남자", "여자"])
@@ -40,7 +39,7 @@ final class HomeViewModel: ViewModelType {
         let itemSelected: ControlEvent<IndexPath>
         let tagList: Observable<[String]>
         let searchResponse: PublishSubject<SearchCompletion>
-        let queueStateResponse: PublishSubject<QueueStateCompletion>
+        let queueStateResponse: PublishRelay<Int>
     }
     
     func transform(_ input: Input) -> Output {
@@ -71,15 +70,18 @@ final class HomeViewModel: ViewModelType {
     func requestQueueState() {
         APIManager.shared
             .request(QueueState.self, QueueRouter.myQueueState) { [weak self] data, status, error in
-                print(#function, data, status, error, "================================= 큐 스테이트 서버통신 ")
                 guard let self = self else { return }
-                self.queueStateResponse.onNext(QueueStateCompletion(data, status, error))
+                if let data = data {
+                    self.queueStateResponse.accept(data.matched)
+                } else {
+                    self.queueStateResponse.accept(status!)
+                }
                 if let error = error {
                     ErrorManager.handle(with: error, vc: HomeViewController(viewModel: HomeViewModel()))
                 }
             }
     }
-    
+
     func searchAroundFriend(lat: Double, lng: Double) {
         requestSearch(params: SearchRequest(lat: lat, long: lng))
     }
@@ -93,7 +95,6 @@ final class HomeViewModel: ViewModelType {
                              selector: #selector(requestMyQueueStateAPI(sender:)),
                              userInfo: nil,
                              repeats: true)
-        print(myQueueStateAPITimer, "타이머 반복 호출")
     }
     
     /// myQueueStateAPI 호출중단 - 매칭 완료 시에 종료!!!!

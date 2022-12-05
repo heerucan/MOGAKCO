@@ -87,7 +87,7 @@ final class NearRequestViewController: BaseViewController {
             .bind { vc, status in
                 if status == 200 {
                     /// 채팅에 상대의 uid 전달
-                    let chatVC = ChatViewController(viewModel: ChatViewModel(), homeViewModel: HomeViewModel())
+                    let chatVC = ChatViewController(viewModel: ChatViewModel())
                     vc.transition(chatVC, .push) { chatVC in
                         chatVC.chatViewModel.otheruid = vc.nearViewModel.uid
                     }

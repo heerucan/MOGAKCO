@@ -50,11 +50,14 @@ final class MessageViewModel: ViewModelType {
     func requestLogin() {
         APIManager.shared
             .request(User.self, AuthRouter.login) { [weak self] data, status, error in
-            guard let self = self else { return }
-            self.loginResponse.onNext(LoginCompletion(data, status, error))
-            if let error = error {
-                ErrorManager.handle(with: error, vc: MessageViewController())
+                guard let self = self else { return }
+                self.loginResponse.onNext(LoginCompletion(data, status, error))
+                if let data = data {
+                    UserDefaultsHelper.standard.myuid = data.uid
+                }
+                if let error = error {
+                    ErrorManager.handle(with: error, vc: MessageViewController())
+                }
             }
-        }
     }
 }
