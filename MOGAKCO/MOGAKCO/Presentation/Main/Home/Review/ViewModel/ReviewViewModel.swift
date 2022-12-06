@@ -35,7 +35,7 @@ final class ReviewViewModel: ViewModelType {
                 self.reviewResponse.accept(status)
             }
             if let error = error {
-                ErrorManager.handle(with: error, vc: ReviewPopupViewController(ReviewViewModel()))
+                ErrorManager.handle(with: error, vc: ReviewViewController(ReviewViewModel()))
             }
         }
     }

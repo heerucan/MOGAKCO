@@ -34,6 +34,7 @@ enum Matrix {
         static let nickname = "10자 이내로 입력"
         static let email = "SeSAC@email.com"
         static let chat = "메세지를 입력해보세요"
+        static let review = "자세한 피드백은 다른 새싹들에게 도움이 됩니다\n(500자 이내 작성)"
     }
     
     enum Chat {

@@ -33,6 +33,22 @@
 		5B55BC9C2927DBDC000C3CA0 /* QueueState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */; };
 		5B774977293A1C36003297A8 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774976293A1C36003297A8 /* ChatView.swift */; };
 		5B774979293A1C47003297A8 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774978293A1C47003297A8 /* ChatViewModel.swift */; };
+		5B77497F293B3B8D003297A8 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77497E293B3B8D003297A8 /* MyChatTableViewCell.swift */; };
+		5B774981293B3B98003297A8 /* YourChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774980293B3B98003297A8 /* YourChatTableViewCell.swift */; };
+		5B774983293B3C19003297A8 /* ChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774982293B3C19003297A8 /* ChatHeaderView.swift */; };
+		5B774986293B6935003297A8 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774985293B6935003297A8 /* Chat.swift */; };
+		5B774988293B693B003297A8 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774987293B693B003297A8 /* ChatRouter.swift */; };
+		5B77498A293B6BAD003297A8 /* ChatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774989293B6BAC003297A8 /* ChatList.swift */; };
+		5B77498C293B7045003297A8 /* RateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77498B293B7045003297A8 /* RateRequest.swift */; };
+		5B77498E293B7264003297A8 /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77498D293B7264003297A8 /* SocketManager.swift */; };
+		5B774991293B72E1003297A8 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5B774990293B72E1003297A8 /* SocketIO */; };
+		5B774993293B7EC9003297A8 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774992293B7EC9003297A8 /* UITextView+.swift */; };
+		5B774995293BB45A003297A8 /* GenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774994293BB45A003297A8 /* GenderType.swift */; };
+		5B774997293BCFB9003297A8 /* ChatMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774996293BCFB9003297A8 /* ChatMoreView.swift */; };
+		5B774999293BD027003297A8 /* PlainChatButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774998293BD027003297A8 /* PlainChatButton.swift */; };
+		5B77499B293E5113003297A8 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77499A293E5112003297A8 /* ReviewViewController.swift */; };
+		5B77499D293E5171003297A8 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77499C293E5171003297A8 /* ReviewViewModel.swift */; };
+		5B7749A3293E542D003297A8 /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7749A2293E542D003297A8 /* ReviewView.swift */; };
 		5B7B03FD29291A4B008B265B /* NearEmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */; };
 		5B7B03FF29291EA9008B265B /* PlainSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B03FE29291EA9008B265B /* PlainSegmentControl.swift */; };
 		5B7B040129291FE6008B265B /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7B040029291FE6008B265B /* UserView.swift */; };
@@ -175,6 +191,21 @@
 		5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueState.swift; sourceTree = "<group>"; };
 		5B774976293A1C36003297A8 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5B774978293A1C47003297A8 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		5B77497E293B3B8D003297A8 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
+		5B774980293B3B98003297A8 /* YourChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourChatTableViewCell.swift; sourceTree = "<group>"; };
+		5B774982293B3C19003297A8 /* ChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHeaderView.swift; sourceTree = "<group>"; };
+		5B774985293B6935003297A8 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		5B774987293B693B003297A8 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
+		5B774989293B6BAC003297A8 /* ChatList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatList.swift; sourceTree = "<group>"; };
+		5B77498B293B7045003297A8 /* RateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRequest.swift; sourceTree = "<group>"; };
+		5B77498D293B7264003297A8 /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
+		5B774992293B7EC9003297A8 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
+		5B774994293BB45A003297A8 /* GenderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderType.swift; sourceTree = "<group>"; };
+		5B774996293BCFB9003297A8 /* ChatMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMoreView.swift; sourceTree = "<group>"; };
+		5B774998293BD027003297A8 /* PlainChatButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainChatButton.swift; sourceTree = "<group>"; };
+		5B77499A293E5112003297A8 /* ReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		5B77499C293E5171003297A8 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
+		5B7749A2293E542D003297A8 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		5B7B03FC29291A4B008B265B /* NearEmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearEmptyStateView.swift; sourceTree = "<group>"; };
 		5B7B03FE29291EA9008B265B /* PlainSegmentControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainSegmentControl.swift; sourceTree = "<group>"; };
 		5B7B040029291FE6008B265B /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
@@ -295,6 +326,7 @@
 				5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */,
 				5BC57D5E2918EF51006CB05C /* RxCocoa in Frameworks */,
 				5BC3661A29240FC100A0A316 /* MultiSlider in Frameworks */,
+				5B774991293B72E1003297A8 /* SocketIO in Frameworks */,
 				5BC57D5B2918EF23006CB05C /* Then in Frameworks */,
 				5BC57D662918EF73006CB05C /* SnapKit in Frameworks */,
 				5B7FDBA8291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -373,6 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				5BC57D7029190AA9006CB05C /* PlainButton.swift */,
+				5B774998293BD027003297A8 /* PlainChatButton.swift */,
 				5BF40CED293324D200F1536C /* PlainGenderButton.swift */,
 				5BC35600292E5A610019B50F /* PlainTagButton.swift */,
 				5B31363B29375D7E003DC5C6 /* PlainRequestButton.swift */,
@@ -411,6 +444,7 @@
 				5B55BC9329277E06000C3CA0 /* Search.swift */,
 				5B55BC9B2927DBDC000C3CA0 /* QueueState.swift */,
 				5B55BC982927AE24000C3CA0 /* QueueRequest.swift */,
+				5B77498B293B7045003297A8 /* RateRequest.swift */,
 				5B55BC962927AC80000C3CA0 /* QueueRouter.swift */,
 			);
 			path = QueueAPI;
@@ -421,6 +455,7 @@
 			children = (
 				5BD11A6E291E731D0011C5B5 /* AuthAPI */,
 				5B55BC9229277DE1000C3CA0 /* QueueAPI */,
+				5B774984293B6920003297A8 /* ChatAPI */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -444,7 +479,63 @@
 		5B77497C293A1FF6003297A8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5B77497D293B3B79003297A8 /* Cell */,
 				5B774976293A1C36003297A8 /* ChatView.swift */,
+				5B774996293BCFB9003297A8 /* ChatMoreView.swift */,
+				5B774982293B3C19003297A8 /* ChatHeaderView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5B77497D293B3B79003297A8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5B77497E293B3B8D003297A8 /* MyChatTableViewCell.swift */,
+				5B774980293B3B98003297A8 /* YourChatTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5B774984293B6920003297A8 /* ChatAPI */ = {
+			isa = PBXGroup;
+			children = (
+				5B774985293B6935003297A8 /* Chat.swift */,
+				5B774989293B6BAC003297A8 /* ChatList.swift */,
+				5B774987293B693B003297A8 /* ChatRouter.swift */,
+			);
+			path = ChatAPI;
+			sourceTree = "<group>";
+		};
+		5B77499E293E5406003297A8 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				5B7749A1293E5422003297A8 /* View */,
+				5B7749A0293E541F003297A8 /* ViewModel */,
+				5B77499F293E541A003297A8 /* Controller */,
+			);
+			path = Review;
+			sourceTree = "<group>";
+		};
+		5B77499F293E541A003297A8 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5B77499A293E5112003297A8 /* ReviewViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5B7749A0293E541F003297A8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5B77499C293E5171003297A8 /* ReviewViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5B7749A1293E5422003297A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5B7749A2293E542D003297A8 /* ReviewView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -576,6 +667,7 @@
 				5B8E1BD929290BCC00D634B3 /* Search */,
 				5B8E1BE229290EF800D634B3 /* Near */,
 				5BF40CF12933799200F1536C /* Chat */,
+				5B77499E293E5406003297A8 /* Review */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -605,6 +697,7 @@
 				5BC355FE292E59EE0019B50F /* EmptyViewType.swift */,
 				5BC355FA292E59A50019B50F /* TextFieldType.swift */,
 				5BC355FC292E59CC0019B50F /* NavigationType.swift */,
+				5B774994293BB45A003297A8 /* GenderType.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -791,6 +884,7 @@
 				5BC57D1C2918E94D006CB05C /* APIKey.swift */,
 				5BC57D1E2918E957006CB05C /* ErrorManager.swift */,
 				5BC57D202918E96D006CB05C /* APIManager.swift */,
+				5B77498D293B7264003297A8 /* SocketManager.swift */,
 				5BD11A75291ECE400011C5B5 /* GenericResponse.swift */,
 			);
 			path = Utility;
@@ -805,6 +899,7 @@
 				5BC57D422918EBB5006CB05C /* Transition+.swift */,
 				5BC57D79291911CC006CB05C /* UILabel+.swift */,
 				5BC57D462918EBFF006CB05C /* UITextField+.swift */,
+				5B774992293B7EC9003297A8 /* UITextView+.swift */,
 				5BC57D402918EB85006CB05C /* UIView+.swift */,
 				5BC57D3A2918EB06006CB05C /* UIViewController+.swift */,
 				5BEFE24F291BAB1300FD31E9 /* String+.swift */,
@@ -1217,6 +1312,7 @@
 				5B7FDBAB291D6625007E38EA /* FirebaseMessaging */,
 				5BC3661929240FC100A0A316 /* MultiSlider */,
 				5B0683002929B8F500C162D6 /* RxDataSources */,
+				5B774990293B72E1003297A8 /* SocketIO */,
 			);
 			productName = MOGAKCO;
 			productReference = 5BC57CF72918E73D006CB05C /* MOGAKCO.app */;
@@ -1256,6 +1352,7 @@
 				5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */,
 				5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				5B77498F293B72E1003297A8 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 5BC57CF82918E73D006CB05C /* Products */;
 			projectDirPath = "";
@@ -1338,6 +1435,7 @@
 				5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */,
 				5BC57D1F2918E957006CB05C /* ErrorManager.swift in Sources */,
 				5BF40CEE293324D200F1536C /* PlainGenderButton.swift in Sources */,
+				5B7749A3293E542D003297A8 /* ReviewView.swift in Sources */,
 				5BC57D412918EB85006CB05C /* UIView+.swift in Sources */,
 				5B7B0408292920B9008B265B /* RequestTableViewCell.swift in Sources */,
 				5BC57D4B2918ED54006CB05C /* BaseTableViewCell.swift in Sources */,
@@ -1346,12 +1444,15 @@
 				5B0683042929DC4A00C162D6 /* SearchCollectionViewCell.swift in Sources */,
 				5BC5222C291D917C000A570B /* UserManager.swift in Sources */,
 				5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */,
+				5B77498E293B7264003297A8 /* SocketManager.swift in Sources */,
 				5BEFE26D291BF7D400FD31E9 /* GenderViewController.swift in Sources */,
 				5B801A03292F5F9D00ED97CD /* DetailTableViewCell.swift in Sources */,
 				5B7B03FF29291EA9008B265B /* PlainSegmentControl.swift in Sources */,
 				5BC57D562918EE46006CB05C /* Color.swift in Sources */,
+				5B77497F293B3B8D003297A8 /* MyChatTableViewCell.swift in Sources */,
 				5B7B355F292AFEDD00A3FCB0 /* PlainAlertViewController.swift in Sources */,
 				5BEFE252291BAEC200FD31E9 /* PlainTextField.swift in Sources */,
+				5B774997293BCFB9003297A8 /* ChatMoreView.swift in Sources */,
 				5BEFE259291BEC1100FD31E9 /* MessageViewController.swift in Sources */,
 				5BEFE27C291C029700FD31E9 /* EmailView.swift in Sources */,
 				5BC57D542918EDFD006CB05C /* Icon.swift in Sources */,
@@ -1373,6 +1474,7 @@
 				5B1394E529225AD50046013E /* MyDetailViewModel.swift in Sources */,
 				5B1395052922D5220046013E /* MyTitleView.swift in Sources */,
 				5B55BC8F2926981C000C3CA0 /* CoreLocationDelegateProxy.swift in Sources */,
+				5B774999293BD027003297A8 /* PlainChatButton.swift in Sources */,
 				5BEFE269291BF7C200FD31E9 /* GenderView.swift in Sources */,
 				5B55BC9C2927DBDC000C3CA0 /* QueueState.swift in Sources */,
 				5B13950B2923B5DF0046013E /* MyNameView.swift in Sources */,
@@ -1388,6 +1490,8 @@
 				5BC57D812919224B006CB05C /* Onboard.swift in Sources */,
 				5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */,
 				5B1394FD2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift in Sources */,
+				5B77499D293E5171003297A8 /* ReviewViewModel.swift in Sources */,
+				5B774986293B6935003297A8 /* Chat.swift in Sources */,
 				5BEFE25D291BEC2A00FD31E9 /* MessageView.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BD11A7C2920127B0011C5B5 /* HomeViewController.swift in Sources */,
@@ -1397,17 +1501,21 @@
 				5B1394EB292271EB0046013E /* MyDetailCardTableViewCell.swift in Sources */,
 				5BEFE280291C030400FD31E9 /* BirthViewModel.swift in Sources */,
 				5BC355F6292E59010019B50F /* ButtonType.swift in Sources */,
+				5B77499B293E5113003297A8 /* ReviewViewController.swift in Sources */,
 				5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */,
 				5B55BC91292773CA000C3CA0 /* LocationManager.swift in Sources */,
+				5B774995293BB45A003297A8 /* GenderType.swift in Sources */,
 				5B9559A7292117E600B34B60 /* FriendViewController.swift in Sources */,
 				5B1394F4292285120046013E /* MyViewModel.swift in Sources */,
 				5B8E1BEF2929146C00D634B3 /* NearUserViewController.swift in Sources */,
 				5BC57D212918E96D006CB05C /* APIManager.swift in Sources */,
 				5BC355F0292D450D0019B50F /* SearchHeaderSupplementaryView.swift in Sources */,
+				5B774993293B7EC9003297A8 /* UITextView+.swift in Sources */,
 				5B1394E0292242CE0046013E /* HomeView.swift in Sources */,
 				5BC57D372918EAAB006CB05C /* BaseMethodProtocol.swift in Sources */,
 				5BC57D522918EDD6006CB05C /* Font.swift in Sources */,
 				5BC57D432918EBB5006CB05C /* Transition+.swift in Sources */,
+				5B774983293B3C19003297A8 /* ChatHeaderView.swift in Sources */,
 				5BF40CF029332A0C00F1536C /* UIControlDelegateProxy.swift in Sources */,
 				5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */,
 				5BC57D1D2918E94D006CB05C /* APIKey.swift in Sources */,
@@ -1427,8 +1535,10 @@
 				5BEFE283291C04BF00FD31E9 /* GenderCollectionViewCell.swift in Sources */,
 				5B55BC992927AE24000C3CA0 /* QueueRequest.swift in Sources */,
 				5BC35601292E5A610019B50F /* PlainTagButton.swift in Sources */,
+				5B774981293B3B98003297A8 /* YourChatTableViewCell.swift in Sources */,
 				5B7B355D292A8E5A00A3FCB0 /* PlainSearchBar.swift in Sources */,
 				5B9559A92921180A00B34B60 /* MyViewController.swift in Sources */,
+				5B77498C293B7045003297A8 /* RateRequest.swift in Sources */,
 				5B7B0406292920A5008B265B /* RequestView.swift in Sources */,
 				5B8E1BE029290DAB00D634B3 /* SearchViewModel.swift in Sources */,
 				5BB16AEE29196A8F00EA3099 /* PhoneViewController.swift in Sources */,
@@ -1439,6 +1549,7 @@
 				5BEFE25B291BEC1A00FD31E9 /* MessageViewModel.swift in Sources */,
 				5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */,
 				5BD11A78291F50E70011C5B5 /* Toast.swift in Sources */,
+				5B77498A293B6BAD003297A8 /* ChatList.swift in Sources */,
 				5BEFE274291BF9B200FD31E9 /* BirthViewController.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
 				5B7B04042929204C008B265B /* UserTableViewCell.swift in Sources */,
@@ -1448,6 +1559,7 @@
 				5B8E1BED29290F6700D634B3 /* NearViewController.swift in Sources */,
 				5B55BC972927AC80000C3CA0 /* QueueRouter.swift in Sources */,
 				5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */,
+				5B774988293B693B003297A8 /* ChatRouter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1677,6 +1789,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		5B77498F293B72E1003297A8 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 16.0.1;
+			};
+		};
 		5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
@@ -1748,6 +1868,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		5B774990293B72E1003297A8 /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B77498F293B72E1003297A8 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		5B7FDBA7291D6625007E38EA /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;

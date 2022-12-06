@@ -17,6 +17,7 @@ enum AlertType {
     case studyCancel
     case studyStop
     case addFriend
+    case review
     
     var title: String {
         switch self {
@@ -32,6 +33,8 @@ enum AlertType {
             return "스터디를 종료하시겠습니까?"
         case .addFriend:
             return "고래밥님을 친구 목록에 추가할까요?"
+        case .review:
+            return "리뷰 등록"
         }
     }
     
@@ -49,6 +52,8 @@ enum AlertType {
             return "상대방이 스터디를 취소했기 때문에 패널티가 부과되지 않습니다"
         case .addFriend:
             return "친구 목록에 추가하면 언제든지 채팅을 할 수 있어요"
+        case .review:
+            return "님과의 스터디는 어떠셨나요?"
         }
     }
 }

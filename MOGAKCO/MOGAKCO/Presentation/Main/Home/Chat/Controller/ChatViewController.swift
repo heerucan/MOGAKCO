@@ -186,7 +186,7 @@ final class ChatViewController: BaseViewController {
         chatView.chatMoreView.reviewButton.rx.tap
             .withUnretained(self)
             .bind { vc,_ in
-                vc.transition(ReviewPopupViewController(ReviewViewModel()), .alert)
+                vc.transition(ReviewViewController(ReviewViewModel()), .alert)
             }
             .disposed(by: disposeBag)
     
