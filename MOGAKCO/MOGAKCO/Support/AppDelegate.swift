@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         NMFAuthManager.shared().clientId = APIKey.clientID
-        
+        NetworkMonitor.shared.startMonitoring()
         return true
     }
     

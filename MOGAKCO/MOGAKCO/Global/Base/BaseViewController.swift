@@ -30,6 +30,18 @@ class BaseViewController: UIViewController, BaseMethodProtocol {
     
     override func viewWillAppear(_ animated: Bool) {
         setupNotificationCenter()
+        if NetworkMonitor.shared.isConnected {
+            print("네트워크 연결")
+        } else {
+            print("네트워크 연결안됨")
+            DispatchQueue.main.async {
+                self.showAlert(title: "인터넷 연결이 끊겼습니다.",
+                               message: "네트워크 연결상태를 확인해주세요.",
+                               actions: [],
+                               cancelTitle: "확인",
+                               preferredStyle: .alert)
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
