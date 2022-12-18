@@ -12,11 +12,11 @@ import Foundation
  */
 
 struct ChatList: Codable {
-    let payload: [Payload]
+    let payload: [Chat]
 }
 
-// MARK: - Payload
-struct Payload: Codable {
+// MARK: - Chat
+struct Chat: Codable {
     let id, to, from, chat: String
     let createdAt: String
 
