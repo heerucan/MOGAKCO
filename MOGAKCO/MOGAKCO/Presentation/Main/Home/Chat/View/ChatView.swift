@@ -22,7 +22,8 @@ final class ChatView: BaseView {
     
     lazy var navigationBar = PlainNavigationBar(type: .chat)
     
-    let tableView = UITableView(frame: .zero, style: .plain).then {
+    let tableView = UITableView(frame: .zero, style: .grouped).then {
+        $0.backgroundColor = .white
         $0.showsHorizontalScrollIndicator = false
         $0.separatorStyle = .none
         $0.keyboardDismissMode = .onDrag
@@ -84,7 +85,7 @@ final class ChatView: BaseView {
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(navigationBar.snp.bottom)
+            make.top.equalTo(navigationBar.snp.bottom).offset(-35)
             make.directionalHorizontalEdges.equalToSuperview()
             make.bottom.equalTo(self.textView.snp.top).offset(-16)
         }

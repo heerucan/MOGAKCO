@@ -19,14 +19,12 @@ final class YourChatTableViewCell: BaseTableViewCell {
         $0.backgroundColor = .white
     }
     
-    let timeLabel = UILabel().then {
-        $0.text = "15:00"
+    private let timeLabel = UILabel().then {
         $0.font = Font.title6.font
         $0.textColor = Color.gray6
     }
     
-    let chatLabel = UILabel().then {
-        $0.text = "안녕하세요 알고리즘 스터디는 언제 하실 생각이세요?"
+    private let chatLabel = UILabel().then {
         $0.font = Font.body3.font
         $0.textColor = Color.black
         $0.numberOfLines = 0
@@ -59,5 +57,12 @@ final class YourChatTableViewCell: BaseTableViewCell {
             make.leading.equalTo(backView.snp.trailing).offset(8)
             make.bottom.equalTo(backView.snp.bottom)
         }
+    }
+    
+    // MARK: - Set Data
+    
+    func setData(data: Chat) {
+        chatLabel.text = data.chat
+        timeLabel.text = data.createdAt
     }
 }
