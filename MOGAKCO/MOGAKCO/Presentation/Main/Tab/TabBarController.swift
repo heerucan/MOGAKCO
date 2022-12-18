@@ -31,7 +31,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         
         let firstTabController = HomeViewController(HomeViewModel())
         let secondTabController = ShopViewController()
-        let thirdTabController = FriendViewController()
         let fourthTabController = MyViewController(MyViewModel())
         
         firstTabController.tabBarItem = UITabBarItem(
@@ -44,11 +43,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
             image: Icon.shopInactive,
             selectedImage: Icon.shop)
         
-        thirdTabController.tabBarItem = UITabBarItem(
-            title: "새싹친구",
-            image: Icon.friendsInactive,
-            selectedImage: Icon.friends)
-        
         fourthTabController.tabBarItem = UITabBarItem(
             title: "내정보",
             image: Icon.myInactive,
@@ -56,7 +50,6 @@ final class TabBarController: UITabBarController, UITabBarControllerDelegate {
         
         self.viewControllers = [firstTabController,
                                 secondTabController,
-//                                thirdTabController,
                                 fourthTabController]
     }
 }
