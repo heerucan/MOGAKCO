@@ -9,12 +9,17 @@ import UIKit
 
 import SnapKit
 import Then
+import RxSwift
 
 final class MyTitleView: BaseView {
     
+    // MARK: - DisposeBag
+    
+    let disposeBag = DisposeBag()
+    
     // MARK: - Property
     
-    var titleData: [Int] = [] // 타이틀뷰의 버튼의 isSelected를 받는 배열
+    var titleData: [Int] = [0, 0, 0, 0, 0, 0] // 타이틀뷰의 버튼의 isSelected를 받는 배열
     
     private var dataSource: UICollectionViewDiffableDataSource<Int, String>?
     
@@ -31,13 +36,14 @@ final class MyTitleView: BaseView {
         $0.text = "새싹 타이틀"
     }
     
-    private lazy var titleCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
+    lazy var titleCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configureDataSource()
+        bindViewModel()
     }
     
     // MARK: - Configure UI & Layout
@@ -61,6 +67,25 @@ final class MyTitleView: BaseView {
     override func setupDelegate() {
         titleCollectionView.delegate = self
         titleCollectionView.register(TitleCategoryCollectionViewCell.self, forCellWithReuseIdentifier: TitleCategoryCollectionViewCell.identifier)
+    }
+    
+    override func bindViewModel() {
+        Observable.of(["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"])
+            .withUnretained(self)
+            .subscribe { (vc, value) in
+                var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
+                snapShot.appendSections([0])
+                snapShot.appendItems(value, toSection: 0)
+                self.dataSource?.apply(snapShot)
+            }
+            .disposed(by: disposeBag)
+        
+        titleCollectionView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                    print("왕", indexPath)
+                
+                })
+                .disposed(by: disposeBag)
     }
 }
 
@@ -112,12 +137,13 @@ extension MyTitleView {
             let cell = collectionView.dequeueConfiguredReusableCell(
                 using: cellRegistration, for: indexPath, item: itemIdentifier)
             cell.setupData(itemIdentifier, reputation: self.titleData[indexPath.item])
+            cell.button.isEnabled = false
             return cell
         })
         
-        var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
-        snapShot.appendSections([0])
-        snapShot.appendItems(["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"], toSection: 0)
-        dataSource?.apply(snapShot)
+//        var snapShot = NSDiffableDataSourceSnapshot<Int, String>()
+//        snapShot.appendSections([0])
+//        snapShot.appendItems(["좋은 매너", "정확한 시간 약속", "빠른 응답", "친절한 성격", "능숙한 실력", "유익한 시간"], toSection: 0)
+//        dataSource?.apply(snapShot)
     }
 }

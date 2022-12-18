@@ -17,6 +17,12 @@ final class MyDetailViewModel: ViewModelType {
     let mypageResponse = BehaviorSubject<Int>(value: 0)
     let userRequest = BehaviorSubject<UserRequest>(value: UserRequest.init(searchable: 0, ageMin: 0, ageMax: 0, gender: 0, study: ""))
     
+    var searchable = 1
+    var ageMin = 0
+    var ageMax = 0
+    var gender = 0
+    var study = ""
+    
     let disposeBag = DisposeBag()
     
     struct Input {
@@ -39,6 +45,11 @@ final class MyDetailViewModel: ViewModelType {
         APIManager.shared.request(User.self, AuthRouter.login) { [weak self] data, status, error in
             guard let self = self else { return }
             if let data = data {
+                self.gender = data.gender
+                self.searchable = data.searchable
+                self.ageMax = data.ageMax
+                self.ageMin = data.ageMin
+                self.study = data.study
                 self.userResponse.onNext([data, data])
             }
             if let error = error {
@@ -58,8 +69,11 @@ final class MyDetailViewModel: ViewModelType {
             }
         }
     }
-       
-    func requestUpdateMypage(params: UserRequest) {
+    
+    func requestUpdateMypage() {
+        let params = UserRequest(searchable: searchable, ageMin: ageMin, ageMax: ageMax, gender: gender, study: study)
+        print(params, "=======================")
+        
         APIManager.shared.request(Int.self, AuthRouter.updateMypage(params)) { [weak self] data, status, error in
             guard let self = self else { return }
             if let status = status {

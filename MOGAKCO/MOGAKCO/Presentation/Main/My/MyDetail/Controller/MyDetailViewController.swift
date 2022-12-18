@@ -105,6 +105,7 @@ final class MyDetailViewController: BaseViewController {
                         withIdentifier: MyDetailInfoTableViewCell.identifier,
                         for: IndexPath(row: row, section: 0)) as! MyDetailInfoTableViewCell
                     cell.setupData(item)
+                    cell.mydetailInfoDelegate = self
                     cell.withdrawButton.addAction(self.withdrawAction, for: .touchUpInside)
                     return cell
                 }
@@ -116,24 +117,23 @@ final class MyDetailViewController: BaseViewController {
             .withUnretained(self)
             .bind { cell, status in
                 if status == 200 {
-                    UserDefaultsHelper.standard.removeObject()
-                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                    let viewController = OnboardingViewController()
-                    sceneDelegate?.window?.rootViewController = viewController
-                    sceneDelegate?.window?.makeKeyAndVisible()
+//                    UserDefaultsHelper.standard.removeObject()
+//                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+//                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+//                    let viewController = OnboardingViewController()
+//                    sceneDelegate?.window?.rootViewController = viewController
+//                    sceneDelegate?.window?.makeKeyAndVisible()
                 }
             }
             .disposed(by: disposeBag)
         
         // 정보 저장
-//        navigationBar.rightButton.rx.tap
-//            .withUnretained(self)
-//            .bind {vc,_ in
-//                vc.myDetailViewModel.requestUpdateMypage(params: <#T##UserRequest#>)
-//            }
-//            .disposed(by: disposeBag)
-        
+        navigationBar.rightButton.rx.tap
+            .withUnretained(self)
+            .bind {vc,_ in
+                vc.myDetailViewModel.requestUpdateMypage()
+            }
+            .disposed(by: disposeBag)
     }
         
     // MARK: - @objc
@@ -143,5 +143,53 @@ final class MyDetailViewController: BaseViewController {
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! MyDetailCardTableViewCell
         cell.changeView(sender.isSelected, vc: MyDetailViewController.identifier)
         tableView.reloadSections(IndexSet(), with: .fade)
+    }
+}
+
+extension MyDetailViewController: MyDetailInfoDelegate {
+    
+    var gender: Int {
+        get {
+            return myDetailViewModel.gender
+        }
+        set {
+            myDetailViewModel.gender = newValue
+        }
+    }
+    
+    var study: String {
+        get {
+            return myDetailViewModel.study
+        }
+        set {
+            myDetailViewModel.study = newValue
+        }
+    }
+    
+    var searchable: Int {
+        get {
+            return myDetailViewModel.searchable
+        }
+        set {
+            myDetailViewModel.searchable = newValue
+        }
+    }
+    
+    var ageMin: Int {
+        get {
+            return myDetailViewModel.ageMin
+        }
+        set {
+            myDetailViewModel.ageMin = newValue
+        }
+    }
+    
+    var ageMax: Int {
+        get {
+            return myDetailViewModel.ageMax
+        }
+        set {
+            myDetailViewModel.ageMax = newValue
+        }
     }
 }

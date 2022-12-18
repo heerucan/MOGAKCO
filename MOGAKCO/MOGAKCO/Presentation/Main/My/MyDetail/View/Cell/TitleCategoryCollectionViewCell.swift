@@ -11,12 +11,14 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - Property
     
+    let view = UIView()
     let button = PlainButton(.fill, height: .h32)
     
     // MARK: - Initializer
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        button.isEnable = false
     }
     
     override func prepareForReuse() {
@@ -25,8 +27,17 @@ final class TitleCategoryCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: - UI & Layout
     
+    override func configureUI() {
+        super.configureUI()
+    }
+    
     override func configureLayout() {
-        contentView.addSubview(button)
+        contentView.addSubview(view)
+        view.addSubview(button)
+
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
 
         button.snp.makeConstraints { make in
             make.edges.equalToSuperview()

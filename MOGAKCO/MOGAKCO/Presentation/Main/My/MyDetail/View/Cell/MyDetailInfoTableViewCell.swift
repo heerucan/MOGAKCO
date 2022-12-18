@@ -11,14 +11,26 @@ import MultiSlider
 import SnapKit
 import Then
 import RxSwift
+import RxCocoa
 
-protocol WithdrawDelegate: AnyObject {
-    func touchupWithdraw()
+protocol MyDetailInfoDelegate: AnyObject {
+    var gender: Int { get set }
+    var study: String { get set }
+    var searchable: Int { get set }
+    var ageMin: Int { get set }
+    var ageMax: Int { get set }
 }
 
 final class MyDetailInfoTableViewCell: BaseTableViewCell {
+    
+    // MARK: - DisposeBag
+    
+    private let disposeBag = DisposeBag()
+    private let myDetialViewModel = MyDetailViewModel()
 
     // MARK: - UI Property
+    
+    weak var mydetailInfoDelegate: MyDetailInfoDelegate?
 
     private let genderLabel = UILabel().then {
         $0.text = "내 성별"
@@ -191,6 +203,50 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
             make.bottom.equalToSuperview().inset(67)
         }
     }
+    
+    override func bindViewModel() {
+        
+        /// 내 성별
+        maleButton.rx.tap
+            .withLatestFrom(maleButton.rx.isHighlighted)
+            .withUnretained(self)
+            .bind { cell, value in
+                cell.maleButton.isSelect = value
+                cell.femaleButton.isSelect = !value
+                cell.mydetailInfoDelegate?.gender = 0
+            }
+            .disposed(by: disposeBag)
+        
+        femaleButton.rx.tap
+            .withLatestFrom(femaleButton.rx.isHighlighted)
+            .withUnretained(self)
+            .bind { cell, value in
+                cell.maleButton.isSelect = !value
+                cell.femaleButton.isSelect = value
+                cell.mydetailInfoDelegate?.gender = 1
+            }
+            .disposed(by: disposeBag)
+        
+        /// 자주 하는 스터디
+        textField.rx.text
+            .orEmpty
+            .withUnretained(self)
+            .debounce(.seconds(1), scheduler: MainScheduler())
+            .bind { cell, value in
+                cell.mydetailInfoDelegate?.study = value
+            }
+            .disposed(by: disposeBag)
+        
+        /// 내 번호 검색 허용
+        numberSwitch.rx.controlEvent(.valueChanged)
+            .withLatestFrom(numberSwitch.rx.value)
+            .withUnretained(self)
+            .bind { cell, value in
+                cell.mydetailInfoDelegate?.searchable = value == true ? 1 : 0
+            }
+            .disposed(by: disposeBag)
+        
+    }
 
     // MARK: - Custom Method
     
@@ -204,7 +260,8 @@ final class MyDetailInfoTableViewCell: BaseTableViewCell {
     // MARK: - @objc
     
     @objc func sliderChanged(_ sender: MultiSlider) {
-        print(sender.minimumValue, sender.maximumValue, sender.value)
+        mydetailInfoDelegate?.ageMin = Int(sender.value[0])
+        mydetailInfoDelegate?.ageMax = Int(sender.value[1])
         rangeLabel.text = "\(Int(sender.value[0]))" + " - " + "\(Int(sender.value[1]))"
     }
     
