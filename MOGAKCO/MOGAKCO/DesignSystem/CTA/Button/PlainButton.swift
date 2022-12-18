@@ -150,11 +150,20 @@ final class PlainButton: UIButton {
     }
     
     func configureSelectedColor(type: PlainButtonType) {
-        backgroundColor = isSelect ? type.selectedColor : type.backgroundColor
-        setTitleColor(type.selectedTitleColor, for: .normal)
-        makeCornerStyle(width: 0, color: type.borderColor.cgColor, radius: 8)
+        backgroundColor = isSelect ? type.selectedColor : .white
+        let titleColor = isSelect ? type.selectedTitleColor : Color.black
+        let borderColor = isSelect ? UIColor.clear.cgColor : Color.gray4.cgColor
+        setTitleColor(titleColor, for: .normal)
+        makeCornerStyle(width: 1, color: borderColor, radius: 8)
     }
     
+    func highlightedColor(_ button: PlainButton, isHighlighted: Bool) {
+        button.backgroundColor = isHighlighted ? Color.green : .white
+        button.setTitleColor(isHighlighted ? .white : Color.black, for: .normal)
+        button.makeCornerStyle(width: isHighlighted ? 0 : 1, color: Color.gray4.cgColor, radius: 8)
+    }
+    
+    // MARK: - selected 색상변경
     func configureSelected(_ type: PlainButtonType) {
         backgroundColor = type.selectedColor
         setTitleColor(type.selectedTitleColor, for: .normal)
