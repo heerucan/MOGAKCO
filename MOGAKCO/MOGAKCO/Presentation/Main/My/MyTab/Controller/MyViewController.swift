@@ -34,7 +34,6 @@ final class MyViewController: BaseViewController {
         $0.register(MyProfileTableViewCell.self, forCellReuseIdentifier: MyProfileTableViewCell.identifier)
     }
     
-    
     // MARK: - Init
     
     init(_ viewModel: MyViewModel) {

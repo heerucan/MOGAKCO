@@ -21,7 +21,9 @@ struct MyProfile {
 
 struct MyProfileData {
     func getMyProfileList() -> [MyProfile] {
-        return [MyProfile(image: UIImage(named: Icon.sesac_face_1), menu: "김새싹", arrowIsHidden: false),
+        return [MyProfile(image: UIImage(named: Icon.sesac_face_1),
+                          menu: UserDefaultsHelper.standard.nickname ?? "김새싹",
+                          arrowIsHidden: false),
                 MyProfile(image: Icon.notice, menu: "공지사항"),
                 MyProfile(image: Icon.faq, menu: "자주 묻는 질문"),
                 MyProfile(image: Icon.qna, menu: "1:1 문의"),
