@@ -52,10 +52,10 @@ extension AuthRouter: URLRequestConvertible {
                     "email": signup.email,
                     "gender": "\(signup.gender)"]
         case .updateMypage(let user):
-            return ["searchable": user.searchable,
-                    "ageMin": user.ageMin,
-                    "ageMax": user.ageMax ,
-                    "gender": user.gender,
+            return ["searchable": "\(user.searchable)",
+                    "ageMin": "\(user.ageMin)",
+                    "ageMax": "\(user.ageMax)",
+                    "gender": "\(user.gender)",
                     "study": user.study]
         default: return nil
         }

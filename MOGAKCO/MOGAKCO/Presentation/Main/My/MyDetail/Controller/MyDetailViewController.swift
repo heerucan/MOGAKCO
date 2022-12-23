@@ -117,12 +117,12 @@ final class MyDetailViewController: BaseViewController {
             .withUnretained(self)
             .bind { cell, status in
                 if status == 200 {
-//                    UserDefaultsHelper.standard.removeObject()
-//                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-//                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
-//                    let viewController = OnboardingViewController()
-//                    sceneDelegate?.window?.rootViewController = viewController
-//                    sceneDelegate?.window?.makeKeyAndVisible()
+                    UserDefaultsHelper.standard.removeObject()
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                    let viewController = OnboardingViewController()
+                    sceneDelegate?.window?.rootViewController = viewController
+                    sceneDelegate?.window?.makeKeyAndVisible()
                 }
             }
             .disposed(by: disposeBag)
