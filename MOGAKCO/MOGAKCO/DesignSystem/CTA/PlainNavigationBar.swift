@@ -69,7 +69,6 @@ final class PlainNavigationBar: BaseView {
             }
         }
     }
-
     
     // MARK: - Property
     

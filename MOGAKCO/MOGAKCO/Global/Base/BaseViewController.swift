@@ -33,7 +33,6 @@ class BaseViewController: UIViewController, BaseMethodProtocol {
         if NetworkMonitor.shared.isConnected {
             print("네트워크 연결")
         } else {
-            print("네트워크 연결안됨")
             DispatchQueue.main.async {
                 self.showAlert(title: "인터넷 연결이 끊겼습니다.",
                                message: "네트워크 연결상태를 확인해주세요.",

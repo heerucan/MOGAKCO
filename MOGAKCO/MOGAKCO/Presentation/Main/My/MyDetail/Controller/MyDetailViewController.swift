@@ -134,6 +134,15 @@ final class MyDetailViewController: BaseViewController {
                 vc.myDetailViewModel.requestUpdateMypage()
             }
             .disposed(by: disposeBag)
+        
+        myDetailViewModel.mypageResponse
+            .withUnretained(self)
+            .bind { vc, status in
+                if status == 200 {
+                    vc.showToast(Toast.saveUserInfo.message)
+                }
+            }
+            .disposed(by: disposeBag)
     }
         
     // MARK: - @objc

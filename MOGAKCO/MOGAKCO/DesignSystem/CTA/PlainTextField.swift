@@ -18,10 +18,6 @@ final class PlainTextField: UITextField {
     
     private var type: TextFieldType = .line
     
-//    var isFocusing: Bool = false {
-//        didSet { setupState() }
-//    }
-    
     lazy var isDisabled: Bool = false {
         didSet {
             configureDisableColor(type: type)

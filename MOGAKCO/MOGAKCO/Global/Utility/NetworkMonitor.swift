@@ -8,7 +8,7 @@
 import UIKit
 import Network
 
-final class NetworkMonitor{
+final class NetworkMonitor {
     static let shared = NetworkMonitor()
     private let queue = DispatchQueue.global()
     private let monitor: NWPathMonitor
@@ -34,7 +34,7 @@ final class NetworkMonitor{
             self.getConenctionType(path)
             
             if self.isConnected {
-                print("연결된 상태임!")
+//                print("연결된 상태임!")
             } else {
                 print("연결 안된 상태임!")
             }

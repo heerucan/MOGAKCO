@@ -31,6 +31,7 @@ enum Toast: String {
     case studyCancelFirstPenalty
     case studyCancelSecondPenalty
     case studyCancelThirdPenalty
+    case saveUserInfo
     
     var message: String {
         switch self {
@@ -78,6 +79,8 @@ enum Toast: String {
             return "스터디 취소 패널티로, 2분동안 이용하실 수 없습니다"
         case .studyCancelThirdPenalty:
             return "스터디 취소 패널티로, 3분동안 이용하실 수 없습니다"
+        case .saveUserInfo:
+            return "성공적으로 정보를 저장했습니다."
         }
     }
 }

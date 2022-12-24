@@ -7,19 +7,23 @@
 
 import Foundation
 
+import Then
 import CoreLocation
 
 final class LocationManager {
-    static let shared = LocationManager().manager
+    static let shared = LocationManager().locationManager
     private init() { }
-    let manager = CLLocationManager()
     
-    static let lat = LocationManager.shared.location?.coordinate.latitude
-    static let lng = LocationManager.shared.location?.coordinate.longitude
+    private let locationManager = CLLocationManager().then {
+        $0.distanceFilter = 10000
+    }
+    
+    static let myLatitude = LocationManager.shared.location?.coordinate.latitude
+    static let myLongtitude = LocationManager.shared.location?.coordinate.longitude
     
     static func coordinate() -> CLLocationCoordinate2D {
-        if let latitude = lat,
-           let longtitude = lng {
+        if let latitude = LocationManager.myLatitude,
+           let longtitude = LocationManager.myLongtitude {
             return CLLocationCoordinate2D(latitude: latitude, longitude: longtitude)
         } else {
             return CLLocationCoordinate2D(latitude: Matrix.ssacLat, longitude: Matrix.ssacLong)
