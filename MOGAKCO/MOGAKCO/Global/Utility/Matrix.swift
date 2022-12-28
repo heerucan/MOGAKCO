@@ -43,6 +43,13 @@ enum Matrix {
         static let maxHeight = 85.0
     }
     
+    enum Shop {
+        static let sesac = "새싹"
+        static let background = "배경"
+        static let width = 165
+        static let height = 279
+    }
+    
     // MARK: - UserDefaults Key
     static let idToken = "idToken"
     static let verificationID = "authVerificationID"
