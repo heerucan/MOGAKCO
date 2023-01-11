@@ -19,6 +19,7 @@ final class PlainRequestButton: UIButton {
     enum RequestButtonType {
         case request
         case accept
+        case save
         
         fileprivate var backgroundColor: UIColor {
             switch self {
@@ -26,6 +27,8 @@ final class PlainRequestButton: UIButton {
                 return Color.error
             case .accept:
                 return Color.success
+            case .save:
+                return Color.green
             }
         }
         
@@ -35,6 +38,8 @@ final class PlainRequestButton: UIButton {
                 return "요청하기"
             case .accept:
                 return "수락하기"
+            case .save:
+                return "저장하기"
             }
         }
     }

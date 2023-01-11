@@ -76,7 +76,6 @@ final class PlainTagButton: UIButton {
     private func configureUI(type: TagButtonType) {
         titleLabel?.font = Font.title4.font
         setTitleColor(type.textColor, for: .normal)
-        setTitleColor(Color.gray4, for: .highlighted)
         backgroundColor = .white
         makeCornerStyle(width: 1, color: type.borderColor.cgColor, radius: 8)
     }

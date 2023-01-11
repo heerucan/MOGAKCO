@@ -36,9 +36,7 @@
 		5B77497F293B3B8D003297A8 /* MyChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77497E293B3B8D003297A8 /* MyChatTableViewCell.swift */; };
 		5B774981293B3B98003297A8 /* YourChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774980293B3B98003297A8 /* YourChatTableViewCell.swift */; };
 		5B774983293B3C19003297A8 /* ChatHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774982293B3C19003297A8 /* ChatHeaderView.swift */; };
-		5B774986293B6935003297A8 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774985293B6935003297A8 /* Chat.swift */; };
 		5B774988293B693B003297A8 /* ChatRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774987293B693B003297A8 /* ChatRouter.swift */; };
-		5B77498A293B6BAD003297A8 /* ChatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B774989293B6BAC003297A8 /* ChatList.swift */; };
 		5B77498C293B7045003297A8 /* RateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77498B293B7045003297A8 /* RateRequest.swift */; };
 		5B77498E293B7264003297A8 /* SocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B77498D293B7264003297A8 /* SocketManager.swift */; };
 		5B774991293B72E1003297A8 /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5B774990293B72E1003297A8 /* SocketIO */; };
@@ -74,24 +72,29 @@
 		5B95599B2920E8D000B34B60 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B95599A2920E8D000B34B60 /* GoogleService-Info.plist */; };
 		5B95599F2921173A00B34B60 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B95599E2921173A00B34B60 /* TabBarController.swift */; };
 		5B9559A3292117C000B34B60 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9559A2292117C000B34B60 /* ShopViewController.swift */; };
-		5B9559A7292117E600B34B60 /* FriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9559A6292117E600B34B60 /* FriendViewController.swift */; };
 		5B9559A92921180A00B34B60 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9559A82921180A00B34B60 /* MyViewController.swift */; };
 		5B9559AB2921320300B34B60 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9559AA2921320300B34B60 /* NetworkMonitor.swift */; };
+		5BA9EFE2294F25F000D12734 /* ChatList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9EFE1294F25F000D12734 /* ChatList.swift */; };
+		5BA9EFE5294F50B300D12734 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 5BA9EFE4294F50B300D12734 /* Realm */; };
+		5BA9EFE7294F50B300D12734 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5BA9EFE6294F50B300D12734 /* RealmSwift */; };
+		5BA9EFEA294F519200D12734 /* RealmChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9EFE9294F519200D12734 /* RealmChat.swift */; };
+		5BA9EFEC294F51AC00D12734 /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA9EFEB294F51AC00D12734 /* RealmRepository.swift */; };
 		5BB16AE3291966F700EA3099 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE2291966F700EA3099 /* NicknameView.swift */; };
 		5BB16AE52919670300EA3099 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE42919670300EA3099 /* NicknameViewModel.swift */; };
 		5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AE62919670D00EA3099 /* NicknameViewController.swift */; };
 		5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEB29196A8800EA3099 /* PhoneViewModel.swift */; };
 		5BB16AEE29196A8F00EA3099 /* PhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AED29196A8F00EA3099 /* PhoneViewController.swift */; };
 		5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB16AEF2919726200EA3099 /* AuthReuseView.swift */; };
+		5BBBEBB8295C9C3B00853D20 /* BackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBEBB7295C9C3B00853D20 /* BackTableViewCell.swift */; };
+		5BBBEBBB295C9C4C00853D20 /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBEBBA295C9C4C00853D20 /* ShopViewModel.swift */; };
+		5BBBEBBD295C9C6300853D20 /* SesacCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBBEBBC295C9C6300853D20 /* SesacCollectionViewCell.swift */; };
 		5BC355F0292D450D0019B50F /* SearchHeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355EF292D450C0019B50F /* SearchHeaderSupplementaryView.swift */; };
 		5BC355F6292E59010019B50F /* ButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355F5292E59000019B50F /* ButtonType.swift */; };
 		5BC355F9292E59430019B50F /* AlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355F8292E59430019B50F /* AlertType.swift */; };
 		5BC355FB292E59A50019B50F /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355FA292E59A50019B50F /* TextFieldType.swift */; };
-		5BC355FD292E59CC0019B50F /* NavigationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355FC292E59CC0019B50F /* NavigationType.swift */; };
 		5BC355FF292E59EE0019B50F /* EmptyViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC355FE292E59EE0019B50F /* EmptyViewType.swift */; };
 		5BC35601292E5A610019B50F /* PlainTagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC35600292E5A610019B50F /* PlainTagButton.swift */; };
 		5BC3661A29240FC100A0A316 /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = 5BC3661929240FC100A0A316 /* MultiSlider */; };
-		5BC5222C291D917C000A570B /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC5222B291D917C000A570B /* UserManager.swift */; };
 		5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFA2918E73D006CB05C /* AppDelegate.swift */; };
 		5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */; };
 		5BC57D042918E73F006CB05C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BC57D032918E73F006CB05C /* Assets.xcassets */; };
@@ -136,7 +139,6 @@
 		5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC57D822919245D006CB05C /* OnboardViewModel.swift */; };
 		5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A6C291E71750011C5B5 /* AuthRouter.swift */; };
 		5BD11A74291E75DA0011C5B5 /* SignupRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */; };
-		5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A75291ECE400011C5B5 /* GenericResponse.swift */; };
 		5BD11A78291F50E70011C5B5 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A77291F50E70011C5B5 /* Toast.swift */; };
 		5BD11A7C2920127B0011C5B5 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD11A7B2920127A0011C5B5 /* HomeViewController.swift */; };
 		5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BEFE24F291BAB1300FD31E9 /* String+.swift */; };
@@ -194,9 +196,7 @@
 		5B77497E293B3B8D003297A8 /* MyChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatTableViewCell.swift; sourceTree = "<group>"; };
 		5B774980293B3B98003297A8 /* YourChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YourChatTableViewCell.swift; sourceTree = "<group>"; };
 		5B774982293B3C19003297A8 /* ChatHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatHeaderView.swift; sourceTree = "<group>"; };
-		5B774985293B6935003297A8 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		5B774987293B693B003297A8 /* ChatRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRouter.swift; sourceTree = "<group>"; };
-		5B774989293B6BAC003297A8 /* ChatList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatList.swift; sourceTree = "<group>"; };
 		5B77498B293B7045003297A8 /* RateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateRequest.swift; sourceTree = "<group>"; };
 		5B77498D293B7264003297A8 /* SocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketManager.swift; sourceTree = "<group>"; };
 		5B774992293B7EC9003297A8 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
@@ -229,23 +229,26 @@
 		5B95599A2920E8D000B34B60 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B95599E2921173A00B34B60 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5B9559A2292117C000B34B60 /* ShopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewController.swift; sourceTree = "<group>"; };
-		5B9559A6292117E600B34B60 /* FriendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendViewController.swift; sourceTree = "<group>"; };
 		5B9559A82921180A00B34B60 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		5B9559AA2921320300B34B60 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		5BA9EFE1294F25F000D12734 /* ChatList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatList.swift; sourceTree = "<group>"; };
+		5BA9EFE9294F519200D12734 /* RealmChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChat.swift; sourceTree = "<group>"; };
+		5BA9EFEB294F51AC00D12734 /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		5BB16AE2291966F700EA3099 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		5BB16AE42919670300EA3099 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		5BB16AE62919670D00EA3099 /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		5BB16AEB29196A8800EA3099 /* PhoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewModel.swift; sourceTree = "<group>"; };
 		5BB16AED29196A8F00EA3099 /* PhoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneViewController.swift; sourceTree = "<group>"; };
 		5BB16AEF2919726200EA3099 /* AuthReuseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReuseView.swift; sourceTree = "<group>"; };
+		5BBBEBB7295C9C3B00853D20 /* BackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackTableViewCell.swift; sourceTree = "<group>"; };
+		5BBBEBBA295C9C4C00853D20 /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		5BBBEBBC295C9C6300853D20 /* SesacCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SesacCollectionViewCell.swift; sourceTree = "<group>"; };
 		5BC355EF292D450C0019B50F /* SearchHeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		5BC355F5292E59000019B50F /* ButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonType.swift; sourceTree = "<group>"; };
 		5BC355F8292E59430019B50F /* AlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertType.swift; sourceTree = "<group>"; };
 		5BC355FA292E59A50019B50F /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
-		5BC355FC292E59CC0019B50F /* NavigationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationType.swift; sourceTree = "<group>"; };
 		5BC355FE292E59EE0019B50F /* EmptyViewType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewType.swift; sourceTree = "<group>"; };
 		5BC35600292E5A610019B50F /* PlainTagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTagButton.swift; sourceTree = "<group>"; };
-		5BC5222B291D917C000A570B /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		5BC57CF72918E73D006CB05C /* MOGAKCO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MOGAKCO.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BC57CFA2918E73D006CB05C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BC57CFC2918E73D006CB05C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -286,7 +289,6 @@
 		5BC57D822919245D006CB05C /* OnboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardViewModel.swift; sourceTree = "<group>"; };
 		5BD11A6C291E71750011C5B5 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5BD11A73291E75DA0011C5B5 /* SignupRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupRequest.swift; sourceTree = "<group>"; };
-		5BD11A75291ECE400011C5B5 /* GenericResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericResponse.swift; sourceTree = "<group>"; };
 		5BD11A77291F50E70011C5B5 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		5BD11A7B2920127A0011C5B5 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		5BEFE24F291BAB1300FD31E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
@@ -325,7 +327,9 @@
 				5BC57D632918EF60006CB05C /* Alamofire in Frameworks */,
 				5B7FDBAA291D6625007E38EA /* FirebaseAuth in Frameworks */,
 				5BC57D5E2918EF51006CB05C /* RxCocoa in Frameworks */,
+				5BA9EFE7294F50B300D12734 /* RealmSwift in Frameworks */,
 				5BC3661A29240FC100A0A316 /* MultiSlider in Frameworks */,
+				5BA9EFE5294F50B300D12734 /* Realm in Frameworks */,
 				5B774991293B72E1003297A8 /* SocketIO in Frameworks */,
 				5BC57D5B2918EF23006CB05C /* Then in Frameworks */,
 				5BC57D662918EF73006CB05C /* SnapKit in Frameworks */,
@@ -499,8 +503,7 @@
 		5B774984293B6920003297A8 /* ChatAPI */ = {
 			isa = PBXGroup;
 			children = (
-				5B774985293B6935003297A8 /* Chat.swift */,
-				5B774989293B6BAC003297A8 /* ChatList.swift */,
+				5BA9EFE1294F25F000D12734 /* ChatList.swift */,
 				5B774987293B693B003297A8 /* ChatRouter.swift */,
 			);
 			path = ChatAPI;
@@ -681,12 +684,38 @@
 			path = My;
 			sourceTree = "<group>";
 		};
-		5B9559A5292117D200B34B60 /* Friend */ = {
+		5BA9EFE8294F518500D12734 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				5B9559A6292117E600B34B60 /* FriendViewController.swift */,
+				5BA9EFE9294F519200D12734 /* RealmChat.swift */,
+				5BA9EFEB294F51AC00D12734 /* RealmRepository.swift */,
 			);
-			path = Friend;
+			path = Realm;
+			sourceTree = "<group>";
+		};
+		5BBBEBB5295C9C1E00853D20 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5BBBEBBC295C9C6300853D20 /* SesacCollectionViewCell.swift */,
+				5BBBEBB7295C9C3B00853D20 /* BackTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5BBBEBB6295C9C2300853D20 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				5BBBEBBA295C9C4C00853D20 /* ShopViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		5BBBEBB9295C9C3D00853D20 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5B9559A2292117C000B34B60 /* ShopViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		5BC355F7292E59060019B50F /* Constant */ = {
@@ -696,7 +725,6 @@
 				5BC355F5292E59000019B50F /* ButtonType.swift */,
 				5BC355FE292E59EE0019B50F /* EmptyViewType.swift */,
 				5BC355FA292E59A50019B50F /* TextFieldType.swift */,
-				5BC355FC292E59CC0019B50F /* NavigationType.swift */,
 				5B774994293BB45A003297A8 /* GenderType.swift */,
 			);
 			path = Constant;
@@ -759,6 +787,7 @@
 			isa = PBXGroup;
 			children = (
 				5B7FDBAD291D686C007E38EA /* MOGAKCO.entitlements */,
+				5BA9EFE8294F518500D12734 /* Realm */,
 				5BC57D0E2918E840006CB05C /* Network */,
 				5BC57D192918E922006CB05C /* Global */,
 				5BC57D102918E858006CB05C /* DesignSystem */,
@@ -869,9 +898,9 @@
 		5BC57D192918E922006CB05C /* Global */ = {
 			isa = PBXGroup;
 			children = (
-				5B55BC8D292697FB000C3CA0 /* DelegateProxy */,
-				5BC57D4C2918ED8B006CB05C /* Utility */,
 				5BC57D232918E97C006CB05C /* Base */,
+				5BC57D4C2918ED8B006CB05C /* Utility */,
+				5B55BC8D292697FB000C3CA0 /* DelegateProxy */,
 				5BC57D222918E979006CB05C /* Extension */,
 				5BC57D242918E97F006CB05C /* Protocol */,
 			);
@@ -882,10 +911,9 @@
 			isa = PBXGroup;
 			children = (
 				5BC57D1C2918E94D006CB05C /* APIKey.swift */,
-				5BC57D1E2918E957006CB05C /* ErrorManager.swift */,
 				5BC57D202918E96D006CB05C /* APIManager.swift */,
 				5B77498D293B7264003297A8 /* SocketManager.swift */,
-				5BD11A75291ECE400011C5B5 /* GenericResponse.swift */,
+				5BC57D1E2918E957006CB05C /* ErrorManager.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1009,10 +1037,9 @@
 			children = (
 				5BC57D4D2918ED93006CB05C /* Matrix.swift */,
 				5BD11A77291F50E70011C5B5 /* Toast.swift */,
-				5BC5222B291D917C000A570B /* UserManager.swift */,
-				5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */,
-				5B9559AA2921320300B34B60 /* NetworkMonitor.swift */,
 				5B55BC90292773CA000C3CA0 /* LocationManager.swift */,
+				5B9559AA2921320300B34B60 /* NetworkMonitor.swift */,
+				5B9559962920D8F100B34B60 /* UserDefaultsHelper.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -1066,7 +1093,6 @@
 				5B9559A02921179500B34B60 /* Tab */,
 				5B9559A1292117AA00B34B60 /* Home */,
 				5BD11A7A292012580011C5B5 /* Shop */,
-				5B9559A5292117D200B34B60 /* Friend */,
 				5B9559A4292117C700B34B60 /* My */,
 			);
 			path = Main;
@@ -1075,7 +1101,9 @@
 		5BD11A7A292012580011C5B5 /* Shop */ = {
 			isa = PBXGroup;
 			children = (
-				5B9559A2292117C000B34B60 /* ShopViewController.swift */,
+				5BBBEBB5295C9C1E00853D20 /* Cell */,
+				5BBBEBB6295C9C2300853D20 /* ViewModel */,
+				5BBBEBB9295C9C3D00853D20 /* Controller */,
 			);
 			path = Shop;
 			sourceTree = "<group>";
@@ -1313,6 +1341,8 @@
 				5BC3661929240FC100A0A316 /* MultiSlider */,
 				5B0683002929B8F500C162D6 /* RxDataSources */,
 				5B774990293B72E1003297A8 /* SocketIO */,
+				5BA9EFE4294F50B300D12734 /* Realm */,
+				5BA9EFE6294F50B300D12734 /* RealmSwift */,
 			);
 			productName = MOGAKCO;
 			productReference = 5BC57CF72918E73D006CB05C /* MOGAKCO.app */;
@@ -1353,6 +1383,7 @@
 				5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */,
 				5B0682FF2929B8F400C162D6 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				5B77498F293B72E1003297A8 /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
+				5BA9EFE3294F50B200D12734 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 5BC57CF82918E73D006CB05C /* Products */;
 			projectDirPath = "";
@@ -1427,11 +1458,11 @@
 			files = (
 				5B89F766292425A300A052C8 /* HomeTagCollectionViewCell.swift in Sources */,
 				5B9559972920D8F100B34B60 /* UserDefaultsHelper.swift in Sources */,
-				5BD11A76291ECE400011C5B5 /* GenericResponse.swift in Sources */,
 				5B9559A3292117C000B34B60 /* ShopViewController.swift in Sources */,
 				5BC57D7129190AA9006CB05C /* PlainButton.swift in Sources */,
 				5BB16AF02919726200EA3099 /* AuthReuseView.swift in Sources */,
 				5BEFE250291BAB1300FD31E9 /* String+.swift in Sources */,
+				5BA9EFE2294F25F000D12734 /* ChatList.swift in Sources */,
 				5BC57CFB2918E73D006CB05C /* AppDelegate.swift in Sources */,
 				5BC57D1F2918E957006CB05C /* ErrorManager.swift in Sources */,
 				5BF40CEE293324D200F1536C /* PlainGenderButton.swift in Sources */,
@@ -1442,7 +1473,6 @@
 				5BB16AEC29196A8800EA3099 /* PhoneViewModel.swift in Sources */,
 				5BC57D452918EBE2006CB05C /* NSNotification+.swift in Sources */,
 				5B0683042929DC4A00C162D6 /* SearchCollectionViewCell.swift in Sources */,
-				5BC5222C291D917C000A570B /* UserManager.swift in Sources */,
 				5BD11A6D291E71760011C5B5 /* AuthRouter.swift in Sources */,
 				5B77498E293B7264003297A8 /* SocketManager.swift in Sources */,
 				5BEFE26D291BF7D400FD31E9 /* GenderViewController.swift in Sources */,
@@ -1459,6 +1489,7 @@
 				5B31363C29375D7E003DC5C6 /* PlainRequestButton.swift in Sources */,
 				5BC57D352918EA9E006CB05C /* BaseCollectionViewCell.swift in Sources */,
 				5B8E1BE829290F4400D634B3 /* NearViewModel.swift in Sources */,
+				5BA9EFEC294F51AC00D12734 /* RealmRepository.swift in Sources */,
 				5BC57D7E291919B0006CB05C /* OnboardCollectionViewCell.swift in Sources */,
 				5B7B03FD29291A4B008B265B /* NearEmptyStateView.swift in Sources */,
 				5B9559AB2921320300B34B60 /* NetworkMonitor.swift in Sources */,
@@ -1468,7 +1499,6 @@
 				5BC57D832919245D006CB05C /* OnboardViewModel.swift in Sources */,
 				5B1394E229225AAD0046013E /* MyDetailViewController.swift in Sources */,
 				5B55BC9429277E06000C3CA0 /* Search.swift in Sources */,
-				5BC355FD292E59CC0019B50F /* NavigationType.swift in Sources */,
 				5BC57D3D2918EB53006CB05C /* Date+.swift in Sources */,
 				5BEFE286291C069B00FD31E9 /* Gender.swift in Sources */,
 				5B1394E529225AD50046013E /* MyDetailViewModel.swift in Sources */,
@@ -1482,6 +1512,7 @@
 				5B8E1BDB29290D4D00D634B3 /* SearchViewController.swift in Sources */,
 				5BC355FB292E59A50019B50F /* TextFieldType.swift in Sources */,
 				5B1394DE2921D0F70046013E /* HomeViewModel.swift in Sources */,
+				5BBBEBBB295C9C4C00853D20 /* ShopViewModel.swift in Sources */,
 				5BEFE27A291C027000FD31E9 /* BirthView.swift in Sources */,
 				5BEFE276291C018900FD31E9 /* EmailViewController.swift in Sources */,
 				5B1395072922D5300046013E /* MyReviewView.swift in Sources */,
@@ -1490,8 +1521,8 @@
 				5BC57D812919224B006CB05C /* Onboard.swift in Sources */,
 				5BC57D7A291911CC006CB05C /* UILabel+.swift in Sources */,
 				5B1394FD2922BEFC0046013E /* TitleCategoryCollectionViewCell.swift in Sources */,
+				5BBBEBBD295C9C6300853D20 /* SesacCollectionViewCell.swift in Sources */,
 				5B77499D293E5171003297A8 /* ReviewViewModel.swift in Sources */,
-				5B774986293B6935003297A8 /* Chat.swift in Sources */,
 				5BEFE25D291BEC2A00FD31E9 /* MessageView.swift in Sources */,
 				5BC57D3F2918EB63006CB05C /* Font+.swift in Sources */,
 				5BD11A7C2920127B0011C5B5 /* HomeViewController.swift in Sources */,
@@ -1505,7 +1536,6 @@
 				5BB16AE72919670D00EA3099 /* NicknameViewController.swift in Sources */,
 				5B55BC91292773CA000C3CA0 /* LocationManager.swift in Sources */,
 				5B774995293BB45A003297A8 /* GenderType.swift in Sources */,
-				5B9559A7292117E600B34B60 /* FriendViewController.swift in Sources */,
 				5B1394F4292285120046013E /* MyViewModel.swift in Sources */,
 				5B8E1BEF2929146C00D634B3 /* NearUserViewController.swift in Sources */,
 				5BC57D212918E96D006CB05C /* APIManager.swift in Sources */,
@@ -1525,6 +1555,7 @@
 				5BEFE254291BBA1000FD31E9 /* PhoneView.swift in Sources */,
 				5BC57D6B2918EFBC006CB05C /* SplashViewController.swift in Sources */,
 				5B8E1BDD29290D8D00D634B3 /* SearchView.swift in Sources */,
+				5BBBEBB8295C9C3B00853D20 /* BackTableViewCell.swift in Sources */,
 				5BC57CFD2918E73D006CB05C /* SceneDelegate.swift in Sources */,
 				5B068306292A4C9C00C162D6 /* MyProfile.swift in Sources */,
 				5B774977293A1C36003297A8 /* ChatView.swift in Sources */,
@@ -1549,7 +1580,6 @@
 				5BEFE25B291BEC1A00FD31E9 /* MessageViewModel.swift in Sources */,
 				5B1394F8292285520046013E /* MyDetailInfoTableViewCell.swift in Sources */,
 				5BD11A78291F50E70011C5B5 /* Toast.swift in Sources */,
-				5B77498A293B6BAD003297A8 /* ChatList.swift in Sources */,
 				5BEFE274291BF9B200FD31E9 /* BirthViewController.swift in Sources */,
 				5BC57D3B2918EB06006CB05C /* UIViewController+.swift in Sources */,
 				5B7B04042929204C008B265B /* UserTableViewCell.swift in Sources */,
@@ -1560,6 +1590,7 @@
 				5B55BC972927AC80000C3CA0 /* QueueRouter.swift in Sources */,
 				5BC57D2F2918EA7E006CB05C /* BaseViewController.swift in Sources */,
 				5B774988293B693B003297A8 /* ChatRouter.swift in Sources */,
+				5BA9EFEA294F519200D12734 /* RealmChat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1805,6 +1836,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		5BA9EFE3294F50B200D12734 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.30.0;
+			};
+		};
 		5BC3661829240FC000A0A316 /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/yonat/MultiSlider.git";
@@ -1888,6 +1927,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5B7FDBA6291D6624007E38EA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		5BA9EFE4294F50B300D12734 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BA9EFE3294F50B200D12734 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		5BA9EFE6294F50B300D12734 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5BA9EFE3294F50B200D12734 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		5BC3661929240FC100A0A316 /* MultiSlider */ = {
 			isa = XCSwiftPackageProductDependency;
