@@ -41,6 +41,7 @@ enum Matrix {
         static let matching = "님과 매칭되었습니다"
         static let description = "채팅을 통해 약속을 정해보세요 :)"
         static let maxHeight = 85.0
+        static let defaultDate = "2000-01-01T00:00:00.000Z"
     }
     
     enum Shop {

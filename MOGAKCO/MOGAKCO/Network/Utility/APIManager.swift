@@ -30,7 +30,7 @@ final class APIManager {
                 switch response.result {
                 case .success(let data):
                     completion(data, statusCode, nil)
-                    print("✅ 성공!!! ===", data, "/", statusCode)
+//                    print("✅ 성공!!! ===", data, "/", statusCode)
                     
                 case .failure(_):
                     guard let error = APIError(rawValue: statusCode) else { return }

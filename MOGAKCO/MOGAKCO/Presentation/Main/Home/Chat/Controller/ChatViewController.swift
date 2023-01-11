@@ -9,6 +9,7 @@ import UIKit
 
 import SnapKit
 import Then
+import RealmSwift
 import RxSwift
 import RxCocoa
 
@@ -22,6 +23,11 @@ final class ChatViewController: BaseViewController {
     
     private let chatView = ChatView()
     var chatViewModel: ChatViewModel!
+    var tasks: Results<RealmChat>! {
+        didSet {
+            chatView.tableView.reloadData()
+        }
+    }
                 
     // MARK: - Init
     
@@ -42,13 +48,8 @@ final class ChatViewController: BaseViewController {
         super.viewDidLoad()
         bindViewModel()
         chatViewModel.requestQueueState()
-        
-        // from : 상대방 uid / lastchatDate : 마지막 채팅 시간
-        chatViewModel.fetchChat(from: chatViewModel.matchedArray[1],
-                                lastchatDate: "2022-12-18T09:37:05.625Z") { dataCount in
-            self.moveToBottom(dataCount)
-        }
-        
+        fetchChatData()
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(getMessage(notification:)),
                                                name: NSNotification.getMessage,
@@ -71,11 +72,7 @@ final class ChatViewController: BaseViewController {
     
     override func bindViewModel() {
         
-        let input = ChatViewModel.Input()
-        let output = chatViewModel.transform(input)
-            
         /// 테이블뷰 세팅
-        // TODO: - 채팅 시간 HH:mm 처리해줘야 됨
         chatViewModel.chatResponse
             .bind(to: chatView.tableView.rx.items) { tableView, row, element in
                 if element.from == self.chatViewModel.matchedArray[1] {
@@ -197,7 +194,7 @@ final class ChatViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        /// 채팅전송 버튼 -> 채팅전송 POST
+        /// 채팅 전송
         chatView.sendButton.rx.tap
             .withLatestFrom(chatView.textView.rx.text)
             .compactMap { $0 }
@@ -209,6 +206,16 @@ final class ChatViewController: BaseViewController {
                 vc.chatView.textView.text = ""
             }
             .disposed(by: disposeBag)
+
+//        chatViewModel.chatResponse
+//            .withUnretained(self)
+//            .bind { vc, value in
+//                print(value)
+//
+////                self.tasks = RealmRepository.shared.fetchChatData(matchedId: vc.chatViewModel.matchedArray[1])
+////                RealmRepository.shared.addChatData(chat: RealmChat(id: value.id, from: value.from, to: <#T##String#>, chat: <#T##String#>, createdAt: <#T##String#>))
+//            }
+//            .disposed(by: disposeBag)
     }
     
     // MARK: - @objc
@@ -218,27 +225,26 @@ final class ChatViewController: BaseViewController {
     }
     
     @objc func getMessage(notification: NSNotification) {
-        print(#function)
         let id = notification.userInfo!["id"] as! String
-        let chat = notification.userInfo!["text"] as! String
+        let chat = notification.userInfo!["chat"] as! String
         let createdAt = notification.userInfo!["createdAt"] as! String
         let from = notification.userInfo!["from"] as! String
         let to = notification.userInfo!["to"] as! String
         
-        let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt)
+        let value = Chat(id: id, to: to, from: from, chat: chat, createdAt: createdAt.toDate().toString(format: .special))
         print("채팅 추가", value)
-        chatView.tableView.reloadData()
         
-        chatViewModel.chatResponse
-            .withUnretained(self)
-            .bind { vc, chats in
-                vc.chatViewModel.chatList.append(contentsOf: chats)
-                vc.chatView.tableView.scrollToRow(
-                    at: IndexPath(row: chats.count - 1, section: 0),
-                    at: .bottom, animated: false)
-            }
-            .disposed(by: disposeBag)
-        chatViewModel.chatResponse.onNext([value])
+        // TODO: - RealmDB 저장
+//        RealmRepository.shared.addChatData(chat: RealmChat(
+//            id: id,
+//            from: from,
+//            to: to,
+//            chat: chat,
+//            createdAt: createdAt)
+//        )
+
+        chatViewModel.chatList.append(value)
+        chatViewModel.chatResponse.onNext(chatViewModel.chatList)
     }
     
     // MARK: - Custom Method
@@ -248,7 +254,15 @@ final class ChatViewController: BaseViewController {
         DispatchQueue.main.async {
             self.chatView.tableView.scrollToRow(at: IndexPath(row: dataCount-1, section: 0), at: .bottom, animated: true)
         }
-        SocketIOManager.shared.establishConnection()
+    }
+    
+    private func fetchChatData() {
+        chatViewModel.fetchChat(from: chatViewModel.matchedArray[1],
+                                lastchatDate: Matrix.Chat.defaultDate) { dataCount in
+            if dataCount != 0 {
+                self.moveToBottom(dataCount)
+            }
+        }
     }
 }
 

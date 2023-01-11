@@ -20,7 +20,7 @@ class SocketIOManager {
         manager = SocketManager(
             socketURL: URL(string: APIKey.baseURL)!,
             config: [
-                .log(true),
+                .log(false),
                 .forceWebsockets(true)
             ]
         )
@@ -30,8 +30,7 @@ class SocketIOManager {
         // 연결
         socket.on(clientEvent: .connect) { data, ack in
             print("💡 SOCKET IS CONNECTED", data, ack)
-            guard let myuid = UserDefaultsHelper.standard.myuid else { return }
-            self.socket.emit("changesocketid", myuid)
+            self.socket.emit("changesocketid", "lnw4fSLFK3hgKKsZai1CJbQFqCr2")
         }
         
         // 연결 해제
@@ -45,12 +44,12 @@ class SocketIOManager {
             
             let data = dataArray[0] as! NSDictionary
             let id = data["_id"] as! String
-            let chat = data["text"] as! String
+            let chat = data["chat"] as! String
             let createdAt = data["createdAt"] as! String
             let from = data["from"] as! String
             let to = data["to"] as! String
 
-            print("💡 Check >>>>", chat, createdAt, from, to)
+            print("💡 Check >>>>", chat, createdAt, from, to, id, data)
             
             NotificationCenter.default.post(name: NSNotification.getMessage,
                                             object: self,

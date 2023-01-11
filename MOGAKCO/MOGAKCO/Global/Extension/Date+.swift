@@ -31,7 +31,7 @@ extension Date {
             case .regular:
                 return "yyyy-MM-dd HH:mm:ss"
             case .special:
-                return "HH:mm"
+                return "a hh:mm"
             }
         }
     }

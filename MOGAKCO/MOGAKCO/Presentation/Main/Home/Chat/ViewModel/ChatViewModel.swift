@@ -30,7 +30,7 @@ final class ChatViewModel: ViewModelType {
     func transform(_ input: Input) -> Output {
         return Output()
     }
-    
+        
     // MARK: - Network
     
     /// 내 상태 확인
@@ -52,7 +52,12 @@ final class ChatViewModel: ViewModelType {
         APIManager.shared.request(Chat.self, ChatRouter.sendChat(chat: chat, to: to)) { [weak self] data, status, error in
             guard let self = self else { return }
             if let data = data {
-                self.chatList.append(data)
+                self.chatList.append(
+                    Chat(id: data.id,
+                         to: data.to,
+                         from: data.from,
+                         chat: data.chat,
+                         createdAt: data.createdAt.toDate().toString(format: .special)))
                 self.chatResponse.onNext(self.chatList)
                 completion(self.chatList.count)
             }
@@ -68,11 +73,18 @@ final class ChatViewModel: ViewModelType {
             from: from, lastchatDate: lastchatDate)) { [weak self] data, status, error in
             guard let self = self else { return }
             if let data = data {
-                self.chatList = data.payload
+                data.payload.forEach {
+                    self.chatList.append(
+                        Chat(id: $0.id,
+                             to: $0.to,
+                             from: $0.from,
+                             chat: $0.chat,
+                             createdAt: $0.createdAt.toDate().toString(format: .special)))
+                }
                 self.chatResponse.onNext(self.chatList)
                 completion(data.payload.count)
             }
-            if let error = error {
+                if let error = error {
                 ErrorManager.handle(with: error, vc: ChatViewController(ChatViewModel()))
             }
         }
