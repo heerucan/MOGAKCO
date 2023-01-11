@@ -24,7 +24,7 @@
 
 |요청|수락|채팅|내정보|
 |:-:|:-:|:-:|:-:|
-|![IMG_5681](https://user-images.githubusercontent.com/63235947/211195477-fefb3b48-1622-46ce-8b94-6c9a096f08a3.PNG)|![IMG_4918](https://user-images.githubusercontent.com/63235947/211245942-333d9ce8-21a6-4d3d-9266-f3480067bb14.PNG)|![IMG_5516](https://user-images.githubusercontent.com/63235947/211246270-19e6d907-045c-4488-8385-68231a35843c.PNG)|![IMG_5717](https://user-images.githubusercontent.com/63235947/211245401-cd7324e5-1530-4625-91bc-f6e10c3b2392.PNG)|
+|![IMG_5681](https://user-images.githubusercontent.com/63235947/211195477-fefb3b48-1622-46ce-8b94-6c9a096f08a3.PNG)|![IMG_4918](https://user-images.githubusercontent.com/63235947/211245942-333d9ce8-21a6-4d3d-9266-f3480067bb14.PNG)|![IMG_853658CCAC24-1](https://user-images.githubusercontent.com/63235947/211774393-67a26002-e63f-4f6e-b800-ebeed93fab26.jpeg)|![IMG_5717](https://user-images.githubusercontent.com/63235947/211245401-cd7324e5-1530-4625-91bc-f6e10c3b2392.PNG)|
 
 <br>
 
@@ -200,6 +200,8 @@ final class APIManager {
 - 이 경우, 꼭 하나의 메소드를 사용하지 않아도 된다는 것과 추후 Rx에서 제공해주는 Single이라는 옵저버블을 알게 됐는데, success, error 이벤트만 방출해 네트워크에 적합하다고 생각돼서 공부 후 적용해보고 싶다고 생각하게 됨
 
 3. 뷰모델에서 네트워크 처리 후 화면전환 처리해줄 때 코디네이터 패턴의 필요성을 느끼게 되었으나, 제한된 시간으로 인해 공부할 시간이 없어 적용하지 못하였음
+
+4. 채팅을 구현할 때 어려웠던 점이 `BehaviorSubject`를 통해 `chatResponse`를 받아서 postChat 서버통신 시 보내는 채팅 데이터를 onNext를 통해 넣고, 뷰에 채팅 내용을 뿌려주는데 이때 채팅 배열이 아닌 보낸 채팅 내용만 하나씩 들어가 어려움을 겪었음. 그래서 `[Chat]` 타입을 가진 chatList를 따로 만들고 이 `chatList`를 `onNext`를 통해 값을 넣어줬음. 이 부분에서 반응형 프로그래밍을 적용함에도 불구하고 불필요한 과정이 중간에 들어간 점이 아쉬움. 개선점을 고민해봐야 할 것 같음.
 
 
 <br>
