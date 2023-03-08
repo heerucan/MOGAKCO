@@ -49,21 +49,7 @@
 
 <br>
 
-- `RxSwift` `RxCocoa` `MVVM` `MVC`
-
-- `Alamofire+URLRequestConvertible` 
- 
-- `SnapKit` `Then` `CodeBase`
- 
-- `Firebase Auth` `FCM`  
-
-- `Realm` 
-
-- `SocketIO` 
-
-- `NMapsMap` 
-
-- `MultiSlider` 
+![image](https://user-images.githubusercontent.com/63235947/223731256-5500df18-31c5-4be4-8a4d-174c56e96d6c.png)
 
 
 <br>
